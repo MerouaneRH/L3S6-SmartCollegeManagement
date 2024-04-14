@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "255138491309",
+    "project_id": "smartcollege-f0fa5",
+    "storage_bucket": "smartcollege-f0fa5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255138491309:android:9ff3dc98b18f9e67e88f24",
+        "android_client_info": {
+          "package_name": "com.example.flutterapp1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYaJeL6rnz4DJH0vHApusw-M4EG2I5O40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255138491309:android:4b35ef7f46622df3e88f24",
+        "android_client_info": {
+          "package_name": "com.example.project_mini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYaJeL6rnz4DJH0vHApusw-M4EG2I5O40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
