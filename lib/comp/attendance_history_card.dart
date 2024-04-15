@@ -27,28 +27,37 @@ class History_Card extends StatelessWidget {
                 Row(
                   children: [
                     const Icon(Icons.book),
-                    const Text("cours artificial intillenget",
-                        style: TextStyle(color: Colors.white)),
+                    const Text(
+                      "cours artificial intillenget",
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
                     Container(
-                      height: 20,
-                      width: 60,
+                      height: 32,
+                      width: 72,
                       decoration: BoxDecoration(
                           // color: Colors.red,
-                          color: const Color.fromARGB(255, 135, 119, 110),
+                          //color: Color.fromARGB(255, 218, 90, 62),
+                          color: Color.fromARGB(255, 122, 189, 91),
                           borderRadius: BorderRadius.circular(10)),
-                      margin: const EdgeInsets.only(left: 70),
+                      margin: const EdgeInsets.only(left: 50),
                       child: const Center(
-                        child:
-                            Text("Absent", style: TextStyle(color: Colors.white)
-                                // "Present"
-                                ),
+                        child: Text("present",
+                            style: TextStyle(color: Colors.white)
+                            // "Present"
+                            ),
                       ),
                     )
                   ],
                 ),
                 const Row(
                   children: [
-                    Icon(Icons.alarm),
+                    Icon(
+                      Icons.alarm,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text("08:30 - 10:00",
                         style: TextStyle(color: Colors.white)),
                   ],

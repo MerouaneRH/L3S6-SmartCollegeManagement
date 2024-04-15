@@ -18,6 +18,7 @@ class _Login_pageState extends State<Login_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xffE6F4F1),
       body: Stack(
         children: [
@@ -86,84 +87,87 @@ class _Login_pageState extends State<Login_page> {
           Positioned.fill(
             child: Container(
               margin: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 150),
-                    child: Text(
-                      'Login to your account',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: Color(0xff002930),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 5.0),
-                  MyTextField(
-                    myHintText: "Your college code",
-                    myController: email,
-                    myIcon: const Icon(Icons.mail_outline,
-                        color: Color(0xff002930), size: 25),
-                  ),
-                  MyTextField(
-                    myHintText: "Your Birthday",
-                    myController: password,
-                    myIcon: const Icon(Icons.lock_outline_rounded),
-                    isPassword: true,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
-                    child: SizedBox(
-                      height: 55,
-                      width: 345,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff568C93)),
-                        onPressed: () async {
-                          try {
-                            await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                                    email: email.text, password: password.text);
-                            await fetchUserData();
-                            print("nigha2 $role");
-
-                            if (role == "student") {
-                              print("rayane1");
-                              Navigator.popAndPushNamed(context, "navigate");
-                              return;
-                            } else if (role == "teacher") {
-                              print("rayane2 $role");
-                              Navigator.popAndPushNamed(
-                                  context, "navigateProf");
-                              return;
-                            } else {
-                              Navigator.popAndPushNamed(
-                                  context, "navigateTech");
-                            }
-                          } catch (e) {
-                            print('No user found for that email.');
-
-                            AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.error,
-                              animType: AnimType.rightSlide,
-                              title: 'ERROR',
-                              desc: 'Error in Email or Password',
-                              btnCancelOnPress: () {},
-                              btnOkOnPress: () {},
-                            ).show();
-                          }
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(color: Colors.white),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 150),
+                      child: Text(
+                        'Login to your account',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Color(0xff002930),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 5.0),
+                    MyTextField(
+                      myHintText: "Your college code",
+                      myController: email,
+                      myIcon: const Icon(Icons.mail_outline,
+                          color: Color(0xff002930), size: 25),
+                    ),
+                    MyTextField(
+                      myHintText: "Your Birthday",
+                      myController: password,
+                      myIcon: const Icon(Icons.lock_outline_rounded),
+                      isPassword: true,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: SizedBox(
+                        height: 55,
+                        width: 345,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff568C93)),
+                          onPressed: () async {
+                            try {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                      email: email.text,
+                                      password: password.text);
+                              await fetchUserData();
+                              print("nigha2 $role");
+
+                              if (role == "student") {
+                                print("rayane1");
+                                Navigator.popAndPushNamed(context, "navigate");
+                                return;
+                              } else if (role == "teacher") {
+                                print("rayane2 $role");
+                                Navigator.popAndPushNamed(
+                                    context, "navigateProf");
+                                return;
+                              } else {
+                                Navigator.popAndPushNamed(
+                                    context, "navigateTech");
+                              }
+                            } catch (e) {
+                              print('No user found for that email.');
+
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.rightSlide,
+                                title: 'ERROR',
+                                desc: 'Error in Email or Password',
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () {},
+                              ).show();
+                            }
+                          },
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

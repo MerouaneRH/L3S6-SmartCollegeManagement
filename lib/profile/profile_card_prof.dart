@@ -20,6 +20,7 @@ class PcardProf extends StatelessWidget {
     this.modules,
     //required this.dateNaissancee,
   });
+
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
