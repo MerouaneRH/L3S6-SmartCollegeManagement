@@ -13,9 +13,9 @@ class NavigateBare_prof extends StatefulWidget {
 class _NavigateBareState extends State<NavigateBare_prof> {
   int i = 0;
   List pages = [
+    const ReserveRooms(),
     const Map_page(),
     const Profile(),
-    const ReserveRooms(),
   ];
 
   @override
@@ -39,27 +39,27 @@ class _NavigateBareState extends State<NavigateBare_prof> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.map,
-                color: Colors.white,
-                size: 26,
-              ),
-              label: "Map",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance,
-                color: Colors.white,
-                size: 26,
-              ),
-              label: "Profile",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
                 Icons.restore,
                 color: Colors.white,
                 size: 26,
               ),
               label: "reservation",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.map,
+                color: Colors.white,
+                size: 26,
+              ),
+              label: "map",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_box,
+                color: Colors.white,
+                size: 26,
+              ),
+              label: "Profile",
             ),
           ],
         ),

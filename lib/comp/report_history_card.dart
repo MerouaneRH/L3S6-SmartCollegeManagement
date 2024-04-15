@@ -7,15 +7,15 @@ class report_history extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             Card(
               margin: const EdgeInsets.only(bottom: 0, top: 8),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25)),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
               ),
               color: const Color(0xFF568C93),
               child: Padding(
@@ -26,13 +26,15 @@ class report_history extends StatelessWidget {
                     const Row(
                       children: [
                         Icon(Icons.calendar_month),
-                        Text("Problem type: Hardware"),
+                        Text("Problem type: Hardware",
+                            style: TextStyle(color: Colors.white)),
                       ],
                     ),
                     Row(
                       children: [
                         const Icon(Icons.book),
-                        const Text("Light switch problem"),
+                        const Text("Light switch problem",
+                            style: TextStyle(color: Colors.white)),
                         ///////
                         Container(
                           margin: const EdgeInsets.only(left: 17),
@@ -40,7 +42,7 @@ class report_history extends StatelessWidget {
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  const Color.fromARGB(255, 56, 219, 214),
+                                  Color.fromARGB(255, 137, 176, 175),
 
                               shape: RoundedRectangleBorder(
                                 borderRadius:
@@ -52,9 +54,9 @@ class report_history extends StatelessWidget {
                               child: Text(
                                 'Mark as solved',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black, // Text color
+                                  color: Colors.white, // Text color
                                 ),
                               ),
                             ),
@@ -65,7 +67,8 @@ class report_history extends StatelessWidget {
                     const Row(
                       children: [
                         Icon(Icons.alarm),
-                        Text("Rport Time: 13:30"),
+                        Text("Rport Time: 13:30",
+                            style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ],
@@ -75,13 +78,13 @@ class report_history extends StatelessWidget {
             Row(
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 20,
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 190, 178, 178),
                         borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(25))),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10))),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

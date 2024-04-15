@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mini/profile/profile_card_else.dart';
+import 'package:project_mini/profile/profile_card_prof.dart';
 import 'package:project_mini/profile/profile_card_student.dart';
+import 'package:project_mini/profile/profile_card_tech.dart';
 
 String? nom;
 String? prenom;
@@ -47,14 +48,20 @@ class Profile extends StatelessWidget {
                   placeOfBirth: lieuNaissance,
                   dateNaissancee: dateNaissance,
                 );
-              } else {
-                return PCardELse(
+              } else if (role == "teacher") {
+                return PcardProf(
                   nom: nom,
                   prenom: prenom,
                   // placeOfBirth: lieuNaissance,
                   // dateNaissancee: dateNaissance,
-                  grade: grade,
-                  modules: modules,
+                  //grade: grade,
+                  //modules: modules,
+                  //role: role,
+                );
+              } else {
+                return PcardTech(
+                  nom: nom,
+                  prenom: prenom,
                   role: role,
                 );
               }
@@ -135,19 +142,16 @@ Future<void> fetchUserData() async {
         .get();
 
     if (technicianSnapshot.exists) {
-      // User document found in 'technician' collection
       Map<String, dynamic> userData =
           technicianSnapshot.data() as Map<String, dynamic>;
-      String name = userData['nom'] ??
-          'Unknown'; // Access 'nom' field (change to your field name)
-      String email = userData['prenom'] ??
-          'Unknown'; // Access 'prenom' field (change to your field name)
-      print('User nom: $name');
-      print('User prenom: $email');
-      return; // Exit function after retrieving user data
+      nom = userData['nom'];
+      prenom = userData['prenom'];
+      role = userData['role'];
+      print('User nom: $nom');
+      print('User prenom: $prenom');
+      print('User prenom: $role');
+      return;
     }
-
-    // If user document not found in any collection
     print(
         'User document not found in Firestore collections for UID: ${user!.uid}');
   } catch (e) {

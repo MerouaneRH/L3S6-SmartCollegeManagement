@@ -13,9 +13,9 @@ class NavigateBareTECH extends StatefulWidget {
 class _NavigateBareState extends State<NavigateBareTECH> {
   int i = 0;
   List pages = [
+    const Report(),
     const Map_page(),
     const Profile(),
-    const Report(),
   ];
 
   @override
@@ -39,27 +39,27 @@ class _NavigateBareState extends State<NavigateBareTECH> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.map,
-                color: Colors.white,
-                size: 26,
-              ),
-              label: "Map",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance,
-                color: Colors.white,
-                size: 26,
-              ),
-              label: "Profile",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
                 Icons.restore,
                 color: Colors.white,
                 size: 26,
               ),
-              label: "report",
+              label: "Report",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.map,
+                color: Colors.white,
+                size: 26,
+              ),
+              label: "map",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_box,
+                color: Colors.white,
+                size: 26,
+              ),
+              label: "Profile",
             ),
           ],
         ),
