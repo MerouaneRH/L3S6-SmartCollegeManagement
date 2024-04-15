@@ -66,7 +66,7 @@ class PcardProf extends StatelessWidget {
                     ),
                     Text(
                       '$role',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.grey,
                         fontFamily: 'Poppins',
@@ -114,15 +114,15 @@ class PcardProf extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 5),
-                          const Text(
+                          SizedBox(height: 5),
+                          Text(
                             'Date of Birth : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -131,7 +131,7 @@ class PcardProf extends StatelessWidget {
                           ),
                           Text(
                             '',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -151,15 +151,15 @@ class PcardProf extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 5),
-                          const Text(
+                          SizedBox(height: 5),
+                          Text(
                             "Lieu de Naissance",
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -168,7 +168,7 @@ class PcardProf extends StatelessWidget {
                           ),
                           Text(
                             'placeOfBirth!',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
