@@ -40,7 +40,7 @@ class MyCard extends StatelessWidget {
                           width: 75,
                           decoration: BoxDecoration(
                               // color: Colors.red,
-                              color: Color.fromARGB(255, 157, 119, 119),
+                              color: const Color.fromARGB(255, 157, 119, 119),
                               borderRadius: BorderRadius.circular(60)),
                           margin: const EdgeInsets.only(left: 70),
                           child: const Center(

@@ -42,7 +42,7 @@ class report_history extends StatelessWidget {
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Color.fromARGB(255, 137, 176, 175),
+                                  const Color.fromARGB(255, 137, 176, 175),
 
                               shape: RoundedRectangleBorder(
                                 borderRadius:

@@ -13,7 +13,7 @@ class _ReportState extends State<Report> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "REPORT HISTORY",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

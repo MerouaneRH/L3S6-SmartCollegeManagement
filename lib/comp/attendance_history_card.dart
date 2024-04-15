@@ -34,7 +34,7 @@ class History_Card extends StatelessWidget {
                       width: 60,
                       decoration: BoxDecoration(
                           // color: Colors.red,
-                          color: Color.fromARGB(255, 135, 119, 110),
+                          color: const Color.fromARGB(255, 135, 119, 110),
                           borderRadius: BorderRadius.circular(10)),
                       margin: const EdgeInsets.only(left: 70),
                       child: const Center(
