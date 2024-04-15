@@ -22,8 +22,8 @@ class _NavigateBareState extends State<NavigateBare> {
       extendBody: true,
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(50.0),
-          topRight: Radius.circular(50.0),
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
         ),
         child: BottomNavigationBar(
           backgroundColor: const Color(0xFF568C93),

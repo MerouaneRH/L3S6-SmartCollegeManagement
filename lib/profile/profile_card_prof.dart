@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class PCardELse extends StatelessWidget {
+class PcardProf extends StatelessWidget {
   final String? nom;
   final String? prenom;
   //final String? placeOfBirth;
@@ -10,14 +10,14 @@ class PCardELse extends StatelessWidget {
   final String? modules;
   final String? role;
   //final String? dateNaissancee;
-  const PCardELse({
+  const PcardProf({
     super.key,
     required this.nom,
     required this.prenom,
-    required this.role,
+    this.role,
     //required this.placeOfBirth,
-    required this.grade,
-    required this.modules,
+    this.grade,
+    this.modules,
     //required this.dateNaissancee,
   });
   @override

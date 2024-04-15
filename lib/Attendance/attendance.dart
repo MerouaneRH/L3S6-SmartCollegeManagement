@@ -16,7 +16,7 @@ class _AttendanceState extends State<Attendance> {
       appBar: AppBar(
         title: const Text(
           "ATTENDANCE HISTORY",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         titleSpacing: 00.0,
         centerTitle: true,
@@ -24,8 +24,8 @@ class _AttendanceState extends State<Attendance> {
         toolbarOpacity: 0.8,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(50),
-              bottomLeft: Radius.circular(50)),
+              bottomRight: Radius.circular(30),
+              bottomLeft: Radius.circular(30)),
         ),
         elevation: 0.00,
         backgroundColor: const Color(0xFF568C93),
