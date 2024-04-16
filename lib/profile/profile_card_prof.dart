@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class PCardELse extends StatelessWidget {
+class PcardProf extends StatelessWidget {
   final String? nom;
   final String? prenom;
   //final String? placeOfBirth;
@@ -10,16 +10,17 @@ class PCardELse extends StatelessWidget {
   final String? modules;
   final String? role;
   //final String? dateNaissancee;
-  const PCardELse({
+  const PcardProf({
     super.key,
     required this.nom,
     required this.prenom,
-    required this.role,
+    this.role,
     //required this.placeOfBirth,
-    required this.grade,
-    required this.modules,
+    this.grade,
+    this.modules,
     //required this.dateNaissancee,
   });
+
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
@@ -66,7 +67,7 @@ class PCardELse extends StatelessWidget {
                     ),
                     Text(
                       '$role',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.grey,
                         fontFamily: 'Poppins',
@@ -114,15 +115,15 @@ class PCardELse extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 5),
-                          const Text(
+                          SizedBox(height: 5),
+                          Text(
                             'Date of Birth : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -131,7 +132,7 @@ class PCardELse extends StatelessWidget {
                           ),
                           Text(
                             '',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -151,15 +152,15 @@ class PCardELse extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 5),
-                          const Text(
+                          SizedBox(height: 5),
+                          Text(
                             "Lieu de Naissance",
                             style: TextStyle(
                               fontFamily: 'Poppins',
@@ -168,7 +169,7 @@ class PCardELse extends StatelessWidget {
                           ),
                           Text(
                             'placeOfBirth!',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),

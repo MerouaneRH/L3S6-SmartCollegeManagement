@@ -17,7 +17,7 @@ class _ReserveRoomsState extends State<ReserveRooms> {
       appBar: AppBar(
         title: const Text(
           "RESERVATION ROOM",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         titleSpacing: 00.0,
         centerTitle: true,
@@ -32,14 +32,9 @@ class _ReserveRoomsState extends State<ReserveRooms> {
         backgroundColor: const Color(0xFF568C93),
       ), //AppBar
       body: ListView.builder(
+        itemCount: 10,
         itemBuilder: (context, index) => const MyCard(),
       ),
-      // bottomNavigationBar: ClipRRect(
-      //   borderRadius: const BorderRadius.only(
-      //     topLeft: Radius.circular(50.0),
-      //     topRight: Radius.circular(50.0),
-      //   ),
-      // ),
     );
   }
 }

@@ -7,7 +7,7 @@ class History_Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
           color: const Color(0xFF568C93),
           child: Padding(
@@ -18,34 +18,48 @@ class History_Card extends StatelessWidget {
                 const Row(
                   children: [
                     Icon(Icons.calendar_month),
-                    Text("03/March/2024"),
+                    Text(
+                      "03/March/2024",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ],
                 ),
                 Row(
                   children: [
                     const Icon(Icons.book),
-                    const Text("cours artificial intillenget"),
+                    const Text(
+                      "cours artificial intillenget",
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
                     Container(
-                      height: 20,
-                      width: 60,
+                      height: 32,
+                      width: 72,
                       decoration: BoxDecoration(
                           // color: Colors.red,
-                          color: Colors.greenAccent[400],
-                          borderRadius: BorderRadius.circular(40)),
-                      margin: const EdgeInsets.only(left: 45),
+                          //color: Color.fromARGB(255, 218, 90, 62),
+                          color: Color.fromARGB(255, 122, 189, 91),
+                          borderRadius: BorderRadius.circular(10)),
+                      margin: const EdgeInsets.only(left: 50),
                       child: const Center(
-                        child: Text(
-                          "Absent",
-                          // "Present"
-                        ),
+                        child: Text("present",
+                            style: TextStyle(color: Colors.white)
+                            // "Present"
+                            ),
                       ),
                     )
                   ],
                 ),
                 const Row(
                   children: [
-                    Icon(Icons.alarm),
-                    Text("08:30 - 10:00"),
+                    Icon(
+                      Icons.alarm,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("08:30 - 10:00",
+                        style: TextStyle(color: Colors.white)),
                   ],
                 ),
               ],

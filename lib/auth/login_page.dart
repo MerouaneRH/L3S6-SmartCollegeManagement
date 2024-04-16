@@ -18,6 +18,7 @@ class _Login_pageState extends State<Login_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xffE6F4F1),
       body: Stack(
         children: [
@@ -84,13 +85,12 @@ class _Login_pageState extends State<Login_page> {
             ),
           ),
           Positioned.fill(
-            child: Container(
-              margin: const EdgeInsets.all(10),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(top: 150),
+                    padding: EdgeInsets.only(top: 350),
                     child: Text(
                       'Login to your account',
                       style: TextStyle(
