@@ -37,7 +37,7 @@ class MyCard extends StatelessWidget {
                             style: TextStyle(color: Colors.white)),
                         Container(
                           height: 32,
-                          width: 80,
+                          width: MediaQuery.of(context).size.width * 0.19,
                           decoration: BoxDecoration(
                               // color: Colors.red,
                               color: const Color.fromARGB(255, 157, 119, 119),

@@ -37,7 +37,8 @@ class report_history extends StatelessWidget {
                             style: TextStyle(color: Colors.white)),
                         ///////
                         Container(
-                          margin: const EdgeInsets.only(left: 17),
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          margin: const EdgeInsets.only(left: 15),
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
