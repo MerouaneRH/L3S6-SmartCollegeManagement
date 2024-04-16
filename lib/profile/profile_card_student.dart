@@ -52,7 +52,7 @@ class PCardStudent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     Text(
                       fullName,
                       style: const TextStyle(
