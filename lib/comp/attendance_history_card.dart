@@ -33,7 +33,7 @@ class History_Card extends StatelessWidget {
                     ),
                     Container(
                       height: 32,
-                      width: 72,
+                      width: MediaQuery.of(context).size.width * 0.19,
                       decoration: BoxDecoration(
                           // color: Colors.red,
                           //color: Color.fromARGB(255, 218, 90, 62),
