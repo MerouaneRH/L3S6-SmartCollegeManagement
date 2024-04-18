@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/profile/profile_card_prof.dart';
 import 'package:project_mini/profile/profile_card_student.dart';
 import 'package:project_mini/profile/profile_card_tech.dart';
@@ -24,7 +23,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       backgroundColor: const Color(0xFFE6F4F1),
       body: FutureBuilder<void>(
           future: fetchUserData(),
@@ -55,7 +53,7 @@ class Profile extends StatelessWidget {
                   // dateNaissancee: dateNaissance,
                   //grade: grade,
                   //modules: modules,
-                  //role: role,
+                  role: role,
                 );
               } else {
                 return PcardTech(
