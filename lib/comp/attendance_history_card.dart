@@ -5,10 +5,9 @@ class History_Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width-20 ,
+        width: MediaQuery.of(context).size.width - 20,
         child: Card(
           color: const Color(0xFF568C93),
           child: Padding(
@@ -26,25 +25,26 @@ class History_Card extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(Icons.book),
-                    const Text(
-                      "cours artificial intillenget",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
+                    const Row(children: [
+                       Icon(Icons.book),
+                       Text(
+                        "cours artificial intillenget",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ]),
                     Container(
-                      height:  MediaQuery.of(context).size.height/20,
-                      width: MediaQuery.of(context).size.width/5,
+                      height: MediaQuery.of(context).size.height / 20,
+                      width: MediaQuery.of(context).size.width / 5,
                       decoration: BoxDecoration(
                           // color: Colors.red,
                           //color: Color.fromARGB(255, 218, 90, 62),
-                          color: Color.fromARGB(255, 122, 189, 91),
+                          color:const Color.fromARGB(255, 122, 189, 91),
                           borderRadius: BorderRadius.circular(20)),
-                      margin: const EdgeInsets.only(left:40),
+                      margin: const EdgeInsets.only(right: 40),
                       child: const Center(
-                        
-                        child: 
-                        Text("present",
+                        child: Text("present",
                             style: TextStyle(color: Colors.white)
                             // "Present"
                             ),

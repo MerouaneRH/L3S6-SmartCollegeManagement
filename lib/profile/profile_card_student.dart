@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class PCardStudent extends StatelessWidget {
@@ -21,9 +22,10 @@ class PCardStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
-    return Column(
+    return ListView(
+      
       children: [
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Container(
           height: 150,
           width: MediaQuery.of(context).size.width,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyCard extends StatelessWidget {
   const MyCard({super.key});
@@ -7,7 +8,8 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width -20,
+        //width: MediaQuery.of(context).size.width -20,
+        width:350.w,
         child: Column(
           children: [
             Card(
@@ -78,7 +80,7 @@ class MyCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width -20,
+                    width:350.w,
                     height: 28,
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 153, 192, 202),
