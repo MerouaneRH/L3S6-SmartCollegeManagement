@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class PcardTech extends StatelessWidget {
@@ -18,7 +19,7 @@ class PcardTech extends StatelessWidget {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
     return Column(
       children: [
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Container(
           height: 150,
           width: MediaQuery.of(context).size.width,

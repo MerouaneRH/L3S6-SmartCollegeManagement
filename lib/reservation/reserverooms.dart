@@ -15,6 +15,7 @@ class _ReserveRoomsState extends State<ReserveRooms> {
       // backgroundColor: Color(0xffE6F4F1),
       backgroundColor: const Color(0xffE6F4F1),
       appBar: AppBar(
+        
         title: const Text(
           "RESERVATION ROOM",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -30,7 +31,9 @@ class _ReserveRoomsState extends State<ReserveRooms> {
         ),
         elevation: 0.00,
         backgroundColor: const Color(0xFF568C93),
+        
       ), //AppBar
+      extendBodyBehindAppBar: true, //white background remove
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) => const MyCard(),

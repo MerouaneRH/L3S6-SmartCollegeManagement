@@ -12,6 +12,7 @@ class _AttendanceState extends State<Attendance> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFE6F4F1),
       appBar: AppBar(
         title: const Text(

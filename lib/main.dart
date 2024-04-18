@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/Attendance/attendance.dart';
 import 'package:project_mini/auth/login_page.dart';
 import 'package:project_mini/comp/navigation_prof.dart';
@@ -25,7 +26,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+
+      builder: (_, child) {
+        return MaterialApp(
       home: const Login_page(),
       routes: {
         "Attendance": (context) => const Attendance(),
@@ -37,6 +44,9 @@ class MyApp extends StatelessWidget {
         "map": (context) => const Map_page(),
       },
       debugShowCheckedModeBanner: false,
+    ); 
+      },
     );
+   
   }
 }
