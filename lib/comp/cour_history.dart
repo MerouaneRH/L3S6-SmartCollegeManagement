@@ -7,7 +7,7 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width -20,
         child: Column(
           children: [
             Card(
@@ -36,13 +36,16 @@ class MyCard extends StatelessWidget {
                         const Text("cours artificial intillenget",
                             style: TextStyle(color: Colors.white)),
                         Container(
-                          height: 32,
-                          width: MediaQuery.of(context).size.width * 0.19,
+                          height:  MediaQuery.of(context).size.height/25,
+                          width: MediaQuery.of(context).size.width/5,
                           decoration: BoxDecoration(
+                            
                               // color: Colors.red,
                               color: const Color.fromARGB(255, 157, 119, 119),
+                              
                               borderRadius: BorderRadius.circular(10)),
                           margin: const EdgeInsets.only(left: 70),
+                          
                           child: const Center(
                             child: Text(
                               "Reserved",
@@ -75,7 +78,7 @@ class MyCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: MediaQuery.of(context).size.width -20,
                     height: 28,
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 153, 192, 202),

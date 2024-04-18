@@ -5,9 +5,10 @@ class History_Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width-20 ,
         child: Card(
           color: const Color(0xFF568C93),
           child: Padding(
@@ -32,16 +33,18 @@ class History_Card extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     Container(
-                      height: 32,
-                      width: MediaQuery.of(context).size.width * 0.19,
+                      height:  MediaQuery.of(context).size.height/20,
+                      width: MediaQuery.of(context).size.width/5,
                       decoration: BoxDecoration(
                           // color: Colors.red,
                           //color: Color.fromARGB(255, 218, 90, 62),
                           color: Color.fromARGB(255, 122, 189, 91),
-                          borderRadius: BorderRadius.circular(10)),
-                      margin: const EdgeInsets.only(left: 50),
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: const EdgeInsets.only(left:40),
                       child: const Center(
-                        child: Text("present",
+                        
+                        child: 
+                        Text("present",
                             style: TextStyle(color: Colors.white)
                             // "Present"
                             ),
