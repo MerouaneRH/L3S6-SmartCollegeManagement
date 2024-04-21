@@ -1,17 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_mini/profile/profile.dart';
 
 // ignore: must_be_immutable
 class PcardTech extends StatelessWidget {
+  final String? username;
   final String? nom;
   final String? prenom;
+  final String? dateOfBirth;
+  final String? placeOfBirth;
   final String? role;
 
   const PcardTech({
     super.key,
+    required this.username,
     required this.nom,
     required this.prenom,
+    required this.dateOfBirth,
+    required this.placeOfBirth,
     required this.role,
   });
   @override
@@ -83,7 +90,7 @@ class PcardTech extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Container(
-          height: 300,
+          height: 230,
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
@@ -103,29 +110,66 @@ class PcardTech extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/calen.png',
+                      'images/uid.png',
                       height: 50.0,
                     ),
                   ),
                   const SizedBox(width: 5),
-                  const Expanded(
+                  Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
-                          Text(
-                            'Date of Birth : ',
-                            style: TextStyle(
+                          const SizedBox(height: 5),
+                          const Text(
+                            'ID : ',
+                            style:  TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
-                            '',
-                            style: TextStyle(fontFamily: 'Poppins'),
+                            '   $username',
+                            style: const TextStyle(fontFamily: 'Poppins'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 35,
+                    child: Image.asset(
+                      'images/calen.png',
+                      height: 50.0,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 50,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Text(
+                            'Date of Birth : ',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          Text(
+                            '   $dateNaissance',
+                            style: const TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -145,24 +189,24 @@ class PcardTech extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  const Expanded(
+                  Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
-                          Text(
+                          const SizedBox(height: 5),
+                          const Text(
                             "Lieu de Naissance",
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
-                            'placeOfBirth!',
-                            style: TextStyle(fontFamily: 'Poppins'),
+                            '   $placeOfBirth',
+                            style: const TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -171,83 +215,9 @@ class PcardTech extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 35,
-                    child: Image.asset(
-                      'images/cap.png',
-                      height: 50.0,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      height: 50,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5),
-                          Text(
-                            'GRADE : ',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '',
-                            style: TextStyle(fontFamily: 'Poppins'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 35,
-                    child: Image.asset(
-                      'images/grp.png',
-                      height: 50.0,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      height: 50,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5),
-                          Text(
-                            'MODULES : ',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '',
-                            style: TextStyle(fontFamily: 'Poppins'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.fromLTRB(
               20, 10, 20, 10), // Adjust padding values as needed

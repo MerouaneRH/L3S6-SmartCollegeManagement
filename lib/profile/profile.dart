@@ -5,6 +5,7 @@ import 'package:project_mini/profile/profile_card_prof.dart';
 import 'package:project_mini/profile/profile_card_student.dart';
 import 'package:project_mini/profile/profile_card_tech.dart';
 
+String? username;
 String? nom;
 String? prenom;
 String? lieuNaissance;
@@ -38,6 +39,7 @@ class Profile extends StatelessWidget {
             } else {
               if (role == "student") {
                 return PCardStudent(
+                  username: username,
                   nom: nom,
                   formation: formation,
                   groupe: groupe,
@@ -47,18 +49,22 @@ class Profile extends StatelessWidget {
                 );
               } else if (role == "teacher") {
                 return PcardProf(
+                  username: username,
                   nom: nom,
                   prenom: prenom,
-                  // placeOfBirth: lieuNaissance,
-                  // dateNaissancee: dateNaissance,
+                  placeOfBirth: lieuNaissance,
+                  dateNaissancee: dateNaissance,
                   //grade: grade,
                   //modules: modules,
                   role: role,
                 );
               } else {
                 return PcardTech(
+                  username: username,
                   nom: nom,
                   prenom: prenom,
+                  dateOfBirth: dateNaissance,
+                  placeOfBirth: lieuNaissance,
                   role: role,
                 );
               }
@@ -81,6 +87,7 @@ Future<void> fetchUserData() async {
     if (studentSnapshot.exists) {
       Map<String, dynamic> userData =
           studentSnapshot.data() as Map<String, dynamic>;
+      username = user!.email;
       nom = userData['nom'];
       prenom = userData['prenom'];
       lieuNaissance = userData['lieuNaissance'];
@@ -95,11 +102,11 @@ Future<void> fetchUserData() async {
       role = userData['role'];
       print('User nom: $nom');
       print('User prenom: $prenom');
-      print('User prenom: $lieuNaissance');
-      print('User prenom: $groupe');
-      print('User prenom: $formation');
-      print('User prenom: $dateNaissance');
-      print('User prenom: $role');
+      print('User lieuNaissance: $lieuNaissance');
+      print('User groupe: $groupe');
+      print('User formation: $formation');
+      print('User dateNaissance: $dateNaissance');
+      print('User role: $role');
       return; // Exit function after retrieving user data
     }
 
@@ -111,24 +118,25 @@ Future<void> fetchUserData() async {
     if (teacherSnapshot.exists) {
       Map<String, dynamic> userData =
           teacherSnapshot.data() as Map<String, dynamic>;
+      username = user!.email;
       nom = userData['nom'];
       prenom = userData['prenom'];
       grade = userData['grade'];
       modules = userData['modules'];
-      //dateNaissanceList = userData['dateNaissance'];
-      // dateNaissance = dateNaissanceList?[0] +
-      //     "/" +
-      //     dateNaissanceList?[1] +
-      //     "/" +
-      //     dateNaissanceList?[2];
+      dateNaissanceList = userData['dateNaissance'];
+      dateNaissance = dateNaissanceList?[0] +
+          "/" +
+          dateNaissanceList?[1] +
+          "/" +
+          dateNaissanceList?[2];
       role = userData['role'];
       print('User nom: $nom');
       print('User prenom: $prenom');
       //print('User prenom: $lieuNaissance');
-      print('User prenom: $grade');
-      print('User prenom: $modules');
+      print('User grade: $grade');
+      print('User modules: $modules');
       //print('User prenom: $dateNaissance');
-      print('User prenom: $role');
+      print('User role: $role');
       return;
     }
 

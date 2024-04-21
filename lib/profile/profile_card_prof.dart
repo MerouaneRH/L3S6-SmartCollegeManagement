@@ -1,25 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_mini/profile/profile.dart';
 
 // ignore: must_be_immutable
 class PcardProf extends StatelessWidget {
+  final String? username;
   final String? nom;
   final String? prenom;
-  //final String? placeOfBirth;
+  final String? placeOfBirth;
   final String? grade;
   final String? modules;
   final String? role;
-  //final String? dateNaissancee;
+  final String? dateNaissancee;
   const PcardProf({
     super.key,
+    required this.username,
     required this.nom,
     required this.prenom,
     this.role,
-    //required this.placeOfBirth,
+    required this.placeOfBirth,
     this.grade,
     this.modules,
-    //required this.dateNaissancee,
+    required this.dateNaissancee,
   });
 
   @override
@@ -91,7 +94,7 @@ class PcardProf extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Container(
-          height: 300,
+          height: 360,
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
@@ -111,29 +114,66 @@ class PcardProf extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/calen.png',
+                      'images/uid.png',
                       height: 50.0,
                     ),
                   ),
                   const SizedBox(width: 5),
-                  const Expanded(
+                  Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
-                          Text(
-                            'Date of Birth : ',
-                            style: TextStyle(
+                          const SizedBox(height: 5),
+                          const Text(
+                            'Email : ',
+                            style:  TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
-                            '',
-                            style: TextStyle(fontFamily: 'Poppins'),
+                            '   $username',
+                            style: const TextStyle(fontFamily: 'Poppins'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 35,
+                    child: Image.asset(
+                      'images/calen.png',
+                      height: 50.0,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 50,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Text(
+                            'Date of Birth : ',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          Text(
+                            '   $dateNaissance',
+                            style: const TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -153,24 +193,24 @@ class PcardProf extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  const Expanded(
+                  Expanded(
                     flex: 1,
                     child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
-                          Text(
-                            "Lieu de Naissance",
+                          const SizedBox(height: 5),
+                          const Text(
+                            "Place of Birth : ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
-                            'placeOfBirth!',
-                            style: TextStyle(fontFamily: 'Poppins'),
+                            '   $placeOfBirth',
+                            style: const TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -185,7 +225,7 @@ class PcardProf extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/cap.png',
+                      'images/grade.png',
                       height: 50.0,
                     ),
                   ),
@@ -199,10 +239,10 @@ class PcardProf extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            'GRADE : ',
+                            "Grade : ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
@@ -236,10 +276,10 @@ class PcardProf extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            'MODULES : ',
+                            'Module : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
