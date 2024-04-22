@@ -54,7 +54,7 @@ class Profile extends StatelessWidget {
                   prenom: prenom,
                   placeOfBirth: lieuNaissance,
                   dateNaissancee: dateNaissance,
-                  //grade: grade,
+                  grade: grade,
                   //modules: modules,
                   role: role,
                 );
@@ -122,8 +122,9 @@ Future<void> fetchUserData() async {
       nom = userData['nom'];
       prenom = userData['prenom'];
       grade = userData['grade'];
-      modules = userData['modules'];
+      //modules = userData['modules'];
       dateNaissanceList = userData['dateNaissance'];
+      lieuNaissance = userData['lieuNaissance'];
       dateNaissance = dateNaissanceList?[0] +
           "/" +
           dateNaissanceList?[1] +
@@ -132,10 +133,10 @@ Future<void> fetchUserData() async {
       role = userData['role'];
       print('User nom: $nom');
       print('User prenom: $prenom');
-      //print('User prenom: $lieuNaissance');
+      print('User prenom: $lieuNaissance');
       print('User grade: $grade');
-      print('User modules: $modules');
-      //print('User prenom: $dateNaissance');
+      //print('User modules: $modules');
+      print('User prenom: $dateNaissance');
       print('User role: $role');
       return;
     }
@@ -149,12 +150,22 @@ Future<void> fetchUserData() async {
     if (technicianSnapshot.exists) {
       Map<String, dynamic> userData =
           technicianSnapshot.data() as Map<String, dynamic>;
+      username = user!.email;
       nom = userData['nom'];
       prenom = userData['prenom'];
       role = userData['role'];
+      dateNaissanceList = userData['dateNaissance'];
+      lieuNaissance = userData['lieuNaissance'];
+      dateNaissance = dateNaissanceList?[0] +
+          "/" +
+          dateNaissanceList?[1] +
+          "/" +
+          dateNaissanceList?[2];
       print('User nom: $nom');
       print('User prenom: $prenom');
-      print('User prenom: $role');
+      print('User role: $role');
+      print('User lieuNaissance: $lieuNaissance');
+      print('User dateNaissance: $dateNaissance');
       return;
     }
     print(

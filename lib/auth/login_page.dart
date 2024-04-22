@@ -42,6 +42,7 @@ class _Login_pageState extends State<Login_page> {
             child: Text(
               'SMART',
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 40,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -54,6 +55,7 @@ class _Login_pageState extends State<Login_page> {
             child: Text(
               'COLLEGE ',
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 40,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -66,6 +68,7 @@ class _Login_pageState extends State<Login_page> {
             child: Text(
               'MANAGEMENT ',
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 40,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -78,6 +81,7 @@ class _Login_pageState extends State<Login_page> {
             child: Text(
               'the college in a smarter way ',
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 15,
                 color: Color.fromARGB(255, 210, 199, 199),
                 fontWeight: FontWeight.bold,
@@ -94,6 +98,7 @@ class _Login_pageState extends State<Login_page> {
                     child: Text(
                       'Login to your account',
                       style: TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 24.0,
                         color: Color(0xff002930),
                         fontWeight: FontWeight.bold,
@@ -158,7 +163,7 @@ class _Login_pageState extends State<Login_page> {
                         },
                         child: const Text(
                           'Login',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(fontFamily: 'Poppins', fontSize: 20, color: Colors.white),
                         ),
                       ),
                     ),

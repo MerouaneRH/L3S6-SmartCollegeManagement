@@ -9,99 +9,91 @@ class MyCard extends StatelessWidget {
     return Center(
       child: SizedBox(
         //width: MediaQuery.of(context).size.width -20,
-        width:350.w,
+        //width:350.w,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             Card(
               margin: const EdgeInsets.only(bottom: 0, top: 8),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),),
               ),
-              color: const Color(0xFF568C93),
+              //color: const Color(0xFF568C93),
+              color: const Color.fromARGB(255, 209, 229, 232),
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.calendar_month),
-                        Text("03/March/2024",
-                            style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
                     Row(
                       children: [
-                        const Icon(Icons.book),
-                        const Text("cours artificial intillenget",
-                            style: TextStyle(color: Colors.white)),
+                        const SizedBox(width: 30,),
                         Container(
-                          height:  MediaQuery.of(context).size.height/25,
-                          width: MediaQuery.of(context).size.width/5,
+                          //width: 200,height: 40,
+                          //color: Colors.green,
+                          child: const Text(  
+                            "Salle N202",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
-                            
-                              // color: Colors.red,
-                              color: const Color.fromARGB(255, 157, 119, 119),
-                              
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: const EdgeInsets.only(left: 70),
-                          
-                          child: const Center(
-                            child: Text(
-                              "Reserved",
-                              style: TextStyle(color: Colors.white),
-
-                              // "Present"
-                            ),
+                            color: Color.fromRGBO(195, 214, 217, 1),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        )
+                          child: const Text(
+                            "Occupied",
+                            style: TextStyle( fontSize: 12, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                            ),
+                        ),
+
                       ],
                     ),
-                    const Row(
+                    SizedBox(height: 5,),
+                    Row(
                       children: [
-                        Icon(Icons.alarm),
-                        Text("08:30 - 10:00",
-                            style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                    const Row(
-                      children: [
-                        Icon(Icons.person),
-                        Text("Mr.ETCHIALI",
-                            style: TextStyle(color: Colors.white)),
+                        const SizedBox(width: 30,),
+                        SizedBox(
+                          width: 35,
+                          child: Image.asset(
+                            'images/date2.png',
+                            height: 30.0,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: const Text(
+                            "03 March, 2024",
+                            style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                            ),
+                        ),
+                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 35,
+                          child: Image.asset(
+                            'images/time1.png',
+                            height: 30.0,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: const Text(
+                            "8:30 - 10:00",
+                            style: TextStyle( fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                            ),
+                        ),
+
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                    width:350.w,
-                    height: 28,
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 153, 192, 202),
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10))),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "  Room ID : ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "N104   ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ))
-              ],
-            )
           ],
         ),
       ),

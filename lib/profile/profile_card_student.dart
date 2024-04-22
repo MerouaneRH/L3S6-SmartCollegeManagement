@@ -33,6 +33,7 @@ class PCardStudent extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
+            color: Color.fromRGBO(209, 229, 232, 1),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: const Color.fromARGB(255, 86, 140, 147),
@@ -95,9 +96,11 @@ class PCardStudent extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
+            color: Color.fromRGBO(209, 229, 232, 1),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: const Color.fromARGB(255, 86, 140, 147),
+              //color: const Color.fromRGBO(209, 229, 232, 1),
               width: 2.0,
             ),
           ),
@@ -111,7 +114,7 @@ class PCardStudent extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/uid.png',
+                      'images/idv2.png',
                       height: 50.0,
                     ),
                   ),
@@ -127,13 +130,14 @@ class PCardStudent extends StatelessWidget {
                           const Text(
                             'ID : ',
                             style:  TextStyle(
+                              decoration: TextDecoration.underline,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $username',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -147,10 +151,18 @@ class PCardStudent extends StatelessWidget {
                   const SizedBox(width: 20),
                   SizedBox(
                     width: 35,
-                    child: Image.asset(
-                      'images/calen.png',
+                    child: 
+                      /*Container( 
+                      height: 34, width: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white30,
+                      ),
+                      child:*/ 
+                      Image.asset(
+                      'images/date2.png',
                       height: 50.0,
-                    ),
+                    ),//),
                   ),
                   const SizedBox(width: 5),
                   Expanded(
@@ -165,12 +177,13 @@ class PCardStudent extends StatelessWidget {
                             'Date of Birth : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $dateNaissancee',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -185,7 +198,7 @@ class PCardStudent extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/loc.png',
+                      'images/loc3.png',
                       height: 50.0,
                     ),
                   ),
@@ -199,15 +212,16 @@ class PCardStudent extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            "Lieu de Naissance",
+                            "Lieu de Naissance : ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $placeOfBirth',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -222,7 +236,7 @@ class PCardStudent extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/cap.png',
+                      'images/forma3.png',
                       height: 50.0,
                     ),
                   ),
@@ -239,12 +253,13 @@ class PCardStudent extends StatelessWidget {
                             'Formation : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $formation',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -259,7 +274,7 @@ class PCardStudent extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/grp.png',
+                      'images/grp3.png',
                       height: 50.0,
                     ),
                   ),
@@ -276,12 +291,13 @@ class PCardStudent extends StatelessWidget {
                             'Groupe : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   G$groupe',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -315,14 +331,14 @@ class PCardStudent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.exit_to_app,
-                  color: Colors.white,
+                  Icons.logout,
+                  color: Colors.black,
                   size: 25.0,
                 ),
                 SizedBox(width: 10.0),
                 Text(
                   "Logout",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
                 ),
               ],
             ),

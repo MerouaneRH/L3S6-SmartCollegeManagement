@@ -16,7 +16,7 @@ class _ReportState extends State<Report> {
       appBar: AppBar(
         title: const Text(
           "REPORT HISTORY",
-          style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(

@@ -32,6 +32,7 @@ class PcardTech extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
+            color: Color.fromRGBO(209, 229, 232, 1),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: const Color.fromARGB(255, 86, 140, 147),
@@ -94,6 +95,7 @@ class PcardTech extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
+            color: Color.fromRGBO(209, 229, 232, 1),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: const Color.fromARGB(255, 86, 140, 147),
@@ -110,7 +112,7 @@ class PcardTech extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/uid.png',
+                      'images/idv2.png',
                       height: 50.0,
                     ),
                   ),
@@ -127,12 +129,13 @@ class PcardTech extends StatelessWidget {
                             'ID : ',
                             style:  TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $username',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -147,7 +150,7 @@ class PcardTech extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/calen.png',
+                      'images/date2.png',
                       height: 50.0,
                     ),
                   ),
@@ -164,12 +167,13 @@ class PcardTech extends StatelessWidget {
                             'Date of Birth : ',
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $dateNaissance',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -184,7 +188,7 @@ class PcardTech extends StatelessWidget {
                   SizedBox(
                     width: 35,
                     child: Image.asset(
-                      'images/loc.png',
+                      'images/loc3.png',
                       height: 50.0,
                     ),
                   ),
@@ -198,15 +202,16 @@ class PcardTech extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            "Lieu de Naissance",
+                            "Lieu de Naissance : ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
+                              decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             '   $placeOfBirth',
-                            style: const TextStyle(fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -240,14 +245,14 @@ class PcardTech extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.exit_to_app,
-                  color: Colors.white,
+                  Icons.logout,
+                  color: Colors.black,
                   size: 25.0,
                 ),
                 SizedBox(width: 10.0),
                 Text(
                   "Logout",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontFamily: 'Poppins',fontSize: 18, color: Colors.white),
                 ),
               ],
             ),

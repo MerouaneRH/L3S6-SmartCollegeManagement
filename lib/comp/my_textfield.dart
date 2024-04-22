@@ -40,7 +40,7 @@ class _MyTextFieldState extends State<MyTextField> {
             widget.isPassword, // Only obscure if it's a password field
         decoration: InputDecoration(
           hintText: widget.myHintText,
-          hintStyle: const TextStyle(),
+          hintStyle: const TextStyle(fontFamily: 'Poppins',),
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(50)),
           ),

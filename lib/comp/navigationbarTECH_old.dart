@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:project_mini/Attendance/attendance.dart';
+import 'package:project_mini/map/map.dart';
 import 'package:project_mini/profile/profile.dart';
+import 'package:project_mini/report/report.dart';
 
-class NavigateBare extends StatefulWidget {
-  const NavigateBare({super.key});
+class NavigateBareTECH extends StatefulWidget {
+  const NavigateBareTECH({super.key});
 
   @override
-  State<NavigateBare> createState() => _NavigateBareState();
+  State<NavigateBareTECH> createState() => _NavigateBareState();
 }
 
-class _NavigateBareState extends State<NavigateBare> {
+class _NavigateBareState extends State<NavigateBareTECH> {
   int i = 0;
   List pages = [
-    const Attendance(),
+    const Report(),
+    const Map_page(),
     const Profile(),
   ];
 
@@ -22,8 +24,8 @@ class _NavigateBareState extends State<NavigateBare> {
       extendBody: true,
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(0.0),
-          topRight: Radius.circular(40.0),
+          topLeft: Radius.circular(50.0),
+          topRight: Radius.circular(50.0),
         ),
         child: BottomNavigationBar(
           backgroundColor: const Color(0xFF568C93),
@@ -37,15 +39,23 @@ class _NavigateBareState extends State<NavigateBare> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.history,
+                Icons.restore,
                 color: Colors.white,
                 size: 26,
               ),
-              label: "Attendance",
+              label: "Report",
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.account_balance,
+                Icons.map,
+                color: Colors.white,
+                size: 26,
+              ),
+              label: "map",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_box,
                 color: Colors.white,
                 size: 26,
               ),

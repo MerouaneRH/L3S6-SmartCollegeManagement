@@ -7,62 +7,93 @@ class History_Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width - 20,
+        //width: MediaQuery.of(context).size.width - 20,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
-          color: const Color(0xFF568C93),
+          margin: const EdgeInsets.only(bottom: 0, top: 8),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),),
+          ),
+          //color: const Color(0xFF568C93),
+          color: const Color.fromARGB(255, 209, 229, 232),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Row(
-                  children: [
-                    Icon(Icons.calendar_month),
-                    Text(
-                      "03/March/2024",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(children: [
-                       Icon(Icons.book),
-                       Text(
-                        "cours artificial intillenget",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                     //SizedBox(width: 25,),
+                      SizedBox(
+                        width: 35,
+                        child: Image.asset(
+                          'images/date2.png',
+                          height: 30.0,
+                        ),
                       ),
-                    ]),
-                    Container(
-                      height: MediaQuery.of(context).size.height / 20,
-                      width: MediaQuery.of(context).size.width / 5,
-                      decoration: BoxDecoration(
-                          // color: Colors.red,
-                          //color: Color.fromARGB(255, 218, 90, 62),
-                          color:const Color.fromARGB(255, 122, 189, 91),
-                          borderRadius: BorderRadius.circular(20)),
-                      margin: const EdgeInsets.only(right: 40),
-                      child: const Center(
-                        child: Text("present",
-                            style: TextStyle(color: Colors.white)
-                            // "Present"
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: const Text(
+                          "03 March, 2024",
+                          style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                          ),
+                      ),
+                      const Spacer(),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade200,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text(
+                            "Present",
+                            style: TextStyle( fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
-                      ),
-                    )
+                        ),
                   ],
                 ),
-                const Row(
+                SizedBox(height: 5,),
+                Row(
                   children: [
-                    Icon(
-                      Icons.alarm,
-                      color: Colors.white,
-                    ),
                     SizedBox(
-                      width: 10,
-                    ),
-                    Text("08:30 - 10:00",
-                        style: TextStyle(color: Colors.white)),
+                        width: 35,
+                        child: Image.asset(
+                          'images/book1.png',
+                          height: 32.0,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: const Text(
+                          "Cour Intelligence Artificielle",
+                          style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                          ),
+                      ),
+                       
+                  ],
+                ),
+                SizedBox(height: 5,),
+                Row(
+                  children: [
+                    SizedBox(
+                        width: 35,
+                        child: Image.asset(
+                          'images/time1.png',
+                          height: 30.0,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: const Text(
+                          "11:30 - 13:00",
+                          style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                          ),
+                      ),
+                       
                   ],
                 ),
               ],
