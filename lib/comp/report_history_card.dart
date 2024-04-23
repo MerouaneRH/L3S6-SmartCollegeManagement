@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 
 class report_history extends StatelessWidget {
-  const report_history({super.key});
+  final String? reportId;
+  final String? reportStatus;
+  final String? reportDate;
+  final String? reportIssueType;
+  final String? reportLocation;
+  final String? reportTime;
+  final String? timeSinceReport;
+  final String? reportDescription;
+  final bool reportIsSolved = false;
+  final bool reportIsInProgress = false;
+  const report_history({
+    super.key,
+    required this.reportId,
+    required this.reportStatus,
+    required this.reportDate,
+    required this.reportIssueType,
+    required this.reportLocation,
+    required this.reportTime,
+    required this.timeSinceReport,
+    required this.reportDescription,
+  });
 
   @override
   Widget build(BuildContext context) {
+    print(reportLocation);
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -31,22 +52,22 @@ class report_history extends StatelessWidget {
                       children: [
                         const SizedBox(width: 150,),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(195, 214, 217, 1),
+                            color: const Color.fromRGBO(195, 214, 217, 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Text(
-                            "Unsolved report #171",
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                          child: Text(
+                            "$reportStatus report #$reportId",
+                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
                         ),
                         const Spacer(),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
-                          child: const Text(
-                            "10/03/2024",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),//color: Colors.blueGrey.shade400
+                          padding: const EdgeInsets.fromLTRB(5, 0, 20, 0),
+                          child: Text(
+                            "$reportDate",
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),//color: Colors.blueGrey.shade400
                             )
                             ),
                         ),
@@ -62,7 +83,7 @@ class report_history extends StatelessWidget {
                               width: 150,height: 150,
                               //color: Colors.red,
                               child: Padding(
-                                padding: EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(15),
                                 child: Image.asset(
                                   'images/alert7.png',
                                   height: 100,
@@ -84,18 +105,18 @@ class report_history extends StatelessWidget {
                                     padding: EdgeInsets.fromLTRB(0, 10, 5, 5),
                                     //width: 200,height: 40,
                                     //color: Colors.green,
-                                    child: const Text(  
-                                      "Amphitheatre 2",
-                                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                                    child: Text(  
+                                      "$reportLocation",
+                                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                                   ),
                                   const Spacer(),
                                   Container(
                                     height: 41,
                                     padding: EdgeInsets.fromLTRB(5, 17, 5, 1),
                                     //color: Colors.green,
-                                    child: const Text(  
-                                      "Sent 23min ago",
-                                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                                    child: Text(  
+                                      "$timeSinceReport",
+                                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                                   ),
                                 ],
                               ),
@@ -104,11 +125,11 @@ class report_history extends StatelessWidget {
                                 children: [
                                   Container(
                                     //width: 300,height: 50,
-                                    padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
+                                    padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
                                     //color: Colors.grey,
-                                    child: const Text(
-                                      "Hardware related issue",
-                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),),
+                                    child: Text(
+                                      "$reportIssueType related issue",
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),),
                                     ),
                                   ),
                                 ],
@@ -117,13 +138,13 @@ class report_history extends StatelessWidget {
                                 height: 75,
                                 //color: Colors.red,
                                 child:
-                                const Expanded(
+                                Expanded(
                                   flex: 2,
                                   child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'The garbage sensor is failing to accurately monitor levels however it seems to be working whenever the button is pressed twice.',
-                                      style: TextStyle(
+                                      '$reportDescription',
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
                                         fontFamily: 'Poppins',
