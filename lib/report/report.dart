@@ -12,6 +12,7 @@ class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFE6F4F1),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(
@@ -57,8 +58,10 @@ class _ReportState extends State<Report> {
       ),
       body: ListView.builder(
         itemCount: 10,
-        itemBuilder: (context, index) => const report_history(),
-      ),
+        itemBuilder: (context, index) => Padding(
+          padding: EdgeInsets.only(bottom: 15, top: 15), 
+          child: const report_history(),
+        ),),
     );
   }
 }

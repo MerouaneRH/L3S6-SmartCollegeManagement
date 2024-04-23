@@ -24,7 +24,7 @@ class PcardTech extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
-    return Column(
+    return ListView(
       children: [
         SizedBox(height: 10.h),
         Container(

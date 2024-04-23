@@ -61,9 +61,12 @@ class report_history extends StatelessWidget {
                             Container(
                               width: 150,height: 150,
                               //color: Colors.red,
-                              child: Image.asset(
-                                'images/alert7.png',
-                                height: 100,
+                              child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Image.asset(
+                                  'images/alert7.png',
+                                  height: 100,
+                                ),
                               ),
                             ), 
                           ],
@@ -140,7 +143,7 @@ class report_history extends StatelessWidget {
                         ElevatedButton(
                           // Use ElevatedButton for a raised button
                           onPressed: () {
-                            print('Logout button pressed!');
+                            print('Mark as Resolved button pressed!');
                           },
                           style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontWeight: FontWeight.w400, fontFamily: 'Poppins',),
@@ -148,13 +151,13 @@ class report_history extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(20, 48.0), // Set desired height
+                            minimumSize: const Size(15, 45.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.done_all,
+                                Icons.done,
                                 color: Colors.white,
                                 size: 20.0,
                               ),
@@ -168,7 +171,7 @@ class report_history extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            print('Logout button pressed!');
+                            print('Mark as In Progress button pressed!');
                           },
                           style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontWeight: FontWeight.w400, fontFamily: 'Poppins',),
@@ -176,7 +179,7 @@ class report_history extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(20, 48.0), // Set desired height
+                            minimumSize: const Size(15, 45.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,

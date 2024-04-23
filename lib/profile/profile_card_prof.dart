@@ -28,7 +28,7 @@ class PcardProf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
-    return Column(
+    return ListView(
       children: [
         SizedBox(height: 10.h),
         Container(
@@ -310,7 +310,6 @@ class PcardProf extends StatelessWidget {
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, "login");
-              print('Logout button pressed!');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 214, 66, 66),
