@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyCard extends StatelessWidget {
-  const MyCard({super.key});
+  final String? reservationLocation;
+  final String? reservationStatus;
+  final String? reservationDate;
+  final String? reservationStartTime;
+  final String? reservationEndTime;
+  const MyCard({
+    super.key,
+    required this.reservationLocation,
+    required this.reservationStatus,
+    required this.reservationDate,
+    required this.reservationStartTime,
+    required this.reservationEndTime,
+    
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,26 +48,27 @@ class MyCard extends StatelessWidget {
                         Container(
                           //width: 200,height: 40,
                           //color: Colors.green,
-                          child: const Text(  
-                            "Salle N202",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: Text(  
+                            "$reservationLocation",
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                         ),
                         const Spacer(),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(195, 214, 217, 1),
+                            color: const Color.fromRGBO(195, 214, 217, 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Text(
-                            "Occupied",
-                            style: TextStyle( fontSize: 12, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                          child: Text(
+                            "$reservationStatus",
+                            style: const TextStyle( fontSize: 12, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
                         ),
 
                       ],
                     ),
-                    SizedBox(height: 5,),
+                    const SizedBox(height: 5,),
                     Row(
                       children: [
                         const SizedBox(width: 30,),
@@ -67,12 +81,12 @@ class MyCard extends StatelessWidget {
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: const Text(
-                            "03 March, 2024",
-                            style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                          child: Text(
+                            "$reservationDate",
+                            style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                             ),
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         SizedBox(
                           width: 35,
                           child: Image.asset(
@@ -81,13 +95,12 @@ class MyCard extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: const Text(
-                            "8:30 - 10:00",
-                            style: TextStyle( fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: Text(
+                            "$reservationStartTime - $reservationEndTime",
+                            style: const TextStyle( fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                             ),
                         ),
-
                       ],
                     ),
                   ],
