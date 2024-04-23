@@ -50,7 +50,7 @@ class report_history extends StatelessWidget {
                     const SizedBox(height: 10,),
                     Row(
                       children: [
-                        const SizedBox(width: 150,),
+                        const SizedBox(width: 120,),
                         Container(
                           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
@@ -59,15 +59,15 @@ class report_history extends StatelessWidget {
                           ),
                           child: Text(
                             "$reportStatus report #$reportId",
-                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                            style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
                         ),
                         const Spacer(),
                         Container(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
                           child: Text(
                             "$reportDate",
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),//color: Colors.blueGrey.shade400
+                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),//color: Colors.blueGrey.shade400
                             )
                             ),
                         ),
@@ -80,20 +80,20 @@ class report_history extends StatelessWidget {
                         Column(
                           children: [
                             Container(
-                              width: 150,height: 150,
+                              width: 120,height: 150,
                               //color: Colors.red,
                               child: Padding(
                                 padding: const EdgeInsets.all(15),
                                 child: Image.asset(
                                   'images/alert7.png',
-                                  height: 100,
+                                  //height: 10,
                                 ),
                               ),
                             ), 
                           ],
                         ),
                         Container(
-                          width: (MediaQuery.of(context).size.width * 0.9) - 170,height: 150,
+                          width: (MediaQuery.of(context).size.width * 0.9) - 136,height: 150,
                           //color: Colors.blue,
                           child: Column( 
                             children: [
@@ -107,12 +107,12 @@ class report_history extends StatelessWidget {
                                     //color: Colors.green,
                                     child: Text(  
                                       "$reportLocation",
-                                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                                   ),
                                   const Spacer(),
                                   Container(
                                     height: 41,
-                                    padding: EdgeInsets.fromLTRB(5, 17, 5, 1),
+                                    padding: EdgeInsets.fromLTRB(5, 17, 10, 1),
                                     //color: Colors.green,
                                     child: Text(  
                                       "$timeSinceReport",
@@ -172,7 +172,7 @@ class report_history extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(15, 45.0), // Set desired height
+                            minimumSize: const Size(10, 40.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -185,7 +185,7 @@ class report_history extends StatelessWidget {
                               SizedBox(width: 2.0),
                               Text(
                                 "Mark as Resolved",
-                                style: TextStyle(fontSize: 14, color: Colors.white),
+                                style: TextStyle(fontSize: 12, color: Colors.white),
                               ),
                             ],
                           ),
@@ -200,7 +200,7 @@ class report_history extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(15, 45.0), // Set desired height
+                            minimumSize: const Size(10, 40.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -212,7 +212,7 @@ class report_history extends StatelessWidget {
                               ),
                               Text(
                                 "Mark as In Progress",
-                                style: TextStyle(fontSize: 14, color: Color.fromARGB(255, 68, 77, 94),),
+                                style: TextStyle(fontSize: 12, color: Color.fromARGB(255, 68, 77, 94),),
                               ),
                             ],
                           ),
