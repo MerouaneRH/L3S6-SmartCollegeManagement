@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_mini/comp/attendance_history_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
+List <Map<String, String>> data = [];
 
 class Attendance extends StatefulWidget {
   const Attendance({super.key});
@@ -31,12 +35,75 @@ class _AttendanceState extends State<Attendance> {
         elevation: 0.00,
         backgroundColor: const Color(0xFF568C93),
       ), //AppBar
-      body: ListView.builder(
-        itemCount: 10,
+      body: FutureBuilder<void>(
+      future: fetchAttendaceData(),
+      builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text('Error: ${snapshot.error}'),
+        );
+      } else {
+      return ListView.builder(
+        itemCount: data.length,
         itemBuilder: (context, index) {
-          return const History_Card();
-        },
-      ),
+          final attendanceData = data[index]; //(const MyCard());
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 15, top: 15),
+            child: History_Card(
+              attendaceDate: attendanceData['attendaceDate'],
+              attendaceStatus: attendanceData['attendaceStatus'],
+              attendaceSubject: attendanceData['attendaceSubject'],
+              attendaceDuration: attendanceData['attendaceDuration'],
+            ),
+          );
+        }
+      );
+    }
+    }),
     );
+  }
+}
+
+String formatAttendaceDate(Timestamp attendaceDate) {
+  // Create a formatter object with the desired format (month name, day, year)
+  final formatter = DateFormat('MMMM dd, yyyy'); 
+  // Convert the timestamp to a DateTime object
+  final dateTime = attendaceDate.toDate();
+  // Format the date using the formatter and return the string
+  return formatter.format(dateTime);
+}
+
+Future<void> fetchAttendaceData() async {
+
+  try {
+    QuerySnapshot attendaceSnapshot = await FirebaseFirestore.instance
+        .collection('attendance')
+        .get();
+
+    // An empty List to store the processed data
+    final List<Map<String, String>> processedAttendaceData = [];
+
+    // Loop through each report document
+    for(final attendace in attendaceSnapshot.docs) {
+      Map<String, dynamic> rawAttendaceData = attendace.data() as Map<String, dynamic>;
+      // Process the raw data
+      final processedAttendaceDataEntry = {
+        'attendaceDate': formatAttendaceDate(rawAttendaceData['attendaceDate']),
+        'attendaceStatus': rawAttendaceData['attendaceStatus'] as String,
+        'attendaceSubject': rawAttendaceData['attendaceSubject'] as String,
+        'attendaceDuration': rawAttendaceData['attendaceDuration'] as String,
+        
+      };
+      processedAttendaceData.add(processedAttendaceDataEntry);
+    }
+    data = processedAttendaceData;
+    return;
+    
+  } catch (e) {
+    print('Error fetching user data: $e');
   }
 }

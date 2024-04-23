@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
 class History_Card extends StatelessWidget {
-  const History_Card({super.key});
+  final String? attendaceDate;
+  final String? attendaceStatus;
+  final String? attendaceSubject;
+  final String? attendaceDuration;
+  const History_Card({
+    super.key,
+    required this.attendaceDate,
+    required this.attendaceStatus,
+    required this.attendaceSubject,
+    required this.attendaceDuration,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,36 +37,36 @@ class History_Card extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                     //SizedBox(width: 25,),
-                      SizedBox(
-                        width: 35,
-                        child: Image.asset(
-                          'images/date2.png',
-                          height: 30.0,
-                        ),
+                    //SizedBox(width: 25,),
+                    SizedBox(
+                      width: 35,
+                      child: Image.asset(
+                        'images/date2.png',
+                        height: 30.0,
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: const Text(
-                          "03 March, 2024",
-                          style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                          ),
-                      ),
-                      const Spacer(),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade200,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            "Present",
-                            style: TextStyle( fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
-                            ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: Text(
+                        "$attendaceDate",
+                        style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                         ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "$attendaceStatus",
+                        style: const TextStyle( fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Row(
                   children: [
                     SizedBox(
@@ -66,34 +76,32 @@ class History_Card extends StatelessWidget {
                           height: 32.0,
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: const Text(
-                          "Cour Intelligence Artificielle",
-                          style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                          ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: Text(
+                        "$attendaceSubject",
+                        style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                       ),
-                       
+                    ),       
                   ],
                 ),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Row(
                   children: [
                     SizedBox(
-                        width: 35,
-                        child: Image.asset(
-                          'images/time1.png',
-                          height: 30.0,
-                        ),
+                      width: 35,
+                      child: Image.asset(
+                        'images/time1.png',
+                        height: 30.0,
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: const Text(
-                          "11:30 - 13:00",
-                          style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                          ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: Text(
+                        "$attendaceDuration",
+                        style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                       ),
-                       
+                    ),  
                   ],
                 ),
               ],
