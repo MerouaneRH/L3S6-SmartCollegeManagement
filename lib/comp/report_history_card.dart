@@ -28,7 +28,7 @@ class report_history extends StatelessWidget {
     print(reportLocation);
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
           children: [
             Card(
@@ -50,7 +50,7 @@ class report_history extends StatelessWidget {
                     const SizedBox(height: 10,),
                     Row(
                       children: [
-                        const SizedBox(width: 120,),
+                        const SizedBox(width: 95,),
                         Container(
                           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class report_history extends StatelessWidget {
                           ),
                           child: Text(
                             "$reportStatus report #$reportId",
-                            style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                            style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
                         ),
                         const Spacer(),
@@ -80,7 +80,7 @@ class report_history extends StatelessWidget {
                         Column(
                           children: [
                             Container(
-                              width: 120,height: 150,
+                              width: 100,height: 150,
                               //color: Colors.red,
                               child: Padding(
                                 padding: const EdgeInsets.all(15),
@@ -93,7 +93,7 @@ class report_history extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          width: (MediaQuery.of(context).size.width * 0.9) - 136,height: 150,
+                          width: (MediaQuery.of(context).size.width * 0.95) - 116,height: 150,
                           //color: Colors.blue,
                           child: Column( 
                             children: [
@@ -107,7 +107,7 @@ class report_history extends StatelessWidget {
                                     //color: Colors.green,
                                     child: Text(  
                                       "$reportLocation",
-                                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                                   ),
                                   const Spacer(),
                                   Container(
@@ -167,12 +167,12 @@ class report_history extends StatelessWidget {
                             print('Mark as Resolved button pressed!');
                           },
                           style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w400, fontFamily: 'Poppins',),
+                            textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
                             backgroundColor: const Color.fromARGB(255, 68, 77, 94),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(10, 40.0), // Set desired height
+                            minimumSize: const Size(4, 40.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -180,12 +180,12 @@ class report_history extends StatelessWidget {
                               Icon(
                                 Icons.done,
                                 color: Colors.white,
-                                size: 20.0,
+                                size: 15.0,
                               ),
                               SizedBox(width: 2.0),
                               Text(
                                 "Mark as Resolved",
-                                style: TextStyle(fontSize: 12, color: Colors.white),
+                                style: TextStyle(fontSize: 10, color: Colors.white),
                               ),
                             ],
                           ),
@@ -195,12 +195,12 @@ class report_history extends StatelessWidget {
                             print('Mark as In Progress button pressed!');
                           },
                           style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w400, fontFamily: 'Poppins',),
+                            textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: const Size(10, 40.0), // Set desired height
+                            minimumSize: const Size(4, 40.0), // Set desired height
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -208,11 +208,11 @@ class report_history extends StatelessWidget {
                               Icon(
                                 Icons.hourglass_top,
                                 color: Color.fromARGB(255, 68, 77, 94),
-                                size: 20.0,
+                                size: 15.0,
                               ),
                               Text(
                                 "Mark as In Progress",
-                                style: TextStyle(fontSize: 12, color: Color.fromARGB(255, 68, 77, 94),),
+                                style: TextStyle(fontSize: 10, color: Color.fromARGB(255, 68, 77, 94),),
                               ),
                             ],
                           ),

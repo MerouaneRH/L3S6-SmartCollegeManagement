@@ -44,7 +44,7 @@ class MyCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const SizedBox(width: 30,),
+                        const SizedBox(width: 10,),
                         Container(
                           //width: 200,height: 40,
                           //color: Colors.green,
@@ -71,7 +71,7 @@ class MyCard extends StatelessWidget {
                     const SizedBox(height: 5,),
                     Row(
                       children: [
-                        const SizedBox(width: 30,),
+                        const SizedBox(width: 10,),
                         SizedBox(
                           width: 35,
                           child: Image.asset(
@@ -86,7 +86,7 @@ class MyCard extends StatelessWidget {
                             style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                             ),
                         ),
-                        const SizedBox(width: 20,),
+                        const SizedBox(width: 10,),
                         SizedBox(
                           width: 35,
                           child: Image.asset(
