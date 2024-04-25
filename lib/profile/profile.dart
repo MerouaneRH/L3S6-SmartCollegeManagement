@@ -77,7 +77,6 @@ class Profile extends StatelessWidget {
 ///////////////////////////////////////////////////////////////////////
 Future<void> fetchUserData() async {
   User? user = FirebaseAuth.instance.currentUser;
-
   try {
     DocumentSnapshot studentSnapshot = await FirebaseFirestore.instance
         .collection('student')

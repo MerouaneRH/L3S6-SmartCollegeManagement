@@ -42,8 +42,9 @@ class PCardStudent extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const Expanded(
-                flex: 1,
+              const Padding(
+                padding: EdgeInsets.all(15),
+                //flex: 1,
                 child: CircleAvatar(
                   backgroundImage: AssetImage(
                     'images/profile.png',

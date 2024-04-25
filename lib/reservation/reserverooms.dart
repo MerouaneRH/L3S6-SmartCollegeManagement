@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project_mini/comp/cour_history.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-List <Map<String, String>> data = [];
+List <Map<String, dynamic>> data = [];
 
 class ReserveRooms extends StatefulWidget {
   const ReserveRooms({super.key});
@@ -80,30 +81,64 @@ String formatReservationDate(Timestamp reservationDate) {
   // Format the date using the formatter and return the string
   return formatter.format(dateTime);
 }
+//FUTURE USE ACTIVE STATUS
+bool isReservationActive(Map<String, dynamic> reservation) {
+  // Get the current date and time
+  DateTime now = DateTime.now();
+  // Convert timestamps to DateTime objects
+  DateTime reservationStart = formatReservationDateTime(
+      reservation['reservationDate'] as Timestamp, reservation['reservationStartTime'] as String);
+  DateTime reservationEnd = formatReservationDateTime(
+      reservation['reservationDate'] as Timestamp, reservation['reservationEndTime'] as String);
+  // Check if the current date and time is between the reservation start and end time
+  return now.isAfter(reservationStart) && now.isBefore(reservationEnd);
+}
+
+bool isReservationExpired(Map<String, dynamic> reservation) {
+  DateTime now = DateTime.now();
+  DateTime reservationEnd = formatReservationDateTime(
+      reservation['reservationDate'] as Timestamp, reservation['reservationEndTime'] as String);
+  return now.isAfter(reservationEnd);
+}
+
+DateTime formatReservationDateTime(Timestamp reservationDate, String reservationTime) {
+  // Convert timestamp to DateTime
+  DateTime reservationDateTime = reservationDate.toDate();
+
+  // Combine date and time (assuming 'reservationTime' is in HH:MM format)
+  return DateTime(reservationDateTime.year, reservationDateTime.month, reservationDateTime.day,
+      int.parse(reservationTime.split(':')[0]), int.parse(reservationTime.split(':')[1])); // Parse hour and minute
+}
 
 Future<void> fetchReservationData() async {
-
+  User? currentLoggedInTeacher = FirebaseAuth.instance.currentUser;
+  String? currentLoggedInTeacherId = currentLoggedInTeacher!.uid;
   try {
     QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
         .collection('reservation')
+        .where("teacherId", isEqualTo: currentLoggedInTeacherId)
         .get();
 
     // An empty List to store the processed data
-    final List<Map<String, String>> processedReservationData = [];
-
+    final List<Map<String, dynamic>> processedReservationData = [];
     // Loop through each report document
     for(final reservation in reservationSnapshot.docs) {
       Map<String, dynamic> rawReservationData = reservation.data() as Map<String, dynamic>;
       // Process the raw data
       final processedReservationDataEntry = {
+        'reservationId': rawReservationData['reservationId'] as String,
         'reservationLocation': rawReservationData['reservationLocation'] as String,
         'reservationStatus': rawReservationData['reservationStatus'] as String,
         'reservationDate': formatReservationDate(rawReservationData['reservationDate']),
         'reservationStartTime': rawReservationData['reservationStartTime'] as String,
         'reservationEndTime': rawReservationData['reservationEndTime'] as String,
+        'teacherId': rawReservationData['teacherId'] as String,
+        'isActive': isReservationActive(rawReservationData), // Add this line to check if active
+        'isExpired': isReservationExpired(rawReservationData), // Add this line to check if active
         
       };
-      processedReservationData.add(processedReservationDataEntry);
+      //updateReservationStatus(processedReservationDataEntry);
+    processedReservationData.add(processedReservationDataEntry);
     }
     data = processedReservationData;
     return;
@@ -111,4 +146,64 @@ Future<void> fetchReservationData() async {
   } catch (e) {
     print('Error fetching user data: $e');
   }
+}
+
+Future<void> updateReservationStatus(Map<String, dynamic> reservation) async {
+  // Use existing isActive and isExpired values
+  bool isActive = reservation['isActive'] as bool;
+  bool isExpired = reservation['isExpired'] as bool;
+  // Determine the updated reservation status based on isActive and isExpired
+  String newStatus;
+  if (isActive && !isExpired) {
+    newStatus = 'Ongoing';
+  } else if (!isActive && !isExpired) {
+    newStatus = 'Upcoming';
+  } else if (!isActive && isExpired) {
+    newStatus = 'Expired';
+  } else {
+    newStatus = 'Error'; // Handle unexpected case (shouldn't occur)
+  }
+  //print(reservation);
+  // Update the reservation document in Firestore
+  try {
+    await FirebaseFirestore.instance
+        .collection('reservation')
+        .doc(reservation['reservationId'] as String) // Assuming 'reservationId' exists
+        .update({'reservationStatus': newStatus});
+    print('Reservation status updated successfully');
+  } catch (e) {
+    print('Error updating reservation status: $e');
+  }
+}
+// FUTURE USE
+Future<void> addNewReservation({
+  required String reservationLocation,
+  required String reservationDate,
+  required String reservationStartTime,
+  required String reservationEndTime,
+  required String teacherId,
+}) async {
+  final db = FirebaseFirestore.instance;
+
+  // Create a reference to the new document with auto-generated ID
+  final newReservationRef = await db.collection("reservation").add({});
+
+  // Get the auto-generated ID from the reference
+  final String reportId = newReservationRef.id;
+
+  // Prepare reservation data with reportId
+  final reservationData = {
+    "reservationLocation": reservationLocation,
+    "reservationStatus": "Upcoming",
+    "reservationDate": reservationDate,
+    "reservationStartTime": reservationStartTime,
+    "reservationEndTime": reservationEndTime,
+    "teacherId": teacherId,
+    "reservationId": reportId,
+  };
+
+  // Set the data on the document
+  await newReservationRef.set(reservationData);
+
+  print("New reservation added with ID: $reportId");
 }

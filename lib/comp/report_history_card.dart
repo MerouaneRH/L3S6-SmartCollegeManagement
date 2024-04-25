@@ -25,7 +25,6 @@ class report_history extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(reportLocation);
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.95,
@@ -83,10 +82,9 @@ class report_history extends StatelessWidget {
                               width: 100,height: 150,
                               //color: Colors.red,
                               child: Padding(
-                                padding: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.only(left:0,right: 0,bottom: 0,top: 0),
                                 child: Image.asset(
-                                  'images/alert7.png',
-                                  //height: 10,
+                                  'images/alert8.png',
                                 ),
                               ),
                             ), 
@@ -102,7 +100,7 @@ class report_history extends StatelessWidget {
                                 children: [
                                   Container(
                                     height: 41,
-                                    padding: EdgeInsets.fromLTRB(0, 10, 5, 5),
+                                    padding: const EdgeInsets.fromLTRB(0, 10, 5, 5),
                                     //width: 200,height: 40,
                                     //color: Colors.green,
                                     child: Text(  
@@ -112,7 +110,7 @@ class report_history extends StatelessWidget {
                                   const Spacer(),
                                   Container(
                                     height: 41,
-                                    padding: EdgeInsets.fromLTRB(5, 17, 10, 1),
+                                    padding: const EdgeInsets.fromLTRB(5, 17, 10, 1),
                                     //color: Colors.green,
                                     child: Text(  
                                       "$timeSinceReport",
