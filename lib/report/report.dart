@@ -3,8 +3,6 @@ import 'package:project_mini/comp/report_history_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-List <Map<String, String>> data = [];
-
 class Report extends StatefulWidget {
   const Report({super.key});
 
@@ -15,7 +13,6 @@ class Report extends StatefulWidget {
 class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: const Color(0xFFE6F4F1),
       extendBodyBehindAppBar: true,
@@ -60,8 +57,8 @@ class _ReportState extends State<Report> {
         backgroundColor: const Color(0xFF568C93),
       ),
 
-      body: FutureBuilder<void>(
-          future: fetchReportData(),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+          stream: getReportDataStream(),
           builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -72,6 +69,7 @@ class _ReportState extends State<Report> {
               child: Text('Error: ${snapshot.error}'),
             );
           } else {
+            List<Map<String, dynamic>> data = snapshot.data!;
             return ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
@@ -80,13 +78,15 @@ class _ReportState extends State<Report> {
                 padding: const EdgeInsets.only(bottom: 15, top: 15), 
                 child: report_history(
                   reportId: reportData['reportId'], // Access specific properties
-                  reportStatus: reportData['reportStatus'],
+                  //reportStatus: reportData['reportStatus'],
                   reportDate: reportData['reportDate'],
                   reportIssueType: reportData['reportIssueType'],
                   reportLocation: reportData['reportLocation'],
                   reportTime: reportData['reportTime'],
                   timeSinceReport: reportData['timeSinceReport'],
                   reportDescription: reportData['reportDescription'],
+                  reportIsSolved: reportData['reportIsSolved'],
+                  reportIsInProgress: reportData['reportIsInProgress'],
                 ),
             );}
           );
@@ -143,37 +143,35 @@ String calculateTimeSinceReport(String reportDay, String reportTime) {
   }
 }
 
-Future<void> fetchReportData() async {
-
-  try {
-    QuerySnapshot reportSnapshot = await FirebaseFirestore.instance
-        .collection('report')
-        .get();
-
-    // An empty List to store the processed data
-    final List<Map<String, String>> processedReportData = [];
-
-    // Loop through each report document
-    for(final report in reportSnapshot.docs) {
-      Map<String, dynamic> rawReportData = report.data() as Map<String, dynamic>;
-      // Process the raw data
-      final processedReportDataEntry = {
+Stream<List<Map<String, dynamic>>> getReportDataStream() {
+  return FirebaseFirestore.instance.collection('report').snapshots().map((snapshot) {
+    return snapshot.docs.map((doc) {
+      Map<String, dynamic> rawReportData = doc.data() as Map<String, dynamic>;
+      return {
         'reportId': rawReportData['reportId'] as String,
-        'reportStatus': rawReportData['reportStatus'] as String,
         'reportDate': formatReportDate(rawReportData['reportDate']),
         'reportIssueType': rawReportData['reportIssueType'] as String,
         'reportLocation': rawReportData['reportLocation'] as String,
         'reportTime': formatReportTime(rawReportData['reportDate']),
         'timeSinceReport': calculateTimeSinceReport(formatReportDate(rawReportData['reportDate']), formatReportTime(rawReportData['reportDate'])),
         'reportDescription': rawReportData['reportDescription'] as String,
-        
+        'reportIsSolved': rawReportData['reportIsSolved'] as bool,
+        'reportIsInProgress': rawReportData['reportIsInProgress'] as bool,
       };
-      processedReportData.add(processedReportDataEntry);
-    }
-    data = processedReportData;
-    return;
-    
+    }).toList();
+  });
+}
+
+Future<void> updateReportStatus(String reportId, bool isSolved, bool isInProgress) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('report')
+        .doc(reportId)
+        .update({
+      'reportIsSolved': isSolved,
+      'reportIsInProgress': isInProgress,
+    });
   } catch (e) {
-    print('Error fetching user data: $e');
+    print('Error updating report status: $e');
   }
 }

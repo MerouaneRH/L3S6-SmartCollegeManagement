@@ -1,30 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:project_mini/report/report.dart' show updateReportStatus;
 
 class report_history extends StatelessWidget {
   final String? reportId;
-  final String? reportStatus;
+  //final String? reportStatus;
   final String? reportDate;
   final String? reportIssueType;
   final String? reportLocation;
   final String? reportTime;
   final String? timeSinceReport;
   final String? reportDescription;
-  final bool reportIsSolved = false;
-  final bool reportIsInProgress = false;
+  final bool reportIsSolved;
+  final bool reportIsInProgress;
   const report_history({
     super.key,
     required this.reportId,
-    required this.reportStatus,
+    //required this.reportStatus,
     required this.reportDate,
     required this.reportIssueType,
     required this.reportLocation,
     required this.reportTime,
     required this.timeSinceReport,
     required this.reportDescription,
+    required this.reportIsSolved,
+    required this.reportIsInProgress,
   });
 
   @override
   Widget build(BuildContext context) {
+    final String reportStatus = 
+      reportIsSolved && !reportIsInProgress
+        ? 
+          "Solved" 
+        : 
+        !reportIsSolved && !reportIsInProgress
+        ? 
+          "Unsolved" 
+        : 
+        !reportIsSolved && reportIsInProgress
+        ? 
+          "In Progress" 
+        : 
+          "Error"
+      ;
+    final Color cardColor = 
+      reportIsSolved && !reportIsInProgress
+        ? 
+          Color.fromRGBO(209, 229, 233, 1)
+        :
+        !reportIsSolved && !reportIsInProgress
+        ? 
+          Color.fromRGBO(232, 230, 230, 1)
+        : 
+          Color.fromRGBO(213, 233, 240, 1)
+      ;
+    final String cardImage = 
+      reportIsSolved && !reportIsInProgress
+        ? 
+          'images/check3.png'
+        :
+        !reportIsSolved && !reportIsInProgress
+        ? 
+          'images/alert9.png'
+        : 
+          'images/hourglass.png'
+      ;
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.95,
@@ -40,7 +80,10 @@ class report_history extends StatelessWidget {
                     bottomRight: Radius.circular(40),),
               ),
               //color: const Color(0xFF568C93),
-              color: const Color.fromARGB(255, 209, 229, 232),
+              //color: reportStatus == "Unsolved"? const Color.fromARGB(255, 209, 229, 232) : const Color.fromARGB(255, 240, 159, 173),
+              //color: const Color.fromRGBO(232, 230, 230, 1), // LIGHT RED
+              //color: , // LIGHT green
+              color: cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
@@ -53,11 +96,12 @@ class report_history extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(195, 214, 217, 1),
+                            //color: const Color.fromRGBO(195, 214, 217, 1),
+                            color: const Color.fromRGBO(0, 0, 0, 0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            "$reportStatus report #$reportId",
+                            "$reportStatus",
                             style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
                             ),
                         ),
@@ -84,7 +128,7 @@ class report_history extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left:0,right: 0,bottom: 0,top: 0),
                                 child: Image.asset(
-                                  'images/alert8.png',
+                                  '$cardImage',
                                 ),
                               ),
                             ), 
@@ -156,67 +200,77 @@ class report_history extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          // Use ElevatedButton for a raised button
-                          onPressed: () {
-                            print('Mark as Resolved button pressed!');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
-                            backgroundColor: const Color.fromARGB(255, 68, 77, 94),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                    !reportIsSolved 
+                    ? 
+                      Row(
+                        mainAxisAlignment: reportIsInProgress? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            // Use ElevatedButton for a raised button
+                            onPressed: () async {
+                              await updateReportStatus(reportId!, true, false); // Mark as solved
+                            },
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
+                              backgroundColor: const Color.fromARGB(255, 68, 77, 94),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              minimumSize: const Size(4, 40.0), // Set desired height
+                              fixedSize: const Size(155, 30.0), // Set desired height
                             ),
-                            minimumSize: const Size(4, 40.0), // Set desired height
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.done,
-                                color: Colors.white,
-                                size: 15.0,
-                              ),
-                              SizedBox(width: 2.0),
-                              Text(
-                                "Mark as Resolved",
-                                style: TextStyle(fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            print('Mark as In Progress button pressed!');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.done,
+                                  color: Colors.white,
+                                  size: 15.0,
+                                ),
+                                SizedBox(width: 2.0),
+                                Text(
+                                  "Mark as Resolved",
+                                  style: TextStyle(fontSize: 10, color: Colors.white),
+                                ),
+                              ],
                             ),
-                            minimumSize: const Size(4, 40.0), // Set desired height
                           ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.hourglass_top,
-                                color: Color.fromARGB(255, 68, 77, 94),
-                                size: 15.0,
+                          !reportIsInProgress
+                          ?
+                            ElevatedButton(
+                              onPressed: () async {
+                                print('Mark as In Progress button pressed!');
+                                await updateReportStatus(reportId!, false, true); // Mark as solved
+                              },
+                              style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                //minimumSize: const Size(4, 40.0), // Set desired height
                               ),
-                              Text(
-                                "Mark as In Progress",
-                                style: TextStyle(fontSize: 10, color: Color.fromARGB(255, 68, 77, 94),),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.hourglass_top,
+                                    color: Color.fromARGB(255, 68, 77, 94),
+                                    size: 15.0,
+                                  ),
+                                  Text(
+                                    "Mark as In Progress",
+                                    style: TextStyle(fontSize: 10, color: Color.fromARGB(255, 68, 77, 94),),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                            )
+                          :
+                            const SizedBox(height: 0,),
+                        ],
+                      )
+                    :
+                      const SizedBox(height: 0,),
                   ],
                 ),
               ),

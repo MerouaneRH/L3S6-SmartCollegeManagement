@@ -26,7 +26,7 @@ class _NavigateBareState extends State<NavigateBareTECH> {
       extendBody: true, // removed the extended navbar
       //backgroundColor: const Color(0xFFE6F4F1),
       bottomNavigationBar: Container(
-        margin: EdgeInsets.all(displayWidth * .05),
+        margin: EdgeInsets.all(20),
         height: 80,//displayWidth * .155,
         decoration: BoxDecoration(
           //color: Colors.white, // main container color
@@ -43,7 +43,7 @@ class _NavigateBareState extends State<NavigateBareTECH> {
         child: ListView.builder(
           itemCount: 3,
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: displayWidth * .02),
+          padding: EdgeInsets.only(left: 20, right: 20),
           itemBuilder: (context, index) => InkWell(
             onTap: () {
               setState(() {
@@ -59,14 +59,14 @@ class _NavigateBareState extends State<NavigateBareTECH> {
                   duration: Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == i
-                      ? 170
-                      : 130,
+                      ? 130
+                      : 100, // PROFILE SPACING
                   alignment: Alignment.center,
                   child: AnimatedContainer(
                     duration: Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
-                    height: index == i ? displayWidth * .12 : 0,
-                    width: index == i ? displayWidth * .32 : 0,
+                    height: index == i ? 50 : 0, // BLUE HIGHLIGHTED CONTAINER
+                    width: index == i ? 200 : 0, // BLUE HIGHLIGHTED CONTAINER
                     decoration: BoxDecoration(
                       color: index == i
                           ? Colors.blueAccent.withOpacity(.2)
@@ -79,8 +79,8 @@ class _NavigateBareState extends State<NavigateBareTECH> {
                   duration: Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == i
-                      ? displayWidth * .31
-                      : displayWidth * .18,
+                      ? 120 // SPACEING ??
+                      : 100, // SPACEING BETWEEN ICONS
                   alignment: Alignment.center,
                   child: Stack(
                     children: [
@@ -90,7 +90,7 @@ class _NavigateBareState extends State<NavigateBareTECH> {
                             duration: Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             width:
-                                index == i ? displayWidth * .13 : 0,
+                                index == i ? 60 : 0, // TEXT
                           ),
                           AnimatedOpacity(
                             opacity: index == i ? 1 : 0,
@@ -116,11 +116,11 @@ class _NavigateBareState extends State<NavigateBareTECH> {
                             duration: Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             width:
-                                index == i ? displayWidth * .03 : 20,
+                                index == i ? 20 : 20,
                           ),
                           Icon(
                             listOfIcons[index],
-                            size: displayWidth * .076,
+                            size: 30,
                             color: index == i
                                 ? Color.fromARGB(255, 85, 93, 109)
                                 : Color.fromARGB(255, 85, 93, 109),
@@ -147,7 +147,7 @@ class _NavigateBareState extends State<NavigateBareTECH> {
   ];
 
   List<String> listOfStrings = [
-    'Report Logs',
+    'Report',
     'Map',
     'Profile',
   ];

@@ -3,6 +3,7 @@ import 'package:project_mini/map/core/models/models2.dart';
 import 'package:project_mini/map/core/viewmodels/floorplan_model.dart';
 import 'package:project_mini/map/view/shared/global%20copy.dart';
 import 'package:flutter/material.dart';
+import 'package:project_mini/map/view/widgets/reportForm.dart';
 import 'package:provider/provider.dart';
 
 class GridViewWidget extends StatelessWidget {
@@ -124,8 +125,20 @@ class GridViewWidget extends StatelessWidget {
                                       icon:
                                           const Icon(Icons.recycling_outlined),
                                       onPressed: () {
-                                        print(
-                                            "lulw ${tileTrashbins[idx].name}");
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              insetPadding: EdgeInsets.zero,
+                                              child: SizedBox(
+                                                height: MediaQuery.of(context).size.height * 0.57,
+                                                width: MediaQuery.of(context).size.width * 0.9,
+                                                child: const ReportForm(),
+                                              ),
+                                            );
+                                          },
+                                        );
+
                                       }),
                                 ),
                               ),

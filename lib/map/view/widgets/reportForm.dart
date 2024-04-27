@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project_mini/comp/my_textfield.dart';
 import 'package:multi_dropdown/enum/app_enums.dart';
 import 'package:multi_dropdown/models/chip_config.dart';
@@ -49,32 +51,35 @@ class ReportForm extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            Container(
+              height: 45,
+              width: MediaQuery.of(context).size.width * 0.75,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color.fromRGBO(0, 0, 0, 0.07),
+                ),       
+                //color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: const EdgeInsets.only(left: 0.0, right: 0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  /*Text(
-                    '04/04/2024',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),*/
-                  Text(
-                    'Amphitheatre 2',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    //color: Colors.red,
+                    children: [
+                      Image.asset('images/door2.png', height: 30,),
+                      SizedBox(width: 10,),
+                      Text(
+                        'Amphitheatre 2',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins'
+                        ),
+                      ),
+                    ],
                   ),
-                  /*Text(
-                    '13:05',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),*/
                 ],
               ),
             ),
@@ -99,20 +104,31 @@ class ReportForm extends StatelessWidget {
               optionTextStyle: const TextStyle(fontSize: 16),
               selectedOptionIcon: const Icon(Icons.check_circle),
             ),*/
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: MultiSelectDropDown<dynamic>(
+            Container(
+              height: 45,
+              width: MediaQuery.of(context).size.width * 0.75,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color.fromRGBO(0, 0, 0, 0.07),
+                ),       
+                //color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: 
+              MultiSelectDropDown<dynamic>(
                 controller: reportType,
                 hint: "Select report type",
                 onOptionSelected: (List<ValueItem> selectedOptions) {},
                 options: const <ValueItem>[
-                  ValueItem(label: 'Hardware related issue', value: 1),
-                  ValueItem(label: 'Software related issue', value: 2),
+                  ValueItem(label: 'Hardware related issue', value: 'Hardware'),
+                  ValueItem(label: 'Software related issue', value: 'Software'),
                 ],
                 selectionType: SelectionType.single,
                 chipConfig: const ChipConfig(wrapType: WrapType.wrap),
                 dropdownHeight: 100,
-                optionTextStyle: const TextStyle(fontSize: 16),
+                optionTextStyle: const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
+                dropdownBorderRadius: 20,
+                
                 selectedOptionIcon: const Icon(Icons.check_circle),
               ),
             ),
@@ -138,7 +154,7 @@ class ReportForm extends StatelessWidget {
             // Use ElevatedButton for a raised button
             //print("${reportType.selectedOptions[0].label} ${reportDescription.text}");
             onPressed: () {
-                addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].label, reportDescription: reportDescription.text);
+                addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
                 Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
@@ -184,20 +200,27 @@ Future<void> addNewReport({
   final db = FirebaseFirestore.instance;
 
   // Create a reference to the new document with auto-generated ID
-  final newReservationRef = await db.collection("report").add({});
+  final newReportRef = await db.collection("report").add({});
 
   // Get the auto-generated ID from the reference
-  //final String reportId = newReservationRef.id;
+  final String reportId = newReportRef.id;
+
+  // Get the current timestamp
+  final Timestamp reportDate = Timestamp.now();
 
   // Prepare reservation data with reportId
   final reportData = {
+    "reportId": reportId,
     "reportLocation": reportLocation,
+    "reportDate": reportDate,
     "reportIssueType": reportIssueType,
     "reportDescription": reportDescription,
+    "reportIsSolved": false,
+    "reportIsInProgress": false,
   };
 
   // Set the data on the document
-  await newReservationRef.set(reportData);
+  await newReportRef.set(reportData);
   print("DONE");
 
   //print("New report added with ID: $reportId");
