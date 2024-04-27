@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mini/comp/attendance_history_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 List <Map<String, String>> data = [];
 
@@ -78,10 +79,12 @@ String formatAttendaceDate(Timestamp attendaceDate) {
 }
 
 Future<void> fetchAttendaceData() async {
-
+  User? currentLoggedInStudent = FirebaseAuth.instance.currentUser;
+  String? currentLoggedInStudentId = currentLoggedInStudent!.uid;
   try {
     QuerySnapshot attendaceSnapshot = await FirebaseFirestore.instance
         .collection('attendance')
+        .where("studentId", isEqualTo: currentLoggedInStudentId)
         .get();
 
     // An empty List to store the processed data
@@ -92,6 +95,7 @@ Future<void> fetchAttendaceData() async {
       Map<String, dynamic> rawAttendaceData = attendace.data() as Map<String, dynamic>;
       // Process the raw data
       final processedAttendaceDataEntry = {
+        'studentId': rawAttendaceData['studentId'] as String,
         'attendaceDate': formatAttendaceDate(rawAttendaceData['attendaceDate']),
         'attendaceStatus': rawAttendaceData['attendaceStatus'] as String,
         'attendaceSubject': rawAttendaceData['attendaceSubject'] as String,
