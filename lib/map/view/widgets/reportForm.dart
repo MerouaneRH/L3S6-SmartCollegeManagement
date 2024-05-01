@@ -21,13 +21,15 @@ class ReportForm extends StatelessWidget {
     MultiSelectController<dynamic> reportType = MultiSelectController<dynamic>();
     TextEditingController reportDescription = TextEditingController();
 
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        borderRadius:  BorderRadius.circular(30),
-        color: Colors.white,
-      ),
+    return SingleChildScrollView(
+      child: Container(
+        //width: 200,
+        //height: 200,
+        height: MediaQuery.of(context).size.height * 0.57,
+        decoration: BoxDecoration(
+          borderRadius:  BorderRadius.circular(30),
+          color: Colors.white,
+        ),
       child: Column(
           children: [
             Row(
@@ -50,6 +52,7 @@ class ReportForm extends StatelessWidget {
                 ),
               ],
             ),
+            
             SizedBox(height: 20,),
             Container(
               height: 45,
@@ -189,8 +192,8 @@ class ReportForm extends StatelessWidget {
           Navigator.of(context).pop();
         },
       )*/
-    );
-  }
+    )
+  );}
 }
 Future<void> addNewReport({
   required String reportLocation,

@@ -15,6 +15,8 @@ class History_Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color cardColor = attendaceStatus == "Present" ? const Color.fromARGB(255, 209, 229, 232) : const Color.fromRGBO(231, 231, 230, 1);
+    Color backgroundStatusColor = attendaceStatus == "Present" ? const Color.fromRGBO(0, 255, 8, 0.08) : const Color.fromRGBO(255, 0, 0, 0.06);
     return Center(
       child: SizedBox(
         //width: MediaQuery.of(context).size.width - 20,
@@ -29,7 +31,7 @@ class History_Card extends StatelessWidget {
                 bottomRight: Radius.circular(30),),
           ),
           //color: const Color(0xFF568C93),
-          color: const Color.fromARGB(255, 209, 229, 232),
+          color: cardColor,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -56,7 +58,7 @@ class History_Card extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                       decoration: BoxDecoration(
-                        color: Colors.green.shade200,
+                        color: backgroundStatusColor,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(

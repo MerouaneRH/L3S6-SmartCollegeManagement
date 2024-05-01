@@ -73,7 +73,6 @@ class Profile extends StatelessWidget {
     );
   }
 }
-
 ///////////////////////////////////////////////////////////////////////
 Future<void> fetchUserData() async {
   User? user = FirebaseAuth.instance.currentUser;
@@ -82,7 +81,6 @@ Future<void> fetchUserData() async {
         .collection('student')
         .doc(user?.uid)
         .get();
-
     if (studentSnapshot.exists) {
       Map<String, dynamic> userData =
           studentSnapshot.data() as Map<String, dynamic>;

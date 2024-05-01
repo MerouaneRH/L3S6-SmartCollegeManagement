@@ -9,7 +9,7 @@ import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
 import 'package:project_mini/comp/navigationBar.dart';
 import 'package:project_mini/map/map.dart';
 import 'package:project_mini/profile/profile.dart';
-//TEST
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
