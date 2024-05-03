@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_mini/map/map.dart';
+import 'package:project_mini/map/displayMap.dart';
+//import 'package:project_mini/map/map.dart';
 import 'package:project_mini/profile/profile.dart';
 import 'package:project_mini/report/report.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -15,7 +16,8 @@ class _NavigateBareState extends State<NavigateBareTECH> {
   int i = 0;
   List pages = [
     const Report(),
-    const Map_page(),
+    //const Map_page(),
+    DisplayMap(),
     const Profile(),
   ];
 

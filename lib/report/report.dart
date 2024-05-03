@@ -19,43 +19,26 @@ class _ReportState extends State<Report> {
       appBar: AppBar(
         title: const Text(
           "REPORT HISTORY",
-          style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(38, 52, 77, 1)),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Solved button pressed');
-            },
-            icon: const Icon(Icons.check),
-            tooltip: 'Mark as Solved',
-          ),
-          IconButton(
-            onPressed: () {
-              print('Unsolved button pressed');
-            },
-            icon: const Icon(Icons.close),
-            tooltip: 'Mark as Unsolved',
-          ),
-          IconButton(
-            onPressed: () {
-              print('Ongoing button pressed');
-            },
-            icon: const Icon(Icons.hourglass_bottom),
-            tooltip: 'Mark as Ongoing',
-          ),
-        ],
+        titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 19),
         titleSpacing: 00.0,
         centerTitle: true,
-        toolbarHeight: 60.2,
+        //toolbarHeight: 50.0,
         toolbarOpacity: 0.8,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(50),
-              bottomLeft: Radius.circular(50)),
+              bottomRight: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              //topLeft: Radius.circular(30),
+              //topRight: Radius.circular(30),
+          ),
         ),
         elevation: 0.00,
-        backgroundColor: const Color(0xFF568C93),
-      ),
+        //backgroundColor: const Color(0xFF568C93),
+        backgroundColor: Color.fromRGBO(206, 228, 227, 1), 
+
+      ), //AppBar
 
       body: StreamBuilder<List<Map<String, dynamic>>>(
           stream: getReportDataStream(),

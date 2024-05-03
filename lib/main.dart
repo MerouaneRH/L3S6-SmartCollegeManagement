@@ -7,7 +7,8 @@ import 'package:project_mini/comp/navigation_prof.dart';
 import 'package:project_mini/comp/navigationbarTECH.dart';
 import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
 import 'package:project_mini/comp/navigationBar.dart';
-import 'package:project_mini/map/map.dart';
+import 'package:project_mini/map/displayMap.dart';
+//import 'package:project_mini/map/map.dart';
 import 'package:project_mini/profile/profile.dart';
 
 void main() async {
@@ -23,7 +24,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
         "navigate": (context) => const NavigateBare(),
         "navigateProf": (context) => const NavigateBare_prof(),
         "navigateTech": (context) => const NavigateBareTECH(),
-        "map": (context) => const Map_page(),
+        //"map": (context) => const Map_page(),
+        "map": (context) => DisplayMap(),
       },
       debugShowCheckedModeBanner: false,
     ); 
