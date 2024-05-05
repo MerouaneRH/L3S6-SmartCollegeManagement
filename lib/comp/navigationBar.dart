@@ -36,7 +36,7 @@ class _NavigateBareState extends State<NavigateBare> {
               selectedIndex: i,
               activeColor: const Color.fromRGBO(38, 52, 77, 1),
               color: const Color.fromRGBO(68, 77, 94, 1),
-              textStyle: const TextStyle(color: Color.fromRGBO(68, 77, 94, 1), fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.bold),
+              textStyle: const TextStyle(color: Color.fromRGBO(68, 77, 94, 1), fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.bold),
               mainAxisAlignment:MainAxisAlignment.spaceEvenly,
               iconSize: 40,
               gap: 5,
