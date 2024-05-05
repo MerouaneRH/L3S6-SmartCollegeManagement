@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -221,29 +222,46 @@ class _ReservationFormState extends State<ReservationForm> {
               padding: const EdgeInsets.only(left: 40, right: 40),
               child: ElevatedButton(
               onPressed: () async {
-                  //print("${_reservationStartTime.text}, ${_reservationEndTime.text}");
-                  bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:26", "01:31");
+                  bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),_reservationStartTime.text, _reservationEndTime.text);
                   print(hasCollision);
                   //print("HHHHH");
                   // bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:40", "01:45");
                   // print(hasCollision); // This will print either true or false
                   //addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
-                /*  currentLoggedInTeacher != null // TODO: CHECK WHETHER IT'S A TEACHER OR NOT
-                  ?
-                    hasCollision
-                    ?
+                  if(currentLoggedInTeacher != null) { // TODO: CHECK WHETHER IT'S A TEACHER OR NOT
+                    if(hasCollision == false){
                       addNewReservation(
                         reservationLocation: "Amphitheatre 2", 
                         reservationDate: _reservationDate.text, 
                         reservationStartTime: _reservationStartTime.text, 
                         reservationEndTime: _reservationEndTime.text, 
                         teacherId: currentLoggedInTeacher.uid
-                      )
-                    :
-                    print("Room is currently occupied at that time")
-                  :
+                      );
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.success,
+                        animType: AnimType.rightSlide,
+                        title: 'Success',
+                        desc: 'Room has been successfully reserved!',
+                        //btnCancelOnPress: () {},
+                        btnOkOnPress: () {Navigator.pop(context);},
+                      ).show();
+                    } else {
+                      print("Room is currently occupied at that time");
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.error,
+                        animType: AnimType.rightSlide,
+                        title: 'ERROR',
+                        desc: 'Error in Email or Password',
+                        btnCancelOnPress: () {Navigator.pop(context);},
+                        btnOkOnPress: () {Navigator.pop(context);},
+                      ).show();
+                    }
+                  } else{
                     print("Error");
-                  Navigator.pop(context);*/
+                    Navigator.pop(context);
+                  }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 23, 31, 119),
@@ -392,145 +410,4 @@ class _ReservationFormState extends State<ReservationForm> {
       return false;
     }
   }
-/* WORKS I THINK ??
-  Future<bool> isBookingCollision(DateTime date, String startTime, String endTime) async {
-    try {
-      // Query Firestore to check for bookings on the given date
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('reservation')
-          .where('date', isEqualTo: date)
-          .get();
-
-      // Check for collision with each booking
-      for (DocumentSnapshot bookingSnapshot in querySnapshot.docs) {
-        // Extract booking details
-        Map<String, dynamic>? bookingData = bookingSnapshot.data() as Map<String, dynamic>?;
-
-        if (bookingData == null) {
-          // Skip this booking if data is null
-          continue;
-        }
-
-        String? bookingStartTime = bookingData['startTime'] as String?;
-        String? bookingEndTime = bookingData['endTime'] as String?;
-
-        // Check if the booking is within the same date and start/end times are not null
-        if (bookingStartTime == null || bookingEndTime == null || bookingStartTime.split(' ')[0] != bookingEndTime.split(' ')[0]) {
-          // Skip this booking as it's not on the same date or start/end times are null
-          continue;
-        }
-
-        // Convert booking start and end times to DateTime objects
-        DateTime bookingStart = DateTime.parse(bookingStartTime);
-        DateTime bookingEnd = DateTime.parse(bookingEndTime);
-
-        // Convert startTime and endTime strings to DateTime objects
-        DateTime inputStart = DateTime(date.year, date.month, date.day, int.parse(startTime.split(':')[0]), int.parse(startTime.split(':')[1]));
-        DateTime inputEnd = DateTime(date.year, date.month, date.day, int.parse(endTime.split(':')[0]), int.parse(endTime.split(':')[1]));
-
-        // Check for collision
-        if ((inputStart.isAfter(bookingStart) && inputStart.isBefore(bookingEnd)) ||
-            (inputEnd.isAfter(bookingStart) && inputEnd.isBefore(bookingEnd)) ||
-            (inputStart.isBefore(bookingStart) && inputEnd.isAfter(bookingEnd))) {
-          // Collision detected
-          return true;
-        }
-      }
-      // No collision found
-      return false;
-    } catch (e) {
-      // Error occurred during Firestore query
-      print('Error checking booking collision: $e');
-      return false;
-    }
-  }*/
-  /*Future<bool> isBookingCollision(DateTime date, String startTime, String endTime) async {
-    try {
-      // Query Firestore to check for bookings on the given date
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('bookings')
-          .where('date', isEqualTo: date)
-          .get();
-
-      // Check for collision with each booking
-      for (DocumentSnapshot bookingSnapshot in querySnapshot.docs) {
-        // Extract booking details
-        String bookingStartTime = bookingSnapshot.data()['startTime'];
-        String bookingEndTime = bookingSnapshot.data()['endTime'];
-
-        // Check if the booking is within the same date
-        if (bookingStartTime.split(' ')[0] != bookingEndTime.split(' ')[0]) {
-          // Skip this booking as it's not on the same date
-          continue;
-        }
-
-        // Convert booking start and end times to DateTime objects
-        DateTime bookingStart = DateTime.parse(bookingStartTime);
-        DateTime bookingEnd = DateTime.parse(bookingEndTime);
-
-        // Convert startTime and endTime strings to DateTime objects
-        DateTime inputStart = DateTime(date.year, date.month, date.day, int.parse(startTime.split(':')[0]), int.parse(startTime.split(':')[1]));
-        DateTime inputEnd = DateTime(date.year, date.month, date.day, int.parse(endTime.split(':')[0]), int.parse(endTime.split(':')[1]));
-
-        // Check for collision
-        if ((inputStart.isAfter(bookingStart) && inputStart.isBefore(bookingEnd)) ||
-            (inputEnd.isAfter(bookingStart) && inputEnd.isBefore(bookingEnd)) ||
-            (inputStart.isBefore(bookingStart) && inputEnd.isAfter(bookingEnd))) {
-          // Collision detected
-          return true;
-        }
-      }
-      // No collision found
-      return false;
-    } catch (e) {
-      // Error occurred during Firestore query
-      print('Error checking booking collision: $e');
-      return false;
-    }
-  }*/
-
-  /*Future<bool> isBookingCollision(DateTime date, String startTime, String endTime) async {
-    try {
-      // Query Firestore to check for bookings on the given date
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('bookings')
-          .where('date', isEqualTo: date)
-          .get();
-
-      // Check for collision with each booking
-      for (DocumentSnapshot bookingSnapshot in querySnapshot.docs) {
-        // Extract booking details
-        String? bookingStartTime = bookingSnapshot.data()['startTime'] as String?;
-        String? bookingEndTime = bookingSnapshot.data()['endTime'] as String?;
-
-        // Check if the booking is within the same date and start/end times are not null
-        if (bookingStartTime == null || bookingEndTime == null || bookingStartTime.split(' ')[0] != bookingEndTime.split(' ')[0]) {
-          // Skip this booking as it's not on the same date or start/end times are null
-          continue;
-        }
-
-        // Convert booking start and end times to DateTime objects
-        DateTime bookingStart = DateTime.parse(bookingStartTime);
-        DateTime bookingEnd = DateTime.parse(bookingEndTime);
-
-        // Convert startTime and endTime strings to DateTime objects
-        DateTime inputStart = DateTime(date.year, date.month, date.day, int.parse(startTime.split(':')[0]), int.parse(startTime.split(':')[1]));
-        DateTime inputEnd = DateTime(date.year, date.month, date.day, int.parse(endTime.split(':')[0]), int.parse(endTime.split(':')[1]));
-
-        // Check for collision
-        if ((inputStart.isAfter(bookingStart) && inputStart.isBefore(bookingEnd)) ||
-            (inputEnd.isAfter(bookingStart) && inputEnd.isBefore(bookingEnd)) ||
-            (inputStart.isBefore(bookingStart) && inputEnd.isAfter(bookingEnd))) {
-          // Collision detected
-          return true;
-        }
-      }
-      // No collision found
-      return false;
-    } catch (e) {
-      // Error occurred during Firestore query
-      print('Error checking booking collision: $e');
-      return false;
-    }
-  }*/
 }
