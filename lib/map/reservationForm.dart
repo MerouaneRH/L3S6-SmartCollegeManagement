@@ -22,7 +22,7 @@ class _ReservationFormState extends State<ReservationForm> {
     User? currentLoggedInTeacher = FirebaseAuth.instance.currentUser;
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
+        height: 400,
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
           borderRadius:  BorderRadius.circular(30),
@@ -252,8 +252,8 @@ class _ReservationFormState extends State<ReservationForm> {
                         context: context,
                         dialogType: DialogType.error,
                         animType: AnimType.rightSlide,
-                        title: 'ERROR',
-                        desc: 'Error in Email or Password',
+                        title: 'Failed',
+                        desc: 'Room is currently occupied at that time',
                         btnCancelOnPress: () {Navigator.pop(context);},
                         btnOkOnPress: () {Navigator.pop(context);},
                       ).show();

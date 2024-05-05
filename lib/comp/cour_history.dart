@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyCard extends StatelessWidget {
@@ -22,8 +23,8 @@ class MyCard extends StatelessWidget {
     return Center(
       child: SizedBox(
         //width: MediaQuery.of(context).size.width -20,
-        //width:350.w,
-        width: MediaQuery.of(context).size.width * 0.9,
+        //width: 300.w,
+        width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
           children: [
             Card(
