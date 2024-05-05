@@ -9,6 +9,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:project_mini/map/reservationForm.dart';
 
 //import '../firestore_service.dart';
 
@@ -154,6 +155,15 @@ class DisplayMapState extends State<DisplayMap> {
           color: Color(0x32323232),
           onPressed: () {
             print("Clicked INFO#1");
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.zero,
+                  child: const ReservationForm(),
+                );
+              },
+            );
           },
         ),
       ),

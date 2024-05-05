@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,6 @@ import 'package:project_mini/comp/navigationbarTECH.dart';
 import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
 import 'package:project_mini/comp/navigationBar.dart';
 import 'package:project_mini/map/displayMap.dart';
-//import 'package:project_mini/map/map.dart';
 import 'package:project_mini/profile/profile.dart';
 
 void main() async {
@@ -17,6 +17,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if(user == null) {
+      print("User is currently Signed Out!");
+    } else {
+      print("${user.email} is Signed In!");
+    }
+  });
 
   runApp(const MyApp());
 }
@@ -35,13 +43,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
       home: const Login_page(),
       routes: {
-        "Attendance": (context) => const Attendance(),
         "login": (context) => const Login_page(),
         "profile": (context) => const Profile(),
         "navigate": (context) => const NavigateBare(),
         "navigateProf": (context) => const NavigateBare_prof(),
         "navigateTech": (context) => const NavigateBareTECH(),
-        //"map": (context) => const Map_page(),
         "map": (context) => DisplayMap(),
       },
       debugShowCheckedModeBanner: false,

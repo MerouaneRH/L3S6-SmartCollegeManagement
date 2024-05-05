@@ -86,7 +86,7 @@ class History_Card extends StatelessWidget {
                       ),
                       child: Text(
                         "$attendaceStatus",
-                        style: const TextStyle( fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)
+                        style: const TextStyle( fontSize: 13, color: Color.fromRGBO(19, 17, 17, 0.70), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                       ),
                     ),
                   ],

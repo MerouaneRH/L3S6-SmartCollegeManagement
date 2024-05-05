@@ -38,6 +38,8 @@ dependencies:
   firebase_database: ^10.5.4
   multi_dropdown: ^2.1.4
   google_nav_bar: ^5.0.6
+  flutter_map: ^6.1.0
+  flutter_map_cancellable_tile_provider: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,3 +53,4 @@ flutter:
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Regular.ttf
+        #- asset: fonts/futura-no2-d-ot-medium.otf
