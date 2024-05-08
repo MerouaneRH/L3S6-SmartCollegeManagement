@@ -12,129 +12,115 @@ class ReservationForm extends StatefulWidget {
 }
 
 class _ReservationFormState extends State<ReservationForm> {
+  final _formKey = GlobalKey<FormState>(); // Add form key
 
   final TextEditingController _reservationDate = TextEditingController();
   final TextEditingController _reservationStartTime = TextEditingController();
   final TextEditingController _reservationEndTime = TextEditingController();
 
+  String? validateReservationDate(String? value) {
+    if(value!.isEmpty) {
+      return "Date can't be empty";
+    }
+    return null;
+  }
+
+  String? validateReservationStartTime(String? value) {
+    if(value!.isEmpty) {
+      return "Start time can't be empty";
+    }
+    return null;
+  }
+
+  String? validateReservationEndTime(String? value) {
+    if(value!.isEmpty) {
+      return "End time can't be empty";
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     User? currentLoggedInTeacher = FirebaseAuth.instance.currentUser;
     return SingleChildScrollView(
-      child: Container(
-        height: 400,
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: BoxDecoration(
-          borderRadius:  BorderRadius.circular(30),
-          color: Color.fromRGBO(232, 244, 242, 1),
-        ),
-      child: Column(
-          children: [
-            Row(
-              children: [
-                Spacer(),
-                IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-            
-            //SizedBox(height: 20,),
-            Container(
-              height: 45,
-              width: MediaQuery.of(context).size.width * 0.75,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
-                //color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      child: Form(
+        key: _formKey,
+        child: Container(
+          height: 400,
+          width: MediaQuery.of(context).size.width * 0.9,
+          decoration: BoxDecoration(
+            borderRadius:  BorderRadius.circular(30),
+            color: Color.fromRGBO(232, 244, 242, 1),
+          ),
+        child: Column(
+            children: [
+              Row(
                 children: [
-                  Row(
-                    //color: Colors.red,
-                    children: [
-                      Image.asset('images/door2.png', height: 30,),
-                      SizedBox(width: 10,),
-                      Text(
-                        'Amphitheatre 2',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins'
-                        ),
-                      ),
-                    ],
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 25,),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.75,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 40,right: 40),
-                    child: TextFormField(
-                      style: TextStyle(fontFamily: 'Poppins',),
-                      textAlign: TextAlign.center,
-                      readOnly: true,
-                      controller: _reservationDate,
-                      decoration: const InputDecoration(
-                        hintText: '-- / -- / ----',
-                        hintStyle: TextStyle(fontFamily: 'Poppins',),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
+              
+              //SizedBox(height: 20,),
+              Container(
+                height: 45,
+                width: MediaQuery.of(context).size.width * 0.75,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 0, 0, 0.07),
+                  ),       
+                  //color: Colors.red,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      //color: Colors.red,
+                      children: [
+                        Image.asset('images/door2.png', height: 30,),
+                        SizedBox(width: 10,),
+                        Text(
+                          'Amphitheatre 2',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins'
+                          ),
                         ),
-                        filled: true,
-                        fillColor: Color.fromRGBO(211, 229, 233, 1),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Icon(Icons.calendar_month_outlined, size: 30,),
-                        ),
-                      ),
-                      onTap: () async {
-                        DateTime? pickDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(), 
-                          firstDate: DateTime(2024), 
-                          lastDate: DateTime(2025),
-                        );
-                        if(pickDate != null) {
-                          setState(() {
-                            _reservationDate.text = DateFormat('dd-MM-yyyy').format(pickDate);
-                          });
-                        }
-                      },
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 20,),
-                  Row(children: [
-                    //Text("From : "),
-                    Flexible(
-                      flex: 1,
-                      child: TextField(
+                  ],
+                ),
+              ),
+              SizedBox(height: 25,),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 0, 0, 0.07),
+                  ),       
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40,right: 40),
+                      child: TextFormField(
                         style: TextStyle(fontFamily: 'Poppins',),
                         textAlign: TextAlign.center,
                         readOnly: true,
-                        controller: _reservationStartTime,
+                        validator: validateReservationDate,
+                        controller: _reservationDate,
                         decoration: const InputDecoration(
-                          hintText: '-- : --',
+                          hintText: '-- / -- / ----',
                           hintStyle: TextStyle(fontFamily: 'Poppins',),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -144,152 +130,200 @@ class _ReservationFormState extends State<ReservationForm> {
                           fillColor: Color.fromRGBO(211, 229, 233, 1),
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 10),
-                            child: Icon(Icons.access_time, size: 30,),
+                            child: Icon(Icons.calendar_month_outlined, size: 30,),
                           ),
                         ),
                         onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context, 
-                            initialTime: TimeOfDay.now(),
-                            /*initialTime: TimeOfDay.now().hour >= 8 && TimeOfDay.now().hour < 18
-                              ? TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute)
-                              : const TimeOfDay(hour: 8, minute: 0),*/
+                          DateTime? pickDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(), 
+                            firstDate: DateTime(2024), 
+                            lastDate: DateTime(2025),
                           );
-                          if(pickedTime != null) {
-                            // Format the time without AM/PM indicator
-                            String formattedHour = pickedTime.hour.toString().padLeft(2, '0');
-                            String formattedMinute = pickedTime.minute.toString().padLeft(2, '0');
-                            String formattedTime = '$formattedHour:$formattedMinute';
+                          if(pickDate != null) {
                             setState(() {
-                              //_reservationStartTime.text = pickedTime.format(context);
-                              _reservationStartTime.text = formattedTime;
+                              _reservationDate.text = DateFormat('dd-MM-yyyy').format(pickDate);
                             });
                           }
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
-                    //Text("To : "),
-                    Flexible(
-                      flex: 1,
-                      child: TextField(
-                         style: TextStyle(fontFamily: 'Poppins',),
-                        textAlign: TextAlign.center,
-                        readOnly: true,
-                        controller: _reservationEndTime,
-                        decoration: const InputDecoration(
-                          hintText: '-- : --',
-                          hintStyle: TextStyle(fontFamily: 'Poppins',),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                    SizedBox(height: 20,),
+                    Row(children: [
+                      //Text("From : "),
+                      Flexible(
+                        flex: 1,
+                        child: TextFormField(
+                          style: TextStyle(fontFamily: 'Poppins',),
+                          textAlign: TextAlign.center,
+                          readOnly: true,
+                          controller: _reservationStartTime,
+                          validator: validateReservationStartTime,
+                          decoration: const InputDecoration(
+                            hintText: '-- : --',
+                            hintStyle: TextStyle(fontFamily: 'Poppins',),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(Radius.circular(40)),
+                            ),
+                            filled: true,
+                            fillColor: Color.fromRGBO(211, 229, 233, 1),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Icon(Icons.access_time, size: 30,),
+                            ),
                           ),
-                          filled: true,
-                          fillColor: Color.fromRGBO(211, 229, 233, 1),
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Icon(Icons.access_time, size: 30,),
-                          ),
+                          onTap: () async {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              context: context, 
+                              initialTime: TimeOfDay.now(),
+                              /*initialTime: TimeOfDay.now().hour >= 8 && TimeOfDay.now().hour < 18
+                                ? TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute)
+                                : const TimeOfDay(hour: 8, minute: 0),*/
+                            );
+                            if(pickedTime != null) {
+                              // Format the time without AM/PM indicator
+                              String formattedHour = pickedTime.hour.toString().padLeft(2, '0');
+                              String formattedMinute = pickedTime.minute.toString().padLeft(2, '0');
+                              String formattedTime = '$formattedHour:$formattedMinute';
+                              setState(() {
+                                //_reservationStartTime.text = pickedTime.format(context);
+                                _reservationStartTime.text = formattedTime;
+                              });
+                            }
+                          },
                         ),
-                        onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context, 
-                            initialTime: TimeOfDay.now(),
-                            /*initialTime: TimeOfDay.now().hour >= 8 && TimeOfDay.now().hour < 18
-                              ? TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute)
-                              : const TimeOfDay(hour: 8, minute: 0),*/
-                          );
-                          if(pickedTime != null) {
-                            // Format the time without AM/PM indicator
-                            String formattedHour = pickedTime.hour.toString().padLeft(2, '0');
-                            String formattedMinute = pickedTime.minute.toString().padLeft(2, '0');
-                            String formattedTime = '$formattedHour:$formattedMinute';
-                            setState(() {
-                              //_reservationEndTime.text = pickedTime.format(context);
-                              _reservationEndTime.text = formattedTime;
-                            });
-                          }
-                        },
                       ),
+                      SizedBox(width: 10),
+                      //Text("To : "),
+                      Flexible(
+                        flex: 1,
+                        child: TextFormField(
+                           style: TextStyle(fontFamily: 'Poppins',),
+                          textAlign: TextAlign.center,
+                          readOnly: true,
+                          controller: _reservationEndTime,
+                          validator: validateReservationEndTime,
+                          decoration: const InputDecoration(
+                            hintText: '-- : --',
+                            hintStyle: TextStyle(fontFamily: 'Poppins',),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(Radius.circular(40)),
+                            ),
+                            filled: true,
+                            fillColor: Color.fromRGBO(211, 229, 233, 1),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Icon(Icons.access_time, size: 30,),
+                            ),
+                          ),
+                          onTap: () async {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              context: context, 
+                              initialTime: TimeOfDay.now(),
+                              /*initialTime: TimeOfDay.now().hour >= 8 && TimeOfDay.now().hour < 18
+                                ? TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute)
+                                : const TimeOfDay(hour: 8, minute: 0),*/
+                            );
+                            if(pickedTime != null) {
+                              // Format the time without AM/PM indicator
+                              String formattedHour = pickedTime.hour.toString().padLeft(2, '0');
+                              String formattedMinute = pickedTime.minute.toString().padLeft(2, '0');
+                              String formattedTime = '$formattedHour:$formattedMinute';
+                              setState(() {
+                                //_reservationEndTime.text = pickedTime.format(context);
+                                _reservationEndTime.text = formattedTime;
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                     ),
                   ],
-                  ),
-                ],
-              ),      
-            ),
-            SizedBox(height: 15,),
-            Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40),
-              child: ElevatedButton(
-              onPressed: () async {
-                  bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),_reservationStartTime.text, _reservationEndTime.text);
-                  print(hasCollision);
-                  //print("HHHHH");
-                  // bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:40", "01:45");
-                  // print(hasCollision); // This will print either true or false
-                  //addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
-                  if(currentLoggedInTeacher != null) { // TODO: CHECK WHETHER IT'S A TEACHER OR NOT
-                    if(hasCollision == false){
-                      addNewReservation(
-                        reservationLocation: "Amphitheatre 2", 
-                        reservationDate: _reservationDate.text, 
-                        reservationStartTime: _reservationStartTime.text, 
-                        reservationEndTime: _reservationEndTime.text, 
-                        teacherId: currentLoggedInTeacher.uid
-                      );
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.success,
-                        animType: AnimType.rightSlide,
-                        title: 'Success',
-                        desc: 'Room has been successfully reserved!',
-                        //btnCancelOnPress: () {},
-                        btnOkOnPress: () {Navigator.pop(context);},
-                      ).show();
-                    } else {
-                      print("Room is currently occupied at that time");
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.error,
-                        animType: AnimType.rightSlide,
-                        title: 'Failed',
-                        desc: 'Room is currently occupied at that time',
-                        btnCancelOnPress: () {Navigator.pop(context);},
-                        btnOkOnPress: () {Navigator.pop(context);},
-                      ).show();
+                ),      
+              ),
+              SizedBox(height: 15,),
+              Padding(
+                padding: const EdgeInsets.only(left: 40, right: 40),
+                child: ElevatedButton(
+                onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {  
+                      print("Not valid!");
+                      return;
+                    }   
+                    bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),_reservationStartTime.text, _reservationEndTime.text);
+                    print(hasCollision);
+                    //print("HHHHH");
+                    // bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:40", "01:45");
+                    // print(hasCollision); // This will print either true or false
+                    //addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
+                    if(currentLoggedInTeacher != null) { // TODO: CHECK WHETHER IT'S A TEACHER OR NOT
+                      if(hasCollision == false){
+                        addNewReservation(
+                          reservationLocation: "Amphitheatre 2", 
+                          reservationDate: _reservationDate.text, 
+                          reservationStartTime: _reservationStartTime.text, 
+                          reservationEndTime: _reservationEndTime.text, 
+                          teacherId: currentLoggedInTeacher.uid
+                        );
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          title: 'Success',
+                          desc: 'Room has been successfully reserved!',
+                          btnOkOnPress: () {},
+                        ).show();
+                      } else {
+                        print("Room is currently occupied at that time");
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          title: 'Failed',
+                          desc: 'Room is currently occupied at that time',
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                      }
+                    } else{
+                      print("Error");
+                      Navigator.pop(context);
                     }
-                  } else{
-                    print("Error");
-                    Navigator.pop(context);
-                  }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 23, 31, 119),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+                    _reservationDate.clear();
+                    _reservationStartTime.clear();
+                    _reservationEndTime.clear();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 23, 31, 119),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  //fixedSize: Size(MediaQuery.of(context).size.width - 280, 45.0), // Set desired height
                 ),
-                //fixedSize: Size(MediaQuery.of(context).size.width - 280, 45.0), // Set desired height
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.edit_calendar_outlined,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                    SizedBox(width: 10.0),
+                    Text(
+                      "Reserve",
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
+                    ),
+                  ],
+                ),
+                          ),
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.edit_calendar_outlined,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    "Reserve",
-                    style: TextStyle(fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
-                  ),
-                ],
-              ),
-                        ),
+            ],
+        ),
             ),
-          ],
-      ),
-    )
+      )
   );}
     Future<void> addNewReservation({
     required String reservationLocation,
@@ -394,6 +428,9 @@ class _ReservationFormState extends State<ReservationForm> {
         //if(inputStart.isAtSameMomentAs(bookingStart) && inputEnd.isAtSameMomentAs(bookingEnd))
         if(inputStart.isAtSameMomentAs(bookingStart) && ( inputEnd.isBefore(bookingEnd)  || inputEnd.isAfter(bookingEnd) || inputEnd.isAtSameMomentAs(bookingEnd) ) )
           return true;
+
+        if( ( inputStart.isBefore(bookingStart) || inputStart.isAfter(bookingStart) ) &&  inputEnd.isAtSameMomentAs(bookingEnd) )
+        return true;
         // Check for collision
         if ((inputStart.isAfter(bookingStart) && inputStart.isBefore(bookingEnd)) ||
             (inputEnd.isAfter(bookingStart) && inputEnd.isBefore(bookingEnd)) ||
