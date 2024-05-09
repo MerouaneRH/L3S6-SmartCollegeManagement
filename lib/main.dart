@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/auth/login_page.dart';
 import 'package:project_mini/comp/navigation_prof.dart';
+import 'package:project_mini/comp/navigationbarAgent.dart';
 import 'package:project_mini/comp/navigationbarTECH.dart';
 import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
 import 'package:project_mini/comp/navigationBar.dart';
@@ -40,19 +41,19 @@ class MyApp extends StatelessWidget {
 
       builder: (_, child) {
         return MaterialApp(
-      home: const Login_page(),
-      routes: {
-        "login": (context) => const Login_page(),
-        "profile": (context) => const Profile(),
-        "navigate": (context) => const NavigateBare(),
-        "navigateProf": (context) => const NavigateBare_prof(),
-        "navigateTech": (context) => const NavigateBareTECH(),
-        "map": (context) => DisplayMap(),
-      },
-      debugShowCheckedModeBanner: false,
-    ); 
+          home: const Login_page(),
+          routes: {
+            "login": (context) => const Login_page(),
+            "profile": (context) => const Profile(),
+            "navigate": (context) => const NavigateBare(),
+            "navigateProf": (context) => const NavigateBare_prof(),
+            "navigateTech": (context) => const NavigateBareTECH(),
+            "navigateAgent": (context) => const NavigateBareAgent(),
+            "map": (context) => DisplayMap(),
+          },
+          debugShowCheckedModeBanner: false,
+        ); 
       },
     );
-   
   }
 }

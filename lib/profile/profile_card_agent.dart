@@ -4,27 +4,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/profile/profile.dart';
 
 // ignore: must_be_immutable
-class PcardProf extends StatelessWidget {
+class PcardAgent extends StatelessWidget {
   final String? username;
   final String? nom;
   final String? prenom;
+  final String? dateOfBirth;
   final String? placeOfBirth;
-  final String? grade;
-  final String? modules;
   final String? role;
-  final String? dateNaissancee;
-  const PcardProf({
+
+  const PcardAgent({
     super.key,
     required this.username,
     required this.nom,
     required this.prenom,
-    this.role,
+    required this.dateOfBirth,
     required this.placeOfBirth,
-    this.grade,
-    this.modules,
-    required this.dateNaissancee,
+    required this.role,
   });
-
   @override
   Widget build(BuildContext context) {
     String fullName = "${nom!.toUpperCase()} ${prenom!.toUpperCase()}";
@@ -95,7 +91,7 @@ class PcardProf extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Container(
-          height: 290,
+          height: 230,
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
@@ -130,7 +126,7 @@ class PcardProf extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            'Email : ',
+                            'ID : ',
                             style:  TextStyle(
                               fontFamily: 'Poppins',
                               decoration: TextDecoration.underline,
@@ -139,7 +135,7 @@ class PcardProf extends StatelessWidget {
                           ),
                           Text(
                             '   $username',
-                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -177,7 +173,7 @@ class PcardProf extends StatelessWidget {
                           ),
                           Text(
                             '   $dateNaissance',
-                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -206,7 +202,7 @@ class PcardProf extends StatelessWidget {
                         children: [
                           const SizedBox(height: 5),
                           const Text(
-                            "Place of Birth : ",
+                            "Lieu de Naissance : ",
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               decoration: TextDecoration.underline,
@@ -215,7 +211,7 @@ class PcardProf extends StatelessWidget {
                           ),
                           Text(
                             '   $placeOfBirth',
-                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
+                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -224,47 +220,9 @@ class PcardProf extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 35,
-                    child: Image.asset(
-                      'images/grade1.png',
-                      height: 50.0,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      height: 50,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 5),
-                          const Text(
-                            "Grade : ",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          Text(
-                            '   $grade',
-                            style: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.fromLTRB(
               20, 10, 20, 10), // Adjust padding values as needed
@@ -273,6 +231,7 @@ class PcardProf extends StatelessWidget {
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, "login");
+              print('Logout button pressed!');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 214, 66, 66),
@@ -293,7 +252,7 @@ class PcardProf extends StatelessWidget {
                 SizedBox(width: 10.0),
                 Text(
                   "Logout",
-                  style: TextStyle(fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontFamily: 'Poppins',fontSize: 18, color: Colors.white),
                 ),
               ],
             ),

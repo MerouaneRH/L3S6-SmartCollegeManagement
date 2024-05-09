@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_mini/profile/profile_card_agent.dart';
 import 'package:project_mini/profile/profile_card_prof.dart';
 import 'package:project_mini/profile/profile_card_student.dart';
 import 'package:project_mini/profile/profile_card_tech.dart';
@@ -15,7 +16,6 @@ List<dynamic>? dateNaissanceList;
 String? dateNaissance;
 String? role;
 String? grade;
-String? modules;
 
 // ignore: must_be_immutable
 class Profile extends StatelessWidget {
@@ -78,7 +78,15 @@ class Profile extends StatelessWidget {
                   placeOfBirth: lieuNaissance,
                   dateNaissancee: dateNaissance,
                   grade: grade,
-                  //modules: modules,
+                  role: role,
+                );
+              } else if (role == "agent") {
+                return PcardAgent(
+                  username: username,
+                  nom: nom,
+                  prenom: prenom,
+                  placeOfBirth: lieuNaissance,
+                  dateOfBirth: dateNaissance,
                   role: role,
                 );
               } else {
@@ -120,13 +128,6 @@ Future<void> fetchUserData() async {
           "/" +
           dateNaissanceList?[2];
       role = userData['role'];
-      print('User nom: $nom');
-      print('User prenom: $prenom');
-      print('User lieuNaissance: $lieuNaissance');
-      print('User groupe: $groupe');
-      print('User formation: $formation');
-      print('User dateNaissance: $dateNaissance');
-      print('User role: $role');
       return; // Exit function after retrieving user data
     }
 
@@ -151,17 +152,32 @@ Future<void> fetchUserData() async {
           "/" +
           dateNaissanceList?[2];
       role = userData['role'];
-      print('User nom: $nom');
-      print('User prenom: $prenom');
-      print('User prenom: $lieuNaissance');
-      print('User grade: $grade');
-      //print('User modules: $modules');
-      print('User prenom: $dateNaissance');
-      print('User role: $role');
       return;
     }
 
-    // If user document not found in both 'student' and 'teacher' collections, check 'technician' collection
+    // If user document not found in both 'student' and 'teacher' collections, check 'agent' collection
+    DocumentSnapshot agentSnapshot = await FirebaseFirestore.instance
+        .collection('agent')
+        .doc(user?.uid)
+        .get();
+     if (agentSnapshot.exists) {
+      Map<String, dynamic> userData =
+          agentSnapshot.data() as Map<String, dynamic>;
+      username = user!.email;
+      nom = userData['nom'];
+      prenom = userData['prenom'];
+      dateNaissanceList = userData['dateNaissance'];
+      lieuNaissance = userData['lieuNaissance'];
+      dateNaissance = dateNaissanceList?[0] +
+          "/" +
+          dateNaissanceList?[1] +
+          "/" +
+          dateNaissanceList?[2];
+      role = userData['role'];
+      return;
+    }
+
+    // If user document not found in both 'student' and 'teacher'  and 'agent 'collections, check 'technician' collection
     DocumentSnapshot technicianSnapshot = await FirebaseFirestore.instance
         .collection('technician')
         .doc(user?.uid)
@@ -181,11 +197,6 @@ Future<void> fetchUserData() async {
           dateNaissanceList?[1] +
           "/" +
           dateNaissanceList?[2];
-      print('User nom: $nom');
-      print('User prenom: $prenom');
-      print('User role: $role');
-      print('User lieuNaissance: $lieuNaissance');
-      print('User dateNaissance: $dateNaissance');
       return;
     }
     print(

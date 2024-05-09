@@ -132,17 +132,17 @@ class _Login_pageState extends State<Login_page> {
                                 .signInWithEmailAndPassword(
                                     email: email.text, password: password.text);
                             await fetchUserData();
-                            print("nigha2 $role");
 
                             if (role == "student") {
-                              print("rayane1");
                               Navigator.popAndPushNamed(context, "navigate");
                               return;
                             } else if (role == "teacher") {
-                              print("rayane2 $role");
                               Navigator.popAndPushNamed(
                                   context, "navigateProf");
                               return;
+                            } else if (role == "agent") {
+                              Navigator.popAndPushNamed(
+                                  context, "navigateAgent");
                             } else {
                               Navigator.popAndPushNamed(
                                   context, "navigateTech");
@@ -201,6 +201,18 @@ class _Login_pageState extends State<Login_page> {
       if (teacherSnapshot.exists) {
         Map<String, dynamic> userData =
             teacherSnapshot.data() as Map<String, dynamic>;
+        role = userData['role'];
+        return;
+      }
+
+      DocumentSnapshot agentSnapshot = await FirebaseFirestore.instance
+          .collection('agent')
+          .doc(user.uid)
+          .get();
+
+      if (agentSnapshot.exists) {
+        Map<String, dynamic> userData =
+            agentSnapshot.data() as Map<String, dynamic>;
         role = userData['role'];
         return;
       }

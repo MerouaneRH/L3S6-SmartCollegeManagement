@@ -1,23 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:project_mini/map/displayMap.dart';
 import 'package:project_mini/profile/profile.dart';
-import 'package:project_mini/reservation/reserverooms.dart';
+import 'package:project_mini/report/report.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:latlong2/latlong.dart';
 
-class NavigateBare_prof extends StatefulWidget {
-  const NavigateBare_prof({super.key});
+import '../report/activetrash.dart';
+
+class NavigateBareAgent extends StatefulWidget {
+  const NavigateBareAgent({super.key});
 
   @override
-  State<NavigateBare_prof> createState() => _NavigateBareState();
+  State<NavigateBareAgent> createState() => _NavigateBareState();
 }
 
-class _NavigateBareState extends State<NavigateBare_prof> {
+class _NavigateBareState extends State<NavigateBareAgent> {
   int i = 0;
-  List pages = [
-    const ReserveRooms(),
+  //bool onPressedCallbackCalled = false; // Initialize as false
+  List pages = [];
+  void initState() {
+    super.initState();
+    // Initialize pages list here
+    pages = [
+      activeTrash(onPressedCallback: setCurrentPageMap),
+      DisplayMap(),
+      const Profile(),
+    ];
+  }
+  
+  void setCurrentPageMap(double zoom, LatLng center) {
+    setState(() {
+      i = 1;
+      //onPressedCallbackCalled = true;
+      // Retrieve the current state of the pages list
+      List<Widget> updatedPages = List.from(pages);
+      // Modify the second item of the list
+      updatedPages[1] = DisplayMap(mapZoom: zoom,mapIntitalCenter: center); // Replace NewWidget with the widget you want to replace DisplayMap with
+      // Set the state with the updated list
+      pages = updatedPages;
+    });
+  }
+  /*List pages = [
+    //const Report(),
+    //const 
+    //const Map_page(),
+    activeTrash(onPressedCallback: setCurrentPageMap),
     DisplayMap(),
     const Profile(),
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +74,8 @@ class _NavigateBareState extends State<NavigateBare_prof> {
               tabBackgroundColor: const Color.fromRGBO(3, 96, 116, 0.1),
                 tabs: [
                   GButton(
-                    icon:Icons.edit_calendar_outlined,
-                    text: 'Reservation',
+                    icon:Icons.info_outline_rounded,
+                    text: 'Pickups',
                     onPressed: () {
                       setState(() {
                         i = 0;
