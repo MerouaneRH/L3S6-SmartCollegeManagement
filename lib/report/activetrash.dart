@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mini/comp/active_trash_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 class activeTrash extends StatefulWidget {

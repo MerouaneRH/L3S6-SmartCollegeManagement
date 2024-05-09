@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/map/displayMap.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:project_mini/report/activetrash.dart' show markBinAsPicked;
 
