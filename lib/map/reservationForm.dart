@@ -46,7 +46,7 @@ class _ReservationFormState extends State<ReservationForm> {
       child: Form(
         key: _formKey,
         child: Container(
-          height: 400,
+          height: 450,
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             borderRadius:  BorderRadius.circular(30),
