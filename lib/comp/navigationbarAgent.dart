@@ -22,7 +22,7 @@ class _NavigateBareState extends State<NavigateBareAgent> {
     // Initialize pages list here
     pages = [
       activeTrash(onPressedCallback: setCurrentPageMap),
-      DisplayMap(),
+      DisplayMap(role: 'agent'),
       const Profile(),
     ];
   }
@@ -34,7 +34,7 @@ class _NavigateBareState extends State<NavigateBareAgent> {
       // Retrieve the current state of the pages list
       List<Widget> updatedPages = List.from(pages);
       // Modify the second item of the list
-      updatedPages[1] = DisplayMap(mapZoom: zoom,mapIntitalCenter: center); // Replace NewWidget with the widget you want to replace DisplayMap with
+      updatedPages[1] = DisplayMap(role: 'agent', mapZoom: zoom, mapIntitalCenter: center); // Replace NewWidget with the widget you want to replace DisplayMap with
       // Set the state with the updated list
       pages = updatedPages;
     });

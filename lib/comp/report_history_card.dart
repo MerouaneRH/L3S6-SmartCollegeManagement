@@ -225,6 +225,7 @@ class report_history extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                                 //minimumSize: const Size(4, 40.0), // Set desired height
+                                minimumSize:  Size(4.h, 40.0.w),
                               ),
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

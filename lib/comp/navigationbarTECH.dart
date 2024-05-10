@@ -17,7 +17,7 @@ class _NavigateBareState extends State<NavigateBareTECH> {
   List pages = [
     const Report(),
     //const Map_page(),
-    DisplayMap(),
+    DisplayMap(role: 'technician'),
     const Profile(),
   ];
 

@@ -15,7 +15,7 @@ class _NavigateBareState extends State<NavigateBare> {
   int i = 0;
   List pages = [
     const Attendance(),
-    DisplayMap(),
+    DisplayMap(role: 'student',),
     const Profile(),
   ];
 

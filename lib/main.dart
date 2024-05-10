@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             "navigateProf": (context) => const NavigateBare_prof(),
             "navigateTech": (context) => const NavigateBareTECH(),
             "navigateAgent": (context) => const NavigateBareAgent(),
-            "map": (context) => DisplayMap(),
+            //"map": (context) => DisplayMap(role:),
           },
           debugShowCheckedModeBanner: false,
         ); 

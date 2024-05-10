@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReservationForm extends StatefulWidget {
-  const ReservationForm({super.key});
+  String? roomId;
+  String roomName;
+  ReservationForm({super.key, this.roomId, required this.roomName});
 
   @override
   State<ReservationForm> createState() => _ReservationFormState();
@@ -87,7 +89,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         Image.asset('images/door2.png', height: 30,),
                         SizedBox(width: 10,),
                         Text(
-                          'Amphitheatre 2',
+                          '${widget.roomName}',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -253,7 +255,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       print("Not valid!");
                       return;
                     }   
-                    bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),_reservationStartTime.text, _reservationEndTime.text);
+                    bool hasCollision = await isBookingCollision(widget.roomName,stringToTimestamp(_reservationDate.text),_reservationStartTime.text, _reservationEndTime.text);
                     print(hasCollision);
                     //print("HHHHH");
                     // bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:40", "01:45");
@@ -262,7 +264,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     if(currentLoggedInTeacher != null) { // TODO: CHECK WHETHER IT'S A TEACHER OR NOT
                       if(hasCollision == false){
                         addNewReservation(
-                          reservationLocation: "Amphitheatre 2", 
+                          reservationLocation: widget.roomName, 
                           reservationDate: _reservationDate.text, 
                           reservationStartTime: _reservationStartTime.text, 
                           reservationEndTime: _reservationEndTime.text, 
@@ -344,7 +346,7 @@ class _ReservationFormState extends State<ReservationForm> {
     // Prepare reservation data with reportId
     final reservationData = {
       "reservationLocation": reservationLocation,
-      "reservationStatus": "Upcoming",
+      "reservationStatus": "Uncoming",
       "reservationDate": reservationDateT,
       "reservationStartTime": reservationStartTime,
       "reservationEndTime": reservationEndTime,
@@ -385,17 +387,24 @@ class _ReservationFormState extends State<ReservationForm> {
     return "$year-$month-$day";
   }
 
-  Future<bool> isBookingCollision(Timestamp date, String startTime, String endTime) async {
+  Future<bool> isBookingCollision(String location,Timestamp date, String startTime, String endTime) async {
     try {
       // Convert Timestamp to DateTime
       DateTime dateTimeDate = date.toDate();
 
+      // Create a DateFormat object to format the date
+      DateFormat formatter = DateFormat('yyyy-MM-dd'); // Change the format as needed
+
+      // Format the date and return it as a string
+      String formattedDate = formatter.format(dateTimeDate);
+      print("AAA: $formattedDate");
       // Query Firestore to check for bookings on the given date
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('reservation')
+          .where('reservationLocation', isEqualTo: location)
           .where('reservationDate', isEqualTo: date)
           .get();
-      print("MY DATE: $date, STARTTIME: $startTime, ENDTIMEM: $endTime");
+      print("MY ROOM: $location MY DATE: $date, STARTTIME: $startTime, ENDTIMEM: $endTime");
       // Check for collision with each booking
       for (DocumentSnapshot bookingSnapshot in querySnapshot.docs) {
         // Extract booking details
@@ -418,8 +427,8 @@ class _ReservationFormState extends State<ReservationForm> {
         }
 
         // Convert booking start and end times to DateTime objects
-        DateTime bookingStart = DateTime.parse("2024-05-05 $bookingStartTime");
-        DateTime bookingEnd = DateTime.parse("2024-05-05 $bookingEndTime");
+        DateTime bookingStart = DateTime.parse("$formattedDate $bookingStartTime");
+        DateTime bookingEnd = DateTime.parse("$formattedDate $bookingEndTime");
         print("$bookingStart, $bookingEnd");
 
         // Convert startTime and endTime strings to DateTime objects

@@ -15,7 +15,7 @@ class _NavigateBareState extends State<NavigateBare_prof> {
   int i = 0;
   List pages = [
     const ReserveRooms(),
-    DisplayMap(),
+    DisplayMap(role: 'teacher'),
     const Profile(),
   ];
 

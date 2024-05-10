@@ -1,21 +1,21 @@
-// ignore_for_file: file_names, depend_on_referenced_packages
-
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:project_mini/map/infoForm.dart';
+import 'package:project_mini/map/map_services.dart';
 import 'package:project_mini/map/reservationForm.dart';
 
 //import '../firestore_service.dart';
 
 class DisplayMap extends StatefulWidget {
   static const String route = '/latlng_to_screen_point';
+  String role;
   LatLng? mapIntitalCenter;
   double? mapZoom;
-  DisplayMap({super.key, this.mapIntitalCenter, this.mapZoom});
+  DisplayMap({super.key, required this.role,this.mapIntitalCenter, this.mapZoom});
 
   @override
   State<DisplayMap> createState() => DisplayMapState();
@@ -31,35 +31,28 @@ class DisplayMapState extends State<DisplayMap> {
   double currentZoom = 17.6;
 
   // Define lists to hold different types of markers
-  List<Marker> markersZoomedIn = [];
-  List<Marker> markersZoomedOut = [];
+  late List<Marker> markersZoomedIn;
+  late List<Marker> markersZoomedOut;
+
+  bool _markersLoaded = false;
 
   @override
-  void initState() {
-    currentZoom = widget.mapZoom ?? 17.6;
+  void initState()  {
     super.initState();
+    currentZoom = widget.mapZoom ?? 17.6;
+    _loadMarkers();
   }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    widget.mapZoom = null; // set mapZoom to default value after function callback
-    widget.mapIntitalCenter = null;
-  }
-  void setCurrentInitCenterZoom() {
-    setState(() {
-      currentZoom = 20;
-    });
+    widget.mapZoom = null; // set initialZoom to default value after function callback
+    widget.mapIntitalCenter = null; // set initialCenter to default value after function callback
   }
 
   @override
   Widget build(BuildContext context) {
-    // Build the markers based on the current zoom level
-    _buildMarkers();
-
-    return SizedBox(
-      //height: 400,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
         title: const Text(
           "Faculty of Sciences Map",
@@ -68,149 +61,154 @@ class DisplayMapState extends State<DisplayMap> {
         titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 19),
         titleSpacing: 00.0,
         centerTitle: true,
-        //toolbarHeight: 50.0,
         toolbarOpacity: 0.8,
-        shape: const RoundedRectangleBorder(
-          /*borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(0),
-              bottomLeft: Radius.circular(0),
-              //topLeft: Radius.circular(30),
-              //topRight: Radius.circular(30),
-          ),*/
-        ),
         elevation: 0.00,
-        //backgroundColor: const Color(0xFF568C93),
         backgroundColor: Color.fromRGBO(206, 228, 227, 1), 
 
-      ), //AppBar
-        body: Stack(
+      ),
+      body: _markersLoaded ? _buildMap() : _buildLoading(), // Render map or loading indicator based on marker loading status,
+    ); 
+  }
+
+  Widget _buildMap() {
+    return Stack(
+      children: [
+        FlutterMap(
+          mapController: mapController,
+          options: MapOptions(
+            initialCenter: widget.mapIntitalCenter ?? const LatLng(34.89580, -1.34833),
+            initialZoom: widget.mapZoom ?? 17.6,
+            initialRotation: 12,
+            minZoom: 17.6,
+            maxZoom: 20,
+            onPositionChanged: (MapPosition mapPosition, bool hasGesture) {
+              setState(() {
+                currentZoom = mapPosition.zoom!;
+              });
+            },
+            maxBounds: LatLngBounds(
+              LatLng(34.894181, -1.346634),
+              LatLng(34.897366, -1.350128),
+            ),
+            interactionOptions: const InteractionOptions(
+              flags: ~InteractiveFlag.doubleTapZoom,
+            ),
+            onTap: (tapPosition, latLng) {
+              print("tapPosition: $latLng");
+            },
+          ),
           children: [
-            FlutterMap(
-              mapController: mapController,
-              options: MapOptions(
-                // Set the initial center to University of Tlemcen.
-                initialCenter: widget.mapIntitalCenter ?? const LatLng(34.89580, -1.34833),
-                initialZoom: widget.mapZoom ?? 17.6, // Adjust zoom level as desired
-                initialRotation: 12, // Adjust roation level as desired
-                minZoom: 17.6,
-                maxZoom: 20,
-                onPositionChanged: (MapPosition mapPosition, bool hasGesture) {
-                  setState(() {
-                    currentZoom = mapPosition.zoom!;
-                  });
-                },
-                maxBounds: LatLngBounds(
-                  LatLng(34.894181, -1.346634),
-                  LatLng(34.897366, -1.350128),
-                ),
-                interactionOptions: const InteractionOptions(
-                  flags: ~InteractiveFlag.doubleTapZoom,
-                ),
-                /*onTap: (tapPosition, latLng) {
-                  print(latLng);
-                  setState(() {
-                    tappedCoords = latLng;
-                  });
-                },*/
-              ),
-              children: [
-                openStreetMapTileLayer,
-                MarkerLayer(
-                  markers: currentZoom > 19.7
-                      ? markersZoomedIn
-                      : markersZoomedOut,
-                ),
-              ],
+            openStreetMapTileLayer,
+            MarkerLayer(
+              markers: currentZoom > 19.7 ? markersZoomedIn : markersZoomedOut,
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  Widget _buildLoading() {
+    return Container(
+      color: Color.fromRGBO(206, 228, 227, 1),
+      child: Center(
+        child: CircularProgressIndicator(), // You can replace this with your custom loading widget
       ),
     );
   }
 
-  // Method to build markers based on current zoom level
-  void _buildMarkers() {
-    markersZoomedIn = [
-      Marker(
-        width: pointSize,
-        rotate: true,
-        height: pointSize,
-        point: LatLng(34.896239, -1.34924),
-        child: IconButton(
-          icon: Icon(Icons.delete_outline),
-          iconSize: 30,
-          color: Color.fromARGB(255, 93, 94, 80),
-          onPressed: () {
-            print("Clicked BIN#1");
-          },
-        ),
-      ),
-      Marker(
-        width: pointSize,
-        rotate: true,
-        height: pointSize,
-        point: LatLng(34.896187, -1.349004),
-        child: IconButton(
-          icon: Icon(Icons.delete_outline),
-          iconSize: 30,
-          color: Color.fromARGB(255, 93, 94, 80),
-          onPressed: () {
-            print("Clicked BIN#2");
-          },
-        ),
-      ),
-      // Add other markers for zoom above 19.7 as needed
-    ];
+  Future<void> _loadMarkers() async {
+    final trashBinData = await fetchTrashBinData();
+    print('Trash bin data: $trashBinData');
+    final markers = _buildMarkers(trashBinData);
+    print('Built markers: $markers');
+    //----------------------------------------------
+    final roomData = await fetchRoomData();
+    print('room data: $roomData');
+    final markersZOut = _buildZoomedOutMarkers(roomData);
+    print('Built markers: $markersZOut');
+    //----------------------------------------------
+    final lightBulbData = await fetchLightBulbData();
+    print('lightbulb data: $lightBulbData');
+    final lightMarkers = _buildLightMarkers(lightBulbData);
+    print('Built markers: $markers');
 
-    markersZoomedOut = [
-      Marker(
+    setState(() {
+      markersZoomedIn = [];
+      markersZoomedOut = [];
+      markersZoomedIn = markers;
+      markersZoomedIn.addAll(lightMarkers);
+      markersZoomedOut = markersZOut;
+      _markersLoaded = true;
+      print(markersZoomedIn);
+    });
+  }
+
+  List<Marker> _buildMarkers(List<Map<String, dynamic>> trashBinData) {
+    return trashBinData.map((binData) {
+      final binId = binData['binId'] as String;
+      final binCoor = binData['binCoor'] as LatLng;
+      return Marker(
         width: pointSize,
         rotate: true,
         height: pointSize,
-        point: LatLng(34.896266176917555, -1.3491687179443161),
+        point: binCoor,
         child: IconButton(
-          icon: Icon(Icons.info),
-          iconSize: 30,
-          color: Color(0x32323232),
+          icon: Icon(Icons.delete_outline, size: 40),
           onPressed: () {
-            print("Clicked INFO#1");
+            print('Clicked on bin $binId');
+          },
+        ),
+      );
+    }).toList();
+  }
+  // build zoomed out  map Icons
+  List<Marker> _buildZoomedOutMarkers(List<Map<String, dynamic>> roomData) {
+    return roomData.map((rData) {
+      final rId = rData['roomId'] as String;
+      final rName = rData['roomName'] as String;
+      final rCoor = rData['roomCoor'] as LatLng;
+      return Marker(
+        width: pointSize,
+        rotate: true,
+        height: pointSize,
+        point: rCoor,
+        child: IconButton(
+          icon: Icon(Icons.info_outline_rounded, size: 30),
+          onPressed: () {
+            print('Clicked on room $rId');
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
                   insetPadding: EdgeInsets.zero,
-                  child: const ReservationForm(),
+                  child: InfoForm(role: widget.role, roomId: rId, roomName: rName,),
                 );
               },
             );
           },
         ),
-      ),
-      Marker(
+      );
+    }).toList();
+  }
+  // build light map Icons
+  List<Marker> _buildLightMarkers(List<Map<String, dynamic>> lightBulbData) {
+    return lightBulbData.map((lightData) {
+      final lightId = lightData['lightId'] as String;
+      final lightCoor = lightData['lightCoor'] as LatLng;
+      return Marker(
         width: pointSize,
         rotate: true,
         height: pointSize,
-        point: LatLng(34.896173, -1.348958),
+        point: lightCoor,
         child: IconButton(
-          icon: Icon(Icons.info),
-          iconSize: 30,
-          color: Color(0x32323232),
+          icon: Icon(Icons.lightbulb_outline, size: 40),
           onPressed: () {
-            print("Clicked INFO#2");
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  insetPadding: EdgeInsets.zero,
-                  child: const ReservationForm(),
-                );
-              },
-            );
+            print('Clicked on light bulb : $lightId');
           },
         ),
-      ),
-      // Add other markers for zoom below or equal to 19.7 as needed
-    ];
+      );
+    }).toList();
   }
 }
 
@@ -219,3 +217,4 @@ TileLayer get openStreetMapTileLayer => TileLayer(
   userAgentPackageName: 'dev.fleaflet.flutter_map.example',
   tileProvider: CancellableNetworkTileProvider(),
 );
+
