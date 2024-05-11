@@ -346,7 +346,7 @@ class _ReservationFormState extends State<ReservationForm> {
     // Prepare reservation data with reportId
     final reservationData = {
       "reservationLocation": reservationLocation,
-      "reservationStatus": "Uncoming",
+      "reservationStatus": "Upcoming",
       "reservationDate": reservationDateT,
       "reservationStartTime": reservationStartTime,
       "reservationEndTime": reservationEndTime,

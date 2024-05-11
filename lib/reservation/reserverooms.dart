@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_mini/comp/cour_history.dart';
+import 'package:project_mini/comp/reservation_history_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 List <Map<String, dynamic>> data = [];
 
@@ -43,18 +44,20 @@ class _ReserveRoomsState extends State<ReserveRooms> {
 
       ), //AppBar //AppBar
       extendBodyBehindAppBar: true, //white background remove
-      body: FutureBuilder<void>(
-        future: fetchReservationData(),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: fetchReservationData(),
         builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
             );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text('Error: ${snapshot.error}'),
-          );
-        } else {
+          } else {
+            List<Map<String, dynamic>> data = snapshot.data!;
+            updateExpiredReservations();
         return ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
@@ -62,6 +65,7 @@ class _ReserveRoomsState extends State<ReserveRooms> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 15, top: 15),
               child: MyCard(
+                reservationId: reservationData['reservationId'],
                 reservationLocation: reservationData['reservationLocation'],
                 reservationStatus: reservationData['reservationStatus'],
                 reservationDate: reservationData['reservationDate'],
@@ -102,6 +106,7 @@ bool isReservationExpired(Map<String, dynamic> reservation) {
   DateTime now = DateTime.now();
   DateTime reservationEnd = formatReservationDateTime(
       reservation['reservationDate'] as Timestamp, reservation['reservationEndTime'] as String);
+      print("nigga end : $reservationEnd");
   return now.isAfter(reservationEnd);
 }
 
@@ -114,42 +119,39 @@ DateTime formatReservationDateTime(Timestamp reservationDate, String reservation
       int.parse(reservationTime.split(':')[0]), int.parse(reservationTime.split(':')[1])); // Parse hour and minute
 }
 
-Future<void> fetchReservationData() async {
+Stream<List<Map<String, dynamic>>> fetchReservationData() {
   User? currentLoggedInTeacher = FirebaseAuth.instance.currentUser;
   String? currentLoggedInTeacherId = currentLoggedInTeacher!.uid;
-  try {
-    QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
-        .collection('reservation')
-        .where("teacherId", isEqualTo: currentLoggedInTeacherId)
-        .get();
 
-    // An empty List to store the processed data
+  // Create a stream from the Firebase query
+  Stream<QuerySnapshot> reservationStream = FirebaseFirestore.instance
+      .collection('reservation')
+      .where("teacherId", isEqualTo: currentLoggedInTeacherId)
+      .snapshots();  // snapshots() method is crucial for streams
+
+  // Transform the stream of QuerySnapshots
+  return reservationStream.map((QuerySnapshot reservationSnapshot) {
     final List<Map<String, dynamic>> processedReservationData = [];
-    // Loop through each report document
-    for(final reservation in reservationSnapshot.docs) {
-      Map<String, dynamic> rawReservationData = reservation.data() as Map<String, dynamic>;
-      // Process the raw data
+
+    for (final reservation in reservationSnapshot.docs) {
+      Map<String, dynamic> rawReservationData =
+          reservation.data() as Map<String, dynamic>;
       final processedReservationDataEntry = {
         'reservationId': rawReservationData['reservationId'] as String,
         'reservationLocation': rawReservationData['reservationLocation'] as String,
         'reservationStatus': rawReservationData['reservationStatus'] as String,
-        'reservationDate': formatReservationDate(rawReservationData['reservationDate']),
+        'reservationDate':
+            formatReservationDate(rawReservationData['reservationDate']),
         'reservationStartTime': rawReservationData['reservationStartTime'] as String,
         'reservationEndTime': rawReservationData['reservationEndTime'] as String,
         'teacherId': rawReservationData['teacherId'] as String,
-        'isActive': isReservationActive(rawReservationData), // Add this line to check if active
-        'isExpired': isReservationExpired(rawReservationData), // Add this line to check if active
-        
+        'isActive': isReservationActive(rawReservationData),
+        'isExpired': isReservationExpired(rawReservationData),
       };
-      //updateReservationStatus(processedReservationDataEntry);
-    processedReservationData.add(processedReservationDataEntry);
+      processedReservationData.add(processedReservationDataEntry);
     }
-    data = processedReservationData;
-    return;
-    
-  } catch (e) {
-    print('Error fetching user data: $e');
-  }
+    return processedReservationData;
+  });
 }
 
 Future<void> updateReservationStatus(Map<String, dynamic> reservation) async {
@@ -210,4 +212,42 @@ Future<void> addNewReservation({
   await newReservationRef.set(reservationData);
 
   print("New reservation added with ID: $reportId");
+}
+Future<void> removeReservation(String reservationId) async {
+  try {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference reservations = firestore.collection('reservation');
+
+    await reservations.doc(reservationId).delete();
+    print('Reservation deleted successfully');
+  } catch (error) {
+    print('Error deleting reservation: $error');
+    // Handle the error appropriately
+  }
+}
+Future<void> updateExpiredReservations() async {
+  User? currentLoggedInTeacher = FirebaseAuth.instance.currentUser;
+  String? currentLoggedInTeacherId = currentLoggedInTeacher!.uid;
+
+  // Fetch all reservations for the current teacher
+  QuerySnapshot reservationsSnapshot = await FirebaseFirestore.instance
+      .collection('reservation')
+      .where('teacherId', isEqualTo: currentLoggedInTeacherId)
+      .get();
+
+  // Iterate through each reservation and check if it's expired
+  for (QueryDocumentSnapshot reservationDoc in reservationsSnapshot.docs) {
+    Map<String, dynamic> reservationData = reservationDoc.data() as Map<String, dynamic>;
+    bool isExpired = isReservationExpired(reservationData);
+
+    if (isExpired && reservationData['reservationStatus'] != 'Expired') {
+      // Update the reservation document in Firestore directly
+      try {
+        await reservationDoc.reference.update({'reservationStatus': 'Expired'});
+        print('Reservation status updated to Expired successfully');
+      } catch (e) {
+        print('Error updating reservation status: $e');
+      }
+    }
+  }
 }
