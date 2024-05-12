@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:project_mini/map/infoForm.dart';
+import 'package:project_mini/Schedule/schedule_services.dart';
+import 'package:project_mini/map/info_form.dart';
 import 'package:project_mini/map/map_services.dart';
-import 'package:project_mini/map/reservationForm.dart';
 
 //import '../firestore_service.dart';
 
+// ignore: must_be_immutable
 class DisplayMap extends StatefulWidget {
   static const String route = '/latlng_to_screen_point';
-  String role;
+  final String role;
   LatLng? mapIntitalCenter;
   double? mapZoom;
   DisplayMap({super.key, required this.role,this.mapIntitalCenter, this.mapZoom});
@@ -22,6 +23,7 @@ class DisplayMap extends StatefulWidget {
 }
 
 class DisplayMapState extends State<DisplayMap> {
+
   static const double pointSize = 65;
 
   final MapController mapController = MapController();
@@ -118,29 +120,35 @@ class DisplayMapState extends State<DisplayMap> {
   }
 
   Future<void> _loadMarkers() async {
-    final trashBinData = await fetchTrashBinData();
-    print('Trash bin data: $trashBinData');
-    final markers = _buildMarkers(trashBinData);
-    print('Built markers: $markers');
+    List<Marker> trashBinMarkers = [];
+    if(widget.role == 'agent' || widget.role == 'technician' || widget.role == 'teacher'){
+      final trashBinData = await fetchTrashBinData();
+      print('Trash bin data: $trashBinData');
+      trashBinMarkers = _buildMarkers(trashBinData);
+      print('Built markers: $trashBinMarkers');
+    }
     //----------------------------------------------
     final roomData = await fetchRoomData();
     print('room data: $roomData');
     final markersZOut = _buildZoomedOutMarkers(roomData);
     print('Built markers: $markersZOut');
     //----------------------------------------------
-    final lightBulbData = await fetchLightBulbData();
-    print('lightbulb data: $lightBulbData');
-    final lightMarkers = _buildLightMarkers(lightBulbData);
-    print('Built markers: $markers');
+    List<Marker> lightMarkers = [];
+    if(widget.role == 'agent' || widget.role == 'technician' || widget.role == 'teacher'){
+      final lightBulbData = await fetchLightBulbData();
+      print('lightbulb data: $lightBulbData');
+      lightMarkers = _buildLightMarkers(lightBulbData);
+      print('Built markers: $lightMarkers');
+    }
 
     setState(() {
       markersZoomedIn = [];
       markersZoomedOut = [];
-      markersZoomedIn = markers;
+      markersZoomedIn = trashBinMarkers;
       markersZoomedIn.addAll(lightMarkers);
       markersZoomedOut = markersZOut;
       _markersLoaded = true;
-      print(markersZoomedIn);
+      //print(markersZoomedIn);
     });
   }
 
@@ -175,14 +183,18 @@ class DisplayMapState extends State<DisplayMap> {
         point: rCoor,
         child: IconButton(
           icon: Icon(Icons.info_outline_rounded, size: 30),
-          onPressed: () {
+          onPressed: () async {
             print('Clicked on room $rId');
+            List<Map<String, dynamic>> result = await getInProgressCour("sunday", "10:01", rName);
+            String timeRemaning = await calculateTimeRemainingForCourse("sunday", "10:01", rName);
+            Map<String, dynamic> courUpcoming = await getNextClosestCourse("sunday", "10:01", rName);
+            //print(timeRemaning);
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
                   insetPadding: EdgeInsets.zero,
-                  child: InfoForm(role: widget.role, roomId: rId, roomName: rName,),
+                  child: InfoForm(role: widget.role, roomId: rId, roomName: rName, inProgressCour: result, courTimeRemaning: timeRemaning, courUpcoming: courUpcoming),
                 );
               },
             );

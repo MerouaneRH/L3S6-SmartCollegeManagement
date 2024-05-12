@@ -8,7 +8,6 @@ import 'package:project_mini/comp/navigationbarAgent.dart';
 import 'package:project_mini/comp/navigationbarTECH.dart';
 import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
 import 'package:project_mini/comp/navigationBar.dart';
-import 'package:project_mini/map/displayMap.dart';
 import 'package:project_mini/profile/profile.dart';
 
 void main() async {

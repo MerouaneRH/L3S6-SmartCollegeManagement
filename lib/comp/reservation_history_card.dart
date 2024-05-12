@@ -86,7 +86,7 @@ class MyCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Row(
                             children: [
                               SizedBox(
@@ -132,12 +132,12 @@ class MyCard extends StatelessWidget {
                   ],
                 ),
                 if (reservationStatus == 'Upcoming')  // Add conditional 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: ElevatedButton(
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start, 
+                    children: [
+                      ElevatedButton(
                         onPressed: () async {
                           removeReservation(reservationId!);
                         },
@@ -158,8 +158,8 @@ class MyCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

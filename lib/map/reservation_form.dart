@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// ignore: must_be_immutable
 class ReservationForm extends StatefulWidget {
   String? roomId;
   String roomName;
@@ -48,17 +50,17 @@ class _ReservationFormState extends State<ReservationForm> {
       child: Form(
         key: _formKey,
         child: Container(
-          height: 450,
+          height: 420.h,
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             borderRadius:  BorderRadius.circular(30),
-            color: Color.fromRGBO(232, 244, 242, 1),
+            color: const Color.fromRGBO(232, 244, 242, 1),
           ),
         child: Column(
             children: [
               Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
@@ -68,13 +70,12 @@ class _ReservationFormState extends State<ReservationForm> {
                 ],
               ),
               
-              //SizedBox(height: 20,),
               Container(
                 height: 45,
                 width: MediaQuery.of(context).size.width * 0.75,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color.fromRGBO(0, 0, 0, 0.07),
+                    color: const Color.fromRGBO(0, 0, 0, 0.07),
                   ),       
                   //color: Colors.red,
                   borderRadius: BorderRadius.circular(20),
@@ -87,9 +88,9 @@ class _ReservationFormState extends State<ReservationForm> {
                       //color: Colors.red,
                       children: [
                         Image.asset('images/door2.png', height: 30,),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Text(
-                          '${widget.roomName}',
+                          widget.roomName,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -101,22 +102,22 @@ class _ReservationFormState extends State<ReservationForm> {
                   ],
                 ),
               ),
-              SizedBox(height: 25,),
+              const SizedBox(height: 25,),
               Container(
                 width: MediaQuery.of(context).size.width * 0.75,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color.fromRGBO(0, 0, 0, 0.07),
+                    color: const Color.fromRGBO(0, 0, 0, 0.07),
                   ),       
                   borderRadius: BorderRadius.circular(20),
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 40,right: 40),
                       child: TextFormField(
-                        style: TextStyle(fontFamily: 'Poppins',),
+                        style: const TextStyle(fontFamily: 'Poppins',),
                         textAlign: TextAlign.center,
                         readOnly: true,
                         validator: validateReservationDate,
@@ -150,7 +151,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Row(children: [
                       //Text("From : "),
                       Flexible(
@@ -196,12 +197,12 @@ class _ReservationFormState extends State<ReservationForm> {
                           },
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       //Text("To : "),
                       Flexible(
                         flex: 1,
                         child: TextFormField(
-                           style: TextStyle(fontFamily: 'Poppins',),
+                           style: const TextStyle(fontFamily: 'Poppins',),
                           textAlign: TextAlign.center,
                           readOnly: true,
                           controller: _reservationEndTime,
@@ -248,7 +249,7 @@ class _ReservationFormState extends State<ReservationForm> {
               ),
               SizedBox(height: 15,),
               Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40),
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: ElevatedButton(
                 onPressed: () async {
                     if (!_formKey.currentState!.validate()) {  
@@ -303,6 +304,7 @@ class _ReservationFormState extends State<ReservationForm> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
+                  minimumSize: Size(4.h, 40.0.w),
                   //fixedSize: Size(MediaQuery.of(context).size.width - 280, 45.0), // Set desired height
                 ),
                 child: const Row(

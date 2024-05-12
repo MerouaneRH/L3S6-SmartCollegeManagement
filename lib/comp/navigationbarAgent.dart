@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_mini/map/displayMap.dart';
+import 'package:project_mini/map/display_map.dart';
 import 'package:project_mini/profile/profile.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:latlong2/latlong.dart';
