@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_mini/auth/fetch_role.dart';
 import 'package:project_mini/auth/login_page.dart';
 import 'package:project_mini/comp/navigation_prof.dart';
 import 'package:project_mini/comp/navigationbarAgent.dart';
@@ -22,14 +23,17 @@ void main() async {
       print("User is currently Signed Out!");
     } else {
       print("${user.email} is Signed In!");
+      
     }
   });
-
-  runApp(const MyApp());
+  String? role = await FetchRole().fetchUserDataa();
+  // Fetch user role
+  runApp(MyApp(role: role));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? role;
+  const MyApp({super.key, this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,15 @@ class MyApp extends StatelessWidget {
 
       builder: (_, child) {
         return MaterialApp(
-          home: const Login_page(),
+          home: role == "student"
+              ? const NavigateBare()
+              : role == "teacher"
+                  ? const NavigateBare_prof()
+                  : role == "agent"
+                       ? const NavigateBareAgent()
+                       : role == null
+                          ? const Login_page()
+                          : const NavigateBareTECH(),
           routes: {
             "login": (context) => const Login_page(),
             "profile": (context) => const Profile(),
