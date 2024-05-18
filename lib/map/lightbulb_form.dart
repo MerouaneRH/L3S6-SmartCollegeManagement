@@ -163,7 +163,7 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
                 onPressed: () {
-                  print("hhh zaftha");
+                  print("lightbulb pressed");
                   toggleLight();
                   /*AwesomeDialog(
                     context: context,

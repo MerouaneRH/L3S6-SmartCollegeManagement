@@ -48,6 +48,19 @@ class FetchRole {
         return role;
       }
 
+      DocumentSnapshot AdminSnapshot = await FirebaseFirestore.instance
+          .collection('admin')
+          .doc(user?.uid)
+          .get();
+      if (AdminSnapshot.exists) {
+        Map<String, dynamic> userData =
+            AdminSnapshot.data() as Map<String, dynamic>;
+
+        role = userData['role'];
+
+        return role; // Exit function after retrieving user data
+      }
+
       // If user document not found in both 'student' and 'teacher' collections, check 'technician' collection
       DocumentSnapshot technicianSnapshot = await FirebaseFirestore.instance
           .collection('technician')

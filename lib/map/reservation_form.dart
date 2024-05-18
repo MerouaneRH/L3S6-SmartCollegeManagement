@@ -258,7 +258,6 @@ class _ReservationFormState extends State<ReservationForm> {
                     }   
                     bool hasCollision = await isBookingCollision(widget.roomName,stringToTimestamp(_reservationDate.text),_reservationStartTime.text, _reservationEndTime.text);
                     print(hasCollision);
-                    //print("HHHHH");
                     // bool hasCollision = await isBookingCollision(stringToTimestamp("05-05-2024"),"01:40", "01:45");
                     // print(hasCollision); // This will print either true or false
                     //addNewReport(reportLocation: "Amphitheatre 3", reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);

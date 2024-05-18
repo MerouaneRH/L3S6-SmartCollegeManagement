@@ -41,6 +41,7 @@ dependencies:
   flutter_map: ^6.1.0
   flutter_map_cancellable_tile_provider: ^2.0.0
   geolocator: ^12.0.0
+  datetime_picker_formfield: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

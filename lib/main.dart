@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_mini/Admin/dashboard.dart';
+import 'package:project_mini/Admin/navigationBarAdmin.dart';
 import 'package:project_mini/auth/fetch_role.dart';
 import 'package:project_mini/auth/login_page.dart';
 import 'package:project_mini/comp/navigation_prof.dart';
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
                   ? const NavigateBare_prof()
                   : role == "agent"
                        ? const NavigateBareAgent()
+                       : role == "admin"
+                       ? const NavigateBarAdmin()
                        : role == null
                           ? const Login_page()
                           : const NavigateBareTECH(),
@@ -60,6 +64,7 @@ class MyApp extends StatelessWidget {
             "navigateProf": (context) => const NavigateBare_prof(),
             "navigateTech": (context) => const NavigateBareTECH(),
             "navigateAgent": (context) => const NavigateBareAgent(),
+            "navigateAdmin": (context) => const NavigateBarAdmin(),
             //"map": (context) => DisplayMap(role:),
           },
           debugShowCheckedModeBanner: false,

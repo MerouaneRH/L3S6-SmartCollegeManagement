@@ -202,7 +202,6 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
                 onPressed: isPickupButtonEnabled() ? () {
-                  print("hhh zaftha");
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.question,

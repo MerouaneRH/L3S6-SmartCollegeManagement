@@ -120,7 +120,6 @@ bool isReservationExpired(Map<String, dynamic> reservation) {
   DateTime now = DateTime.now();
   DateTime reservationEnd = formatReservationDateTime(
       reservation['reservationDate'] as Timestamp, reservation['reservationEndTime'] as String);
-      print("nigga end : $reservationEnd");
   return now.isAfter(reservationEnd);
 }
 

@@ -143,6 +143,10 @@ class _Login_pageState extends State<Login_page> {
                             } else if (role == "agent") {
                               Navigator.popAndPushNamed(
                                   context, "navigateAgent");
+                            } else if (role == "admin") {
+                              Navigator.popAndPushNamed(
+                                  context, "navigateAdmin");
+                              return;
                             } else {
                               Navigator.popAndPushNamed(
                                   context, "navigateTech");
@@ -213,6 +217,17 @@ class _Login_pageState extends State<Login_page> {
       if (agentSnapshot.exists) {
         Map<String, dynamic> userData =
             agentSnapshot.data() as Map<String, dynamic>;
+        role = userData['role'];
+        return;
+      }
+      DocumentSnapshot adminSnapshot = await FirebaseFirestore.instance
+          .collection('admin')
+          .doc(user.uid)
+          .get();
+
+      if (adminSnapshot.exists) {
+        Map<String, dynamic> userData =
+            adminSnapshot.data() as Map<String, dynamic>;
         role = userData['role'];
         return;
       }
