@@ -7,6 +7,8 @@ import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_ti
 import 'package:latlong2/latlong.dart';
 import 'package:project_mini/Schedule/schedule_services.dart';
 import 'package:project_mini/map/info_form.dart';
+import 'package:project_mini/map/lightbulb_form.dart';
+import 'package:project_mini/map/trashbin_form.dart';
 import 'package:project_mini/map/map_services.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -337,6 +339,7 @@ class DisplayMapState extends State<DisplayMap> {
 
   List<Marker> _buildMarkers(List<Map<String, dynamic>> trashBinData) {
     return trashBinData.map((binData) {
+      final rId = binData['roomId'] as String;
       final binId = binData['binId'] as String;
       final binCoor = binData['binCoor'] as LatLng;
       return Marker(
@@ -346,8 +349,18 @@ class DisplayMapState extends State<DisplayMap> {
         point: binCoor,
         child: IconButton(
           icon: Icon(Icons.delete_outline, size: 40),
-          onPressed: () {
+          onPressed: () async {
             print('Clicked on bin $binId');
+            final rName = await getRoomName(rId);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.zero,
+                  child: TrashBinForm(role: widget.role, binId: binId, roomId: rId, roomName: rName),
+                );
+              },
+            );
           },
         ),
       );
@@ -395,6 +408,7 @@ class DisplayMapState extends State<DisplayMap> {
     return lightBulbData.map((lightData) {
       final lightId = lightData['lightId'] as String;
       final lightCoor = lightData['lightCoor'] as LatLng;
+      final rId = lightData['roomId'] as String;
       return Marker(
         width: pointSize,
         rotate: true,
@@ -402,8 +416,18 @@ class DisplayMapState extends State<DisplayMap> {
         point: lightCoor,
         child: IconButton(
           icon: Icon(Icons.lightbulb_outline, size: 40),
-          onPressed: () {
+          onPressed: () async {
             print('Clicked on light bulb : $lightId');
+            final rName = await getRoomName(rId);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.zero,
+                  child: LightbulbForm(role: widget.role, bulbId: lightId, roomId: rId, roomName: rName),
+                );
+              },
+            );
           },
         ),
       );

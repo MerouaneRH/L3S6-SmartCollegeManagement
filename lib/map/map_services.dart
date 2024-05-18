@@ -97,3 +97,29 @@ Future<List<Map<String, dynamic>>> fetchLightBulbData() async {
     return [];
   }
 }
+
+Future<String> getRoomName(String roomId) async {
+  String roomName = "";
+
+  try {
+    // Access Firestore collection "rooms" and retrieve the document with roomId
+    DocumentSnapshot roomSnapshot = await FirebaseFirestore.instance
+        .collection('room')
+        .doc(roomId)
+        .get();
+
+    // Check if the document exists
+    if (roomSnapshot.exists) {
+      // Extract the roomName from the document data
+      roomName = ((roomSnapshot.data() as Map<String, dynamic>)['roomName']) as String;
+    } else {
+      // Handle case where the document doesn't exist
+      print('Document with roomId $roomId does not exist.');
+    }
+  } catch (e) {
+    // Handle any errors that occur
+    print('Error retrieving roomName: $e');
+  }
+
+  return roomName;
+}

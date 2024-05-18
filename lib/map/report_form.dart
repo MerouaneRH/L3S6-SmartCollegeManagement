@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
@@ -163,9 +164,19 @@ class _ReportFormState extends State<ReportForm> {
                         //List<Map<String, dynamic>> result = await getInProgressCour("sunday", "09:24", "Amphitheatre 1"); //getCurrentStudentTp("sunday","13:30", "G4", true); //getCurrentStudentCour("sunday","08:30");
                         //print(result);
                         return;
-                      }   
-                      addNewReport(reportLocation: widget.roomName, reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
-                      Navigator.pop(context);
+                      }
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.question,
+                        animType: AnimType.topSlide,
+                        title: 'Warning',          
+                        descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
+                        desc: 'Are you sure you want send the report ?',
+                        btnCancelOnPress: () {Navigator.pop(context);},
+                        btnOkOnPress: () async { await addNewReport(reportLocation: widget.roomName, reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text); Navigator.pop(context); }// Mark as solved},
+                      ).show();
+                      //addNewReport(reportLocation: widget.roomName, reportIssueType: reportType.selectedOptions[0].value, reportDescription: reportDescription.text);
+                      //Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 23, 31, 119),

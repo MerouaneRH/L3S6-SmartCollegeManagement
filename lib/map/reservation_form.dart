@@ -277,7 +277,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           animType: AnimType.rightSlide,
                           title: 'Success',
                           desc: 'Room has been successfully reserved!',
-                          btnOkOnPress: () {},
+                          btnOkOnPress: () {Navigator.pop(context);},
                         ).show();
                       } else {
                         print("Room is currently occupied at that time");
@@ -287,7 +287,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           animType: AnimType.rightSlide,
                           title: 'Failed',
                           desc: 'Room is currently occupied at that time',
-                          btnCancelOnPress: () {},
+                          btnCancelOnPress: () {Navigator.pop(context);},
                           btnOkOnPress: () {},
                         ).show();
                       }
