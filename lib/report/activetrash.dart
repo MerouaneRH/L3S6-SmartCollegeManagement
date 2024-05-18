@@ -55,8 +55,16 @@ class _activeTrashState extends State<activeTrash> {
           } else {
             List<Map<String, dynamic>> data = snapshot.data!;
             if(data.isEmpty)
-              return Center(
-                child: Text("No active full bins."),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: Icon(Icons.dangerous_outlined, size: 40, color: Color(0xFF323232),)),
+                  Center(
+                    child: Text("No Active Full Bins !",
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                  ),
+                ],
               );
             return ListView.builder(
               itemCount: data.length,

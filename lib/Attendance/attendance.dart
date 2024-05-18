@@ -54,6 +54,19 @@ class _AttendanceState extends State<Attendance> {
           child: Text('Error: ${snapshot.error}'),
         );
       } else {
+      if (data.isEmpty) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(child: Icon(Icons.dangerous_outlined, size: 40, color: Color(0xFF323232),)),
+            Center(
+              child: Text("No Attendances Found !",
+                style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+          ],
+        );
+      }
       return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {

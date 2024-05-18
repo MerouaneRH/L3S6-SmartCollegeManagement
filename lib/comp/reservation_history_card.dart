@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mini/reservation/reserverooms.dart' show removeReservation;
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -139,7 +140,16 @@ class MyCard extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () async {
-                          removeReservation(reservationId!);
+                           AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.question,
+                            animType: AnimType.topSlide,
+                            title: 'Warning',          
+                            descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
+                            desc: 'Are you sure you want to cancel this reservation?',
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () {removeReservation(reservationId!);},
+                          ).show();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red, // Ensure background color is visible

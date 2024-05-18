@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/report/report.dart' show updateReportStatus;
@@ -184,7 +185,16 @@ class report_history extends StatelessWidget {
                           ElevatedButton(
                             // Use ElevatedButton for a raised button
                             onPressed: () async {
-                              await updateReportStatus(reportId!, true, false); // Mark as solved
+                              AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.question,
+                                  animType: AnimType.topSlide,
+                                  title: 'Warning',          
+                                  descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
+                                  desc: 'Are you sure you want to mark this as Solved?',
+                                  btnCancelOnPress: () {},
+                                  btnOkOnPress: () async { await updateReportStatus(reportId!, true, false); }// Mark as solved},
+                                ).show();
                             },
                             style: ElevatedButton.styleFrom(
                               textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
@@ -216,7 +226,16 @@ class report_history extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () async {
                                 print('Mark as In Progress button pressed!');
-                                await updateReportStatus(reportId!, false, true); // Mark as solved
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.question,
+                                  animType: AnimType.topSlide,
+                                  title: 'Warning',          
+                                  descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
+                                  desc: 'Are you sure you want to mark this as In Progress?',
+                                  btnCancelOnPress: () {},
+                                  btnOkOnPress: () async { await updateReportStatus(reportId!, false, true); }// Mark as solved},
+                                ).show();
                               },
                               style: ElevatedButton.styleFrom(
                                 textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),

@@ -55,6 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '255138491309',
     projectId: 'smartcollege-f0fa5',
     authDomain: 'smartcollege-f0fa5.firebaseapp.com',
+    databaseURL: 'https://smartcollege-f0fa5-default-rtdb.europe-west1.firebasedatabase.app', // IMPORTANT!
     storageBucket: 'smartcollege-f0fa5.appspot.com',
     measurementId: 'G-QNDC0EZ4MQ',
   );
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAYaJeL6rnz4DJH0vHApusw-M4EG2I5O40',
     appId: '1:255138491309:android:4b35ef7f46622df3e88f24',
+    databaseURL: 'https://smartcollege-f0fa5-default-rtdb.europe-west1.firebasedatabase.app', // IMPORTANT!
     messagingSenderId: '255138491309',
     projectId: 'smartcollege-f0fa5',
     storageBucket: 'smartcollege-f0fa5.appspot.com',

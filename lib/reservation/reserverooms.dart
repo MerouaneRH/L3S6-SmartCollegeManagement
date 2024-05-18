@@ -57,26 +57,40 @@ class _ReserveRoomsState extends State<ReserveRooms> {
             );
           } else {
             List<Map<String, dynamic>> data = snapshot.data!;
+            if (data.isEmpty) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: Icon(Icons.dangerous_outlined, size: 40, color: Color(0xFF323232),)),
+                  Center(
+                    child: Text("No Reservation Found !",
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                  ),
+                ],
+              );
+            }
             updateExpiredReservations();
-        return ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) {
-            final reservationData = data[index]; //(const MyCard());
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 15, top: 15),
-              child: MyCard(
-                reservationId: reservationData['reservationId'],
-                reservationLocation: reservationData['reservationLocation'],
-                reservationStatus: reservationData['reservationStatus'],
-                reservationDate: reservationData['reservationDate'],
-                reservationStartTime: reservationData['reservationStartTime'],
-                reservationEndTime: reservationData['reservationEndTime'],
-              ),
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final reservationData = data[index]; //(const MyCard());
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 15, top: 15),
+                  child: MyCard(
+                    reservationId: reservationData['reservationId'],
+                    reservationLocation: reservationData['reservationLocation'],
+                    reservationStatus: reservationData['reservationStatus'],
+                    reservationDate: reservationData['reservationDate'],
+                    reservationStartTime: reservationData['reservationStartTime'],
+                    reservationEndTime: reservationData['reservationEndTime'],
+                  ),
+                );
+              }
             );
           }
-        );
-      }
-      }),
+        }
+      ),
     );
   }
 }

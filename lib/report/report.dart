@@ -127,7 +127,7 @@ String calculateTimeSinceReport(String reportDay, String reportTime) {
 }
 
 Stream<List<Map<String, dynamic>>> getReportDataStream() {
-  return FirebaseFirestore.instance.collection('report').snapshots().map((snapshot) {
+  return FirebaseFirestore.instance.collection('report').orderBy('reportDate', descending: true).snapshots().map((snapshot) {
     return snapshot.docs.map((doc) {
       Map<String, dynamic> rawReportData = doc.data() as Map<String, dynamic>;
       return {

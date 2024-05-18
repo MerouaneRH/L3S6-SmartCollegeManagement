@@ -116,12 +116,12 @@ Future<void> fetchUserData() async {
       Map<String, dynamic> userData =
           studentSnapshot.data() as Map<String, dynamic>;
       username = user!.email;
-      nom = userData['nom'];
-      prenom = userData['prenom'];
-      lieuNaissance = userData['lieuNaissance'];
-      groupe = userData['groupe'];
-      formation = userData['formation'];
-      dateNaissanceList = userData['dateNaissance'];
+      nom = userData['familyname'];
+      prenom = userData['firstname'];
+      lieuNaissance = userData['place'];
+      groupe = userData['group'];
+      formation = userData['grade'];
+      dateNaissanceList = userData['birthday'];
       dateNaissance = dateNaissanceList?[0] +
           "/" +
           dateNaissanceList?[1] +
@@ -140,12 +140,12 @@ Future<void> fetchUserData() async {
       Map<String, dynamic> userData =
           teacherSnapshot.data() as Map<String, dynamic>;
       username = user!.email;
-      nom = userData['nom'];
-      prenom = userData['prenom'];
+      nom = userData['familyname'];
+      prenom = userData['firstname'];
       grade = userData['grade'];
       //modules = userData['modules'];
-      dateNaissanceList = userData['dateNaissance'];
-      lieuNaissance = userData['lieuNaissance'];
+      dateNaissanceList = userData['birthday'];
+      lieuNaissance = userData['place'];
       dateNaissance = dateNaissanceList?[0] +
           "/" +
           dateNaissanceList?[1] +
@@ -164,10 +164,10 @@ Future<void> fetchUserData() async {
       Map<String, dynamic> userData =
           agentSnapshot.data() as Map<String, dynamic>;
       username = user!.email;
-      nom = userData['nom'];
-      prenom = userData['prenom'];
-      dateNaissanceList = userData['dateNaissance'];
-      lieuNaissance = userData['lieuNaissance'];
+      nom = userData['familyname'];
+      prenom = userData['firstname'];
+      dateNaissanceList = userData['birthday'];
+      lieuNaissance = userData['place'];
       dateNaissance = dateNaissanceList?[0] +
           "/" +
           dateNaissanceList?[1] +
@@ -187,11 +187,11 @@ Future<void> fetchUserData() async {
       Map<String, dynamic> userData =
           technicianSnapshot.data() as Map<String, dynamic>;
       username = user!.email;
-      nom = userData['nom'];
-      prenom = userData['prenom'];
+      nom = userData['familyname'];
+      prenom = userData['firstname'];
       role = userData['role'];
-      dateNaissanceList = userData['dateNaissance'];
-      lieuNaissance = userData['lieuNaissance'];
+      dateNaissanceList = userData['birthday'];
+      lieuNaissance = userData['place'];
       dateNaissance = dateNaissanceList?[0] +
           "/" +
           dateNaissanceList?[1] +

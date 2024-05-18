@@ -6,9 +6,10 @@ class FetchRole {
   Future<String?> fetchUserDataa() async {
     User? user = FirebaseAuth.instance.currentUser;
     try {
+      if(user == null) return null;
       DocumentSnapshot studentSnapshot = await FirebaseFirestore.instance
           .collection('student')
-          .doc(user?.uid)
+          .doc(user.uid)
           .get();
       if (studentSnapshot.exists) {
         Map<String, dynamic> userData =
@@ -21,7 +22,7 @@ class FetchRole {
 
       DocumentSnapshot teacherSnapshot = await FirebaseFirestore.instance
           .collection('teacher')
-          .doc(user?.uid)
+          .doc(user.uid)
           .get();
 
       if (teacherSnapshot.exists) {
@@ -35,7 +36,7 @@ class FetchRole {
 
        DocumentSnapshot agentSnapshot = await FirebaseFirestore.instance
           .collection('agent')
-          .doc(user?.uid)
+          .doc(user.uid)
           .get();
 
       if (agentSnapshot.exists) {
@@ -50,7 +51,7 @@ class FetchRole {
       // If user document not found in both 'student' and 'teacher' collections, check 'technician' collection
       DocumentSnapshot technicianSnapshot = await FirebaseFirestore.instance
           .collection('technician')
-          .doc(user?.uid)
+          .doc(user.uid)
           .get();
 
       if (technicianSnapshot.exists) {
@@ -62,7 +63,7 @@ class FetchRole {
         return role;
       }
       print(
-          'User document not found in Firestore collections for UID: ${user!.uid}');
+          'User document not found in Firestore collections for UID: ${user.uid}');
     } catch (e) {
       print('Error fetching user data: $e');
     }
