@@ -237,12 +237,12 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                     Icon(
                       Icons.delete_outline_rounded,
                       color: Color(0xFF323232),
-                      size: 30.0,
+                      size: 25.0,
                     ),
-                    SizedBox(width: 10.0),
+                    SizedBox(width: 5.0),
                     Text(
                       "Request a pickup",
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 17, color: Color(0xFF323232),),
                     ),
                   ],
                 ),
