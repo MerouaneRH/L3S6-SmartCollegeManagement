@@ -84,7 +84,7 @@ class DisplayMapState extends State<DisplayMap> {
             if (_liveUpdate && userLocation != null) {
               mapController.move( // Used to auto focus on the user movement
                 LatLng(
-                  movedLocation!.latitude!, movedLocation!.longitude!
+                  movedLocation!.latitude, movedLocation!.longitude
                 ),
                 currentZoom, // Set the desired zoom level
               );
@@ -100,7 +100,7 @@ class DisplayMapState extends State<DisplayMap> {
     if(userLocation == null) return;
     mapController.move( // Used to auto focus on the user movement
       LatLng(
-        userLocation!.latitude!, userLocation!.longitude!
+        userLocation!.latitude, userLocation!.longitude
       ),
       currentZoom, // Set the desired zoom level
     );
