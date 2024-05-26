@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:project_mini/Admin/RoleBasedDropDown.dart';
 import 'package:project_mini/Admin/wilayat.dart';
 
 class createuser extends StatefulWidget {
@@ -27,6 +28,9 @@ class _createuserState extends State<createuser> {
       MultiSelectController<dynamic>();
   final MultiSelectController<dynamic> _grade =
       MultiSelectController<dynamic>();
+  final MultiSelectController<dynamic> gradeetude =
+      MultiSelectController<dynamic>();
+
   List<String> _userbirthday = [];
   String selectedRole = 'student';
 
@@ -45,24 +49,15 @@ class _createuserState extends State<createuser> {
   }
 
   bool _isPasswordVisible = false;
+
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return "Password can't be empty";
     } else if (value.length < 6) {
       return "Password must be at least 6 characters long";
-    }
-    // else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-    //   return "Password must contain at least one uppercase letter";
-    // }
-    //  else if (!RegExp(r'[a-z]').hasMatch(value)) {
-    //   return "Password must contain at least one lowercase letter";
-    // }
-    else if (!RegExp(r'\d').hasMatch(value)) {
+    } else if (!RegExp(r'\d').hasMatch(value)) {
       return "Password must contain at least one digit";
     }
-    // else if (!RegExp(r'[!@#\$&*~]').hasMatch(value)) {
-    //   return "Password must contain at least one special character";
-    // }
     return null;
   }
 
@@ -77,14 +72,12 @@ class _createuserState extends State<createuser> {
   Future<void> createuser() async {
     if (_formKey.currentState!.validate()) {
       try {
-        // Create User in Firebase Authentication
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
 
-        // Create User Document in Firestore
         await FirebaseFirestore.instance
             .collection(_newuserrole.selectedOptions[0].value)
             .doc(userCredential.user!.uid)
@@ -95,11 +88,15 @@ class _createuserState extends State<createuser> {
           'role': _newuserrole.selectedOptions[0].value,
           'birthday': _userbirthday,
           'place': _search.text,
-          if (selectedRole == 'student') 'group': _group.text,
-          'grade': _grade.selectedOptions[0].value,
+          if (selectedRole == 'student')  
+          'group': _group.text,
+          if (selectedRole == 'student')
+          'grade': gradeetude.selectedOptions[0].value,
+          if (selectedRole == 'teacher')
+          'grade': _grade.selectedOptions[0].value, 
+          
         });
 
-        // Clear text controllers after successful creation
         _firstname.clear();
         _familyname.clear();
         _emailController.clear();
@@ -108,17 +105,14 @@ class _createuserState extends State<createuser> {
         _group.clear();
         Navigator.pop(context);
 
-        // Show success message or navigate to next screen
       } catch (e) {
-        // Handle errors here
         print('Error creating user: $e');
-        // Optionally, show an error message to the user
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Error'),
-              content: Text("this email already exist"),
+              content: Text("This email already exists"),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -306,7 +300,7 @@ class _createuserState extends State<createuser> {
                 hint: "Select new user role",
                 onOptionSelected: (List<ValueItem> selectedOptions) {
                   setState(() {
-                    selectedRole = _newuserrole.selectedOptions[0].value;
+                    selectedRole = _newuserrole.selectedOptions[0].value.toString();
                   });
                 },
                 options: const <ValueItem>[
@@ -320,36 +314,43 @@ class _createuserState extends State<createuser> {
                     const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                 dropdownBorderRadius: 20,
                 selectedOptionIcon: const Icon(Icons.check_circle),
+                clearIcon: null ,
               ),
             ),
             SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10),
-              child: MultiSelectDropDown<dynamic>(
-                borderRadius: 20,
-                fieldBackgroundColor: const Color.fromRGBO(211, 229, 233, 1),
-                selectedOptions: const [
-                  ValueItem(
-                      label: 'L3 - Informatique', value: 'L3 - Informatique')
-                ],
-                controller: _grade,
-                hint: "Select grade",
-                onOptionSelected: (List<ValueItem> selectedOptions) {},
-                options: const <ValueItem>[
-                  ValueItem(
-                      label: 'Maitre de Conférences A',
-                      value: 'Maitre de Conférences A'),
-                  ValueItem(
-                      label: 'L3 - Informatique', value: 'L3 - Informatique'),
-                ],
-                selectionType: SelectionType.single,
-                chipConfig: const ChipConfig(wrapType: WrapType.wrap),
-                dropdownHeight: 100,
-                optionTextStyle:
-                    const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
-                dropdownBorderRadius: 20,
-                selectedOptionIcon: const Icon(Icons.check_circle),
-              ),
+            Column(
+              children: [
+                if (selectedRole == 'student')
+                  RoleBasedDropDown(
+                    key: UniqueKey(),
+                    hint: "Select promo",
+                    selectedOptions: const [
+                      ValueItem(label: 'L3 - Informatique', value: 'L3 - Informatique'),
+                    ],
+                    controller: gradeetude,
+                    options: [
+                      ValueItem(label: 'L3 - Informatique', value: 'L3 - Informatique'),
+                    ],
+                    onOptionSelected: (List<ValueItem> selectedOptions) {
+                      setState(() {});
+                    },
+                  ),
+                if (selectedRole == 'teacher')
+                  RoleBasedDropDown(
+                    key: UniqueKey(),
+                    hint: "Select grade",
+                    selectedOptions: const [
+                      ValueItem(label: 'Maitre de Conférences A', value: 'Maitre de Conférences A'),
+                    ],
+                    controller: _grade,
+                    options: [
+                      ValueItem(label: 'Maitre de Conférences A', value: 'Maitre de Conférences A'),
+                    ],
+                    onOptionSelected: (List<ValueItem> selectedOptions) {
+                      setState(() {});
+                    },
+                  ),
+              ],
             ),
             SizedBox(height: 20.0),
             ElevatedButton(

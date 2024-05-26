@@ -633,6 +633,7 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
     try {
       // print(familyName.text);
       // print(firstName.text);
+      print(roleController!.selectedOptions[0].value);
       QuerySnapshot studentSnapshot = await FirebaseFirestore.instance
           .collection(roleController!.selectedOptions[0].value)
           .where("familyname", isEqualTo: familyName.text)
