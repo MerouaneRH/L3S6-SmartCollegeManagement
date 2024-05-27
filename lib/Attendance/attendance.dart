@@ -54,61 +54,10 @@ class _AttendanceState extends State<Attendance> {
       print("dbTimeAndDate: $timeAndDate");
       print("studentId: $studentId");
       if(id != "" &&  timeAndDate != ""){
-        markConcernedUserAsAttended(studentId, timeAndDate, courseNow);
+        markConcernedUserAsAttended(studentId, timeAndDate, courseNow,id);
       }
     }
   }
-
-    bool isTimeWithinInterval(String timeAndDate, String courStartTime, String courEndTime) {
-    // Parse the TimeAndDate string into a DateTime object
-    DateTime dateTime = DateTime.parse(timeAndDate);
-    
-    // Extract the time component
-    String timeString = DateFormat('HH:mm').format(dateTime);
-    DateTime time = DateFormat('HH:mm').parse(timeString);
-
-    // Parse courStartTime and courEndTime strings into DateTime objects
-    DateTime startTime = DateFormat('HH:mm').parse(courStartTime);
-    DateTime endTime = DateFormat('HH:mm').parse(courEndTime);
-
-    // Check if the time is within the interval
-    return time.isAfter(startTime) && time.isBefore(endTime);
-  }
-
-  Future<bool> isStudentAlreadyAttended(String studentId, String timeAndDate, String courStartTime, String courEndTime) async {
-  try {
-    QuerySnapshot attendanceSnapshot = await FirebaseFirestore.instance
-        .collection('attendance')
-        .where('studentId', isEqualTo: studentId)
-        .get();
-
-    DateTime targetDateTime = DateTime.parse(timeAndDate);
-    String targetDate = DateFormat('yyyy-MM-dd').format(targetDateTime);
-    DateTime startTime = DateFormat('HH:mm').parse(courStartTime);
-    DateTime endTime = DateFormat('HH:mm').parse(courEndTime);
-
-    for (var doc in attendanceSnapshot.docs) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      Timestamp attendanceTimestamp = data['attendaceDate'];
-      DateTime attendanceDateTime = attendanceTimestamp.toDate();
-      
-      // Check if the date matches
-      if (DateFormat('yyyy-MM-dd').format(attendanceDateTime) == targetDate) {
-        // Extract time component and compare with the interval
-        String attendanceTimeString = DateFormat('HH:mm').format(attendanceDateTime);
-        DateTime attendanceTime = DateFormat('HH:mm').parse(attendanceTimeString);
-
-        if (attendanceTime.isAfter(startTime) && attendanceTime.isBefore(endTime)) {
-          return true; // Student has already attended within the given interval
-        }
-      }
-    }
-  } catch (e) {
-    print('Error checking attendance: $e');
-  }
-  return false; // Student has not attended within the given interval
-}
-
   Map<String, String> splitDateAndTime(String dateTimeString) {
     DateTime dateTime = DateTime.parse(dateTimeString);
     String date = DateFormat('yyyy-MM-dd').format(dateTime);
@@ -153,11 +102,71 @@ class _AttendanceState extends State<Attendance> {
       return null;
     }
   }
+  String convertTimestampToString(Timestamp timestamp) {
+  // Convert the Timestamp to a DateTime object
+  DateTime dateTime = timestamp.toDate();
 
-  void markConcernedUserAsAttended(String studentId, String timeAndDate, List<Map<String, dynamic>> concernedCourse) {
+  // Format the DateTime object to the desired format
+  String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+  print(formattedDate);
+  return formattedDate;
+}
+  Future<void> addPresence(String day, String courseId, String presence) async {
+  try {
+    // Reference to the specific course document
+    DocumentReference courseDocRef = FirebaseFirestore.instance
+        .collection('schedule')
+        .doc(day)
+        .collection('cour')
+        .doc(courseId);
+
+    // Get the current document data
+    DocumentSnapshot courseDoc = await courseDocRef.get();
+
+    if (courseDoc.exists) {
+      // Get the current presence list or initialize it if it doesn't exist
+      List<dynamic> currentPresence = (courseDoc.data() as Map<String, dynamic>?)?['present'] ?? [];
+      // Add the new presence string to the list
+      currentPresence.add(presence);
+
+      // Update the document with the new presence list
+      await courseDocRef.update({'present': currentPresence});
+      print('Presence added successfully.');
+    } else {
+      print('Course document does not exist.');
+    }
+  } catch (error) {
+    print('Error adding presence: $error');
+  }
+}
+  void markConcernedUserAsAttended(String studentId, String timeAndDate, List<Map<String, dynamic>> concernedCourse,String CardID) {
 
     Timestamp timeAndDateTimestamp = convertStringToTimestamp(timeAndDate);
-
+    /*List<Map<String,dynamic>> fetchAtt = fetchAttendaceData() as List<Map<String,dynamic>>;
+    for (var i = 0; i < fetchAtt.length; i++) {
+     fetchAtt[i]['attendaceDate'] = convertTimestampToString(fetchAtt[i]['attendaceDate']);
+    }
+    print(fetchAtt);*/
+    int ispresent = 0;
+    concernedCourse[0]['present'].forEach((element) { 
+      print(element);
+      if(element == CardID){
+        print("Already Marked");
+        ispresent = 1;
+      }
+    });
+    if(ispresent == 1){
+      _databaseReference.update({
+      'TimeAndDate': '',
+      'ID': '',
+    }).then((_) {
+      print('Realtime Database values reset to empty strings');
+    }).catchError((error) {
+      print('Error resetting Realtime Database values: $error');
+    });
+    
+      return;
+    }
     FirebaseFirestore.instance.collection('attendance').add({
       'studentId': studentId,
       'attendaceDate': timeAndDateTimestamp,
@@ -165,6 +174,7 @@ class _AttendanceState extends State<Attendance> {
       'attendaceSubject': concernedCourse[0]['courName'], // Add the subject name
       'attendaceDuration': '${concernedCourse[0]['courStartTime']} - ${concernedCourse[0]['courEndTime']}', // Add the duration
     }).then((_) {
+      addPresence(getTodayDayName().toLowerCase(),concernedCourse[0]['courId'],CardID);
     // Set the Realtime Database values to empty strings after marking attendance
     _databaseReference.update({
       'TimeAndDate': '',
@@ -178,6 +188,39 @@ class _AttendanceState extends State<Attendance> {
     print('Error marking attendance in Firestore: $error');
   });
   }
+  Future<void> fetchAttendaceData() async {
+  User? currentLoggedInStudent = FirebaseAuth.instance.currentUser;
+  String? currentLoggedInStudentId = currentLoggedInStudent!.uid;
+  try {
+    QuerySnapshot attendaceSnapshot = await FirebaseFirestore.instance
+        .collection('attendance')
+        .where("studentId", isEqualTo: currentLoggedInStudentId)
+        .get();
+
+    // An empty List to store the processed data
+    final List<Map<String, String>> processedAttendaceData = [];
+
+    // Loop through each report document
+    for(final attendace in attendaceSnapshot.docs) {
+      Map<String, dynamic> rawAttendaceData = attendace.data() as Map<String, dynamic>;
+      // Process the raw data
+      final processedAttendaceDataEntry = {
+        'studentId': rawAttendaceData['studentId'] as String,
+        'attendaceDate': formatAttendaceDate(rawAttendaceData['attendaceDate']),
+        'attendaceStatus': rawAttendaceData['attendaceStatus'] as String,
+        'attendaceSubject': rawAttendaceData['attendaceSubject'] as String,
+        'attendaceDuration': rawAttendaceData['attendaceDuration'] as String,
+        
+      };
+      processedAttendaceData.add(processedAttendaceDataEntry);
+    }
+    data = processedAttendaceData;
+    return;
+    
+  } catch (e) {
+    print('Error fetching user data: $e');
+  }
+}
 
   Timestamp convertStringToTimestamp(String dateTimeString) {
   // Parse the string into a DateTime object
@@ -192,7 +235,7 @@ class _AttendanceState extends State<Attendance> {
   @override
   //@override
   Widget build(BuildContext context) {
-    print(isTimeWithinInterval("09:00","09:00","10:00"));
+    //print(isTimeWithinInterval("09:00","09:00","10:00"));
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFE6F4F1),
