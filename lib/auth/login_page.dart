@@ -130,7 +130,8 @@ class _Login_pageState extends State<Login_page> {
                           try {
                             await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
-                                    email: email.text, password: password.text);
+                                    email: email.text.trim(),
+                                    password: password.text.trim());
                             await fetchUserData();
 
                             if (role == "student") {
@@ -167,7 +168,10 @@ class _Login_pageState extends State<Login_page> {
                         },
                         child: const Text(
                           'Login',
-                          style: TextStyle(fontFamily: 'Poppins', fontSize: 20, color: Colors.white),
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 20,
+                              color: Colors.white),
                         ),
                       ),
                     ),

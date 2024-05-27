@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/map/report_form.dart';
@@ -11,28 +12,35 @@ class TrashBinForm extends StatefulWidget {
   String? roomId;
   String roomName;
   String? role;
-  TrashBinForm({super.key, this.role, required this.binId, this.roomId, required this.roomName});
+  TrashBinForm(
+      {super.key,
+      this.role,
+      required this.binId,
+      this.roomId,
+      required this.roomName});
 
   @override
   State<TrashBinForm> createState() => _TrashBinFormState();
 }
 
-class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderStateMixin {
+class _TrashBinFormState extends State<TrashBinForm>
+    with SingleTickerProviderStateMixin {
   final databaseReference = FirebaseDatabase.instance.ref();
   //int garbageLevel = 0;
   double value1 = 0.0;
   late AnimationController _controller;
   late Animation<double> _animation;
 
-   void initState() {
+  void initState() {
     super.initState();
     _controller = AnimationController(
-     vsync: this, 
-     duration: Duration(milliseconds: 500), );
-     _animation = Tween(begin: 0.0, end: value1).animate(_controller)
-     ..addListener(() {
-       setState(() {}); // Trigger rebuild when animation value changes
-     });
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+    _animation = Tween(begin: 0.0, end: value1).animate(_controller)
+      ..addListener(() {
+        setState(() {}); // Trigger rebuild when animation value changes
+      });
     // Listen to changes in the 'garbage_level' node
     databaseReference.child('garbage/Lvl').onValue.listen((event) {
       final dynamic value = event.snapshot.value;
@@ -44,14 +52,15 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
   }
 
   void setLevel(double newLevel) {
-   setState(() {
-      value1 = newLevel.clamp(0.0, 1.0);     
+    setState(() {
+      value1 = newLevel.clamp(0.0, 1.0);
       // Reset the animation
-      _animation = Tween(begin: _animation.value, end: value1).animate(_controller)
-        ..addListener(() {
-          setState(() {}); 
-        });     
-      _controller.forward(from: 0.0); 
+      _animation =
+          Tween(begin: _animation.value, end: value1).animate(_controller)
+            ..addListener(() {
+              setState(() {});
+            });
+      _controller.forward(from: 0.0);
     });
   }
 
@@ -84,7 +93,7 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
         //height: 450,
         width: MediaQuery.of(context).size.width * 0.8,
         decoration: BoxDecoration(
-          borderRadius:  BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(30),
           color: const Color.fromRGBO(232, 244, 242, 1),
         ),
         child: Column(
@@ -99,14 +108,14 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                   },
                 ),
               ],
-            ),        
+            ),
             Container(
               height: 45,
               width: MediaQuery.of(context).size.width * 0.75,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
+                ),
                 //color: Colors.red,
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -116,29 +125,35 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                 children: [
                   Row(
                     children: [
-                      Image.asset('images/door2.png', height: 30,),
-                      const SizedBox(width: 10,),
+                      Image.asset(
+                        'images/door2.png',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         widget.roomName,
                         style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins'
-                        ),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Container(
               //height: 45,
               width: MediaQuery.of(context).size.width * 0.75,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
+                ),
                 //color: Colors.red,
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -152,16 +167,19 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                         padding: const EdgeInsets.all(10),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Column( 
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 10), 
-                              Row( 
-                                crossAxisAlignment: CrossAxisAlignment.start, 
+                              SizedBox(height: 10),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(Icons.delete_rounded, size: 25),
                                   SizedBox(width: 2),
-                                  Text("Garbage level : ", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+                                  Text("Garbage level : ",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w800)),
                                 ],
                               ),
                             ],
@@ -179,8 +197,17 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                       color: _getProgressColor(_animation.value),
                     ),
                   ),
-                  Center(child: Text('${(value1 * 100).toInt()}%', style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w800, fontSize: 17),)),
-                  SizedBox(height: 15,),
+                  Center(
+                      child: Text(
+                    '${(value1 * 100).toInt()}%',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17),
+                  )),
+                  SizedBox(
+                    height: 15,
+                  ),
                   /*ElevatedButton(
                     onPressed: (){setLevel(1); }, 
                     style: ElevatedButton.styleFrom(
@@ -197,22 +224,30 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
               "No cour In Progress", 
               style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
             ),*/
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
-                onPressed: isPickupButtonEnabled() ? () {
-                  AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.question,
-                    animType: AnimType.topSlide,
-                    title: 'Warning',          
-                    descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
-                    desc: 'Are you sure you want to request a garbage pickup ?',
-                    btnCancelOnPress: () {},
-                    btnOkOnPress: () async { await requestGarbagePickup(widget.binId); }
-                  ).show();
-                  /*showDialog(
+                onPressed: isPickupButtonEnabled()
+                    ? () {
+                        AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.question,
+                            animType: AnimType.topSlide,
+                            title: 'Warning',
+                            descTextStyle: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                            desc:
+                                'Are you sure you want to request a garbage pickup ?',
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () async {
+                              await requestGarbagePickup(widget.binId);
+                            }).show();
+                        /*showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(
@@ -221,7 +256,8 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                       );
                     },
                   );*/
-                }: null,
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(215, 235, 215, 1),
                   shape: RoundedRectangleBorder(
@@ -241,13 +277,20 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                     SizedBox(width: 5.0),
                     Text(
                       "Request a pickup",
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 17, color: Color(0xFF323232),),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Color(0xFF323232),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
@@ -281,7 +324,12 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
                     SizedBox(width: 10.0),
                     Text(
                       "Report bugs",
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Color(0xFF323232),
+                      ),
                     ),
                   ],
                 ),
@@ -292,17 +340,19 @@ class _TrashBinFormState extends State<TrashBinForm> with SingleTickerProviderSt
       ),
     );
   }
+
   Future<void> requestGarbagePickup(String binId) async {
     try {
       // Get reference to the document
-      DocumentReference binRef = FirebaseFirestore.instance.collection('trashbin').doc(binId);
+      DocumentReference binRef =
+          FirebaseFirestore.instance.collection('trashbin').doc(binId);
 
       // Update the document
       await binRef.update({
         'binIsPicked': false,
         'binIsFull': true,
       });
-      
+
       print('Pickup requested successfully.');
     } catch (error) {
       print('Error requesting a pickup: $error');

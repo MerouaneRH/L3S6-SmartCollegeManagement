@@ -21,11 +21,10 @@ void main() async {
   );
 
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if(user == null) {
+    if (user == null) {
       print("User is currently Signed Out!");
     } else {
       print("${user.email} is Signed In!");
-      
     }
   });
   String? role = await FetchRole().fetchUserDataa();
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-
       builder: (_, child) {
         return MaterialApp(
           home: role == "student"
@@ -51,12 +49,12 @@ class MyApp extends StatelessWidget {
               : role == "teacher"
                   ? const NavigateBare_prof()
                   : role == "agent"
-                       ? const NavigateBareAgent()
-                       : role == "admin"
-                       ? const NavigateBarAdmin()
-                       : role == null
-                          ? const Login_page()
-                          : const NavigateBareTECH(),
+                      ? const NavigateBareAgent()
+                      : role == "admin"
+                          ? const NavigateBarAdmin()
+                          : role == null
+                              ? const Login_page()
+                              : const NavigateBareTECH(),
           routes: {
             "login": (context) => const Login_page(),
             "profile": (context) => const Profile(),
@@ -68,7 +66,7 @@ class MyApp extends StatelessWidget {
             //"map": (context) => DisplayMap(role:),
           },
           debugShowCheckedModeBanner: false,
-        ); 
+        );
       },
     );
   }

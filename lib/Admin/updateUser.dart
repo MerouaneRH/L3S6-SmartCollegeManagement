@@ -176,7 +176,7 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
                     insetPadding: EdgeInsets.zero,
                     backgroundColor: const Color(0xffE6F4F1),
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.7,
+                      height: MediaQuery.of(context).size.height * 0.71,
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -184,7 +184,7 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
                           child: Column(
                             children: [
                               Container(
-                                height: 45,
+                                height: 70,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -225,7 +225,7 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
                               SizedBox(height: 20),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.5,
+                                    MediaQuery.of(context).size.height * 0.54,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -525,11 +525,14 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
                                         );
                                       },
                                       child: ListTile(
-                                        title: Text(
-                                          "Email : ${studentData[0]['email']}",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700,
+                                        title: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            "Email : ${studentData[0]['email']}",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                         leading: Icon(

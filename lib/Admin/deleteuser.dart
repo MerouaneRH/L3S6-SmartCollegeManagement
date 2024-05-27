@@ -187,7 +187,7 @@ class _DeleteUserState extends State<DeleteUser> {
                           insetPadding: EdgeInsets.zero,
                           backgroundColor: const Color(0xffE6F4F1),
                           child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.57,
+                            height: MediaQuery.of(context).size.height * 0.85,
                             width: MediaQuery.of(context).size.width * 0.9,
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -238,7 +238,7 @@ class _DeleteUserState extends State<DeleteUser> {
                                   Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.475,
+                                              0.7,
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -298,13 +298,16 @@ class _DeleteUserState extends State<DeleteUser> {
                                           ),
                                           SizedBox(height: 10),
                                           ListTile(
-                                            title: Text(
-                                              studentData[0]['email'] == null
-                                                  ? "Email : EMPTY"
-                                                  : "Email : ${studentData[0]['email']}",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
+                                            title: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                studentData[0]['email'] == null
+                                                    ? "Email : EMPTY"
+                                                    : "Email : ${studentData[0]['email']}",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
                                             ),
                                             leading: Icon(

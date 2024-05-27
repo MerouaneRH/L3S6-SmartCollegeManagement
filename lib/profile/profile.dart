@@ -28,7 +28,9 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "My Profile",
-          style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(38, 52, 77, 1)),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromRGBO(38, 52, 77, 1)),
         ),
         titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 19),
         titleSpacing: 00.0,
@@ -37,16 +39,15 @@ class Profile extends StatelessWidget {
         toolbarOpacity: 0.8,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-              //topLeft: Radius.circular(30),
-              //topRight: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+            //topLeft: Radius.circular(30),
+            //topRight: Radius.circular(30),
           ),
         ),
         elevation: 0.00,
         //backgroundColor: const Color(0xFF568C93),
-        backgroundColor: Color.fromRGBO(206, 228, 227, 1), 
-
+        backgroundColor: Color.fromRGBO(206, 228, 227, 1),
       ), //AppBar
       body: FutureBuilder<void>(
           future: fetchUserData(),
@@ -104,6 +105,7 @@ class Profile extends StatelessWidget {
     );
   }
 }
+
 ///////////////////////////////////////////////////////////////////////
 Future<void> fetchUserData() async {
   User? user = FirebaseAuth.instance.currentUser;
@@ -160,7 +162,7 @@ Future<void> fetchUserData() async {
         .collection('agent')
         .doc(user?.uid)
         .get();
-     if (agentSnapshot.exists) {
+    if (agentSnapshot.exists) {
       Map<String, dynamic> userData =
           agentSnapshot.data() as Map<String, dynamic>;
       username = user!.email;

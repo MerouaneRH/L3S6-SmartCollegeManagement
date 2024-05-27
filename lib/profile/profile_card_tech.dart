@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/profile/profile.dart';
 
@@ -57,13 +59,16 @@ class PcardTech extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    Text(
-                      fullName,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        fullName,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
+                        ),
                       ),
                     ),
                     Text(
@@ -127,15 +132,20 @@ class PcardTech extends StatelessWidget {
                           const SizedBox(height: 5),
                           const Text(
                             'ID : ',
-                            style:  TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Poppins',
                               decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                          Text(
-                            '   $username',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              '   $username',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'Poppins'),
+                            ),
                           ),
                         ],
                       ),
@@ -173,7 +183,9 @@ class PcardTech extends StatelessWidget {
                           ),
                           Text(
                             '   $dateNaissance',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -211,7 +223,9 @@ class PcardTech extends StatelessWidget {
                           ),
                           Text(
                             '   $placeOfBirth',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -252,7 +266,8 @@ class PcardTech extends StatelessWidget {
                 SizedBox(width: 10.0),
                 Text(
                   "Logout",
-                  style: TextStyle(fontFamily: 'Poppins',fontSize: 18, color: Colors.white),
+                  style: TextStyle(
+                      fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
                 ),
               ],
             ),
