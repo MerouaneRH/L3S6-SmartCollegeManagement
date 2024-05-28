@@ -281,7 +281,7 @@ class _TrashBinFormState extends State<TrashBinForm>
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 13,
                         color: Color(0xFF323232),
                       ),
                     ),

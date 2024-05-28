@@ -344,8 +344,8 @@ class _DeleteUserState extends State<DeleteUser> {
                                                   .selectedOptions[0].value
                                                   .toString());
                                               DeleteUserData(
-                                                  familyName.text,
-                                                  firstName.text,
+                                                  familyName.text.trim(),
+                                                  firstName.text.trim(),
                                                   rolecontroller!
                                                       .selectedOptions[0].value
                                                       .toString());

@@ -133,7 +133,7 @@ class report_history extends StatelessWidget {
                                   //color: Colors.green,
                                   child: Text(
                                     "$reportLocation",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
+                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),)),
                                 ),
                                 const Spacer(),
                                 Container(

@@ -204,7 +204,7 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                     SizedBox(width: 10.0),
                     Text(
                       isLightOn ? 'Turn Light Off' : 'Turn Light On',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 16, color: Color(0xFF323232),),
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_mini/reservation/reserverooms.dart' show removeReservation;
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -82,7 +83,7 @@ class MyCard extends StatelessWidget {
                                 ),
                                 child: Text(
                                   "$reservationStatus",
-                                  style: const TextStyle( fontSize: 13, color: Color.fromRGBO(19, 17, 17, 0.70), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
+                                  style: const TextStyle( fontSize: 12, color: Color.fromRGBO(19, 17, 17, 0.70), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
                                 ),
                               ),
                             ],

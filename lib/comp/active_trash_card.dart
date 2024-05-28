@@ -62,7 +62,7 @@ class activeTrashCard extends StatelessWidget {
                                 ),
                                 child: Text(
                                   "$trashLocation",
-                                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),),
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),),
                                 ),
                               ),
                               Container(
