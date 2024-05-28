@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
-import 'package:project_mini/Admin/RoleBasedDropDown.dart';
-import 'package:project_mini/Admin/wilayat.dart';
+
+import 'RoleBasedDropDown.dart';
+import 'wilayat.dart';
 
 class createuser extends StatefulWidget {
   const createuser({super.key});
@@ -88,13 +89,11 @@ class _createuserState extends State<createuser> {
           'role': _newuserrole.selectedOptions[0].value,
           'birthday': _userbirthday,
           'place': _search.text,
-          if (selectedRole == 'student')  
-          'group': _group.text,
+          if (selectedRole == 'student') 'group': _group.text,
           if (selectedRole == 'student')
-          'grade': gradeetude.selectedOptions[0].value,
+            'grade': gradeetude.selectedOptions[0].value,
           if (selectedRole == 'teacher')
-          'grade': _grade.selectedOptions[0].value, 
-          
+            'grade': _grade.selectedOptions[0].value,
         });
 
         _firstname.clear();
@@ -104,7 +103,6 @@ class _createuserState extends State<createuser> {
         _search.clear();
         _group.clear();
         Navigator.pop(context);
-
       } catch (e) {
         print('Error creating user: $e');
         showDialog(
@@ -300,7 +298,8 @@ class _createuserState extends State<createuser> {
                 hint: "Select new user role",
                 onOptionSelected: (List<ValueItem> selectedOptions) {
                   setState(() {
-                    selectedRole = _newuserrole.selectedOptions[0].value.toString();
+                    selectedRole =
+                        _newuserrole.selectedOptions[0].value.toString();
                   });
                 },
                 options: const <ValueItem>[
@@ -316,7 +315,7 @@ class _createuserState extends State<createuser> {
                     const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                 dropdownBorderRadius: 20,
                 selectedOptionIcon: const Icon(Icons.check_circle),
-                clearIcon: null ,
+                clearIcon: null,
               ),
             ),
             SizedBox(height: 20.0),
@@ -327,11 +326,15 @@ class _createuserState extends State<createuser> {
                     key: UniqueKey(),
                     hint: "Select promo",
                     selectedOptions: const [
-                      ValueItem(label: 'L3 - Informatique', value: 'L3 - Informatique'),
+                      ValueItem(
+                          label: 'L3 - Informatique',
+                          value: 'L3 - Informatique'),
                     ],
                     controller: gradeetude,
                     options: [
-                      ValueItem(label: 'L3 - Informatique', value: 'L3 - Informatique'),
+                      ValueItem(
+                          label: 'L3 - Informatique',
+                          value: 'L3 - Informatique'),
                     ],
                     onOptionSelected: (List<ValueItem> selectedOptions) {
                       setState(() {});
@@ -342,11 +345,15 @@ class _createuserState extends State<createuser> {
                     key: UniqueKey(),
                     hint: "Select grade",
                     selectedOptions: const [
-                      ValueItem(label: 'Maitre de Conférences A', value: 'Maitre de Conférences A'),
+                      ValueItem(
+                          label: 'Maitre de Conférences A',
+                          value: 'Maitre de Conférences A'),
                     ],
                     controller: _grade,
                     options: [
-                      ValueItem(label: 'Maitre de Conférences A', value: 'Maitre de Conférences A'),
+                      ValueItem(
+                          label: 'Maitre de Conférences A',
+                          value: 'Maitre de Conférences A'),
                     ],
                     onOptionSelected: (List<ValueItem> selectedOptions) {
                       setState(() {});

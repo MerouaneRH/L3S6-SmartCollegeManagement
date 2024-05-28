@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:Smart_College/map/trashbin_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:project_mini/Schedule/schedule_services.dart';
-import 'package:project_mini/map/info_form.dart';
-import 'package:project_mini/map/lightbulb_form.dart';
-import 'package:project_mini/map/trashbin_form.dart';
-import 'package:project_mini/map/map_services.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../Schedule/schedule_services.dart';
+import 'info_form.dart';
+import 'lightbulb_form.dart';
+import 'map_services.dart';
 
 //import '../firestore_service.dart';
 
@@ -20,14 +21,14 @@ class DisplayMap extends StatefulWidget {
   final String role;
   LatLng? mapIntitalCenter;
   double? mapZoom;
-  DisplayMap({super.key, required this.role,this.mapIntitalCenter, this.mapZoom});
+  DisplayMap(
+      {super.key, required this.role, this.mapIntitalCenter, this.mapZoom});
 
   @override
   State<DisplayMap> createState() => DisplayMapState();
 }
 
 class DisplayMapState extends State<DisplayMap> {
-
   static const double pointSize = 65;
 
   final MapController mapController = MapController();
@@ -49,7 +50,7 @@ class DisplayMapState extends State<DisplayMap> {
   bool _markersLoaded = false;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     _getCurrentLocation();
     currentZoom = widget.mapZoom ?? 17.6;
@@ -57,7 +58,7 @@ class DisplayMapState extends State<DisplayMap> {
   }
 
   Future<void> _updateUserLocation() async {
-    try{
+    try {
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -75,41 +76,42 @@ class DisplayMapState extends State<DisplayMap> {
       }
       _positionStreamSubscription = Geolocator.getPositionStream(
         locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.bestForNavigation,
-          distanceFilter: 1  // Specify the minimum distance (in meters) the device must move horizontally before an update event is generated.
-          ),
-        ).listen((Position position) {
-          setState(() {
-            userLocation = LatLng(position.latitude, position.longitude);
-            print("New location detected : $userLocation");
-            movedLocation = LatLng(position.latitude, position.longitude);
-            if (_liveUpdate && userLocation != null) {
-              mapController.move( // Used to auto focus on the user movement
-                LatLng(
-                  movedLocation!.latitude, movedLocation!.longitude
-                ),
-                currentZoom, // Set the desired zoom level
-              );
-            }
-          });
+            accuracy: LocationAccuracy.bestForNavigation,
+            distanceFilter:
+                1 // Specify the minimum distance (in meters) the device must move horizontally before an update event is generated.
+            ),
+      ).listen((Position position) {
+        setState(() {
+          userLocation = LatLng(position.latitude, position.longitude);
+          print("New location detected : $userLocation");
+          movedLocation = LatLng(position.latitude, position.longitude);
+          if (_liveUpdate && userLocation != null) {
+            mapController.move(
+              // Used to auto focus on the user movement
+              LatLng(movedLocation!.latitude, movedLocation!.longitude),
+              currentZoom, // Set the desired zoom level
+            );
+          }
         });
-    }catch(e){
+      });
+    } catch (e) {
       // Handle other exceptions, such as timeout or location service disabled
       print("Error getting location : $e");
     }
   }
+
   void focusOnUserCurrentPosition() {
-    if(userLocation == null) return;
-    mapController.move( // Used to auto focus on the user movement
-      LatLng(
-        userLocation!.latitude, userLocation!.longitude
-      ),
+    if (userLocation == null) return;
+    mapController.move(
+      // Used to auto focus on the user movement
+      LatLng(userLocation!.latitude, userLocation!.longitude),
       currentZoom, // Set the desired zoom level
     );
   }
 
   void setUserOnDefaultCamera() {
-    mapController.move( // Used to auto focus on the user movement
+    mapController.move(
+      // Used to auto focus on the user movement
       const LatLng(34.89580, -1.34833),
       17.6, // Set the desired zoom level
     );
@@ -118,18 +120,22 @@ class DisplayMapState extends State<DisplayMap> {
   @override
   void dispose() {
     super.dispose();
-    widget.mapZoom = null; // set initialZoom to default value after function callback
-    widget.mapIntitalCenter = null; // set initialCenter to default value after function callback
+    widget.mapZoom =
+        null; // set initialZoom to default value after function callback
+    widget.mapIntitalCenter =
+        null; // set initialCenter to default value after function callback
     _positionStreamSubscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: const Text(
           "Faculty of Sciences Map",
-          style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(38, 52, 77, 1)),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromRGBO(38, 52, 77, 1)),
         ),
         titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 19),
         titleSpacing: 00.0,
@@ -137,10 +143,11 @@ class DisplayMapState extends State<DisplayMap> {
         toolbarOpacity: 0.8,
         elevation: 0.00,
         backgroundColor: Color.fromRGBO(206, 228, 227, 1),
-
       ),
-      body: _markersLoaded || movedLocation != null ? _buildMap() : _buildLoading(), // Render map or loading indicator based on marker loading status,
-    ); 
+      body: _markersLoaded || movedLocation != null
+          ? _buildMap()
+          : _buildLoading(), // Render map or loading indicator based on marker loading status,
+    );
   }
 
   Future<void> _getCurrentLocation() async {
@@ -179,7 +186,8 @@ class DisplayMapState extends State<DisplayMap> {
         FlutterMap(
           mapController: mapController,
           options: MapOptions(
-            initialCenter: widget.mapIntitalCenter ?? const LatLng(34.89580, -1.34833),
+            initialCenter:
+                widget.mapIntitalCenter ?? const LatLng(34.89580, -1.34833),
             initialZoom: widget.mapZoom ?? 17.6,
             initialRotation: 12,
             minZoom: 17.6,
@@ -203,14 +211,17 @@ class DisplayMapState extends State<DisplayMap> {
           children: [
             openStreetMapTileLayer,
             MarkerLayer(
-              markers: [ 
+              markers: [
                 Marker(
                   width: pointSize,
                   rotate: true,
                   height: pointSize,
                   point: movedLocation ?? LatLng(0, 0),
                   child: IconButton(
-                    icon: Icon(Icons.man_rounded, color: Color.fromARGB(255, 58, 58, 58),),
+                    icon: Icon(
+                      Icons.man_rounded,
+                      color: Color.fromARGB(255, 58, 58, 58),
+                    ),
                     iconSize: 30,
                     color: Color.fromARGB(255, 16, 14, 51),
                     onPressed: () {
@@ -234,20 +245,19 @@ class DisplayMapState extends State<DisplayMap> {
             onPressed: () {
               setState(() {
                 _liveUpdate = !_liveUpdate;
-          
+
                 if (_liveUpdate) {
-                  
-                    print('Live update enabled');
-          
+                  print('Live update enabled');
+
                   _updateUserLocation();
                 } else {
-                  if(_positionStreamSubscription != null){
+                  if (_positionStreamSubscription != null) {
                     _positionStreamSubscription?.cancel();
                     //_positionStreamSubscription!.pause();
                     print("CANCELD");
                   }
-                  
-                    print('Live update disabled');
+
+                  print('Live update disabled');
                 }
               });
             },
@@ -299,14 +309,17 @@ class DisplayMapState extends State<DisplayMap> {
     return Container(
       color: Color.fromRGBO(206, 228, 227, 1),
       child: Center(
-        child: CircularProgressIndicator(), // You can replace this with your custom loading widget
+        child:
+            CircularProgressIndicator(), // You can replace this with your custom loading widget
       ),
     );
   }
 
   Future<void> _loadMarkers() async {
     List<Marker> trashBinMarkers = [];
-    if(widget.role == 'agent' || widget.role == 'technician' || widget.role == 'teacher'){
+    if (widget.role == 'agent' ||
+        widget.role == 'technician' ||
+        widget.role == 'teacher') {
       final trashBinData = await fetchTrashBinData();
       print('Trash bin data: $trashBinData');
       trashBinMarkers = _buildMarkers(trashBinData);
@@ -319,7 +332,9 @@ class DisplayMapState extends State<DisplayMap> {
     print('Built markers: $markersZOut');
     //----------------------------------------------
     List<Marker> lightMarkers = [];
-    if(widget.role == 'agent' || widget.role == 'technician' || widget.role == 'teacher'){
+    if (widget.role == 'agent' ||
+        widget.role == 'technician' ||
+        widget.role == 'teacher') {
       final lightBulbData = await fetchLightBulbData();
       print('lightbulb data: $lightBulbData');
       lightMarkers = _buildLightMarkers(lightBulbData);
@@ -357,7 +372,11 @@ class DisplayMapState extends State<DisplayMap> {
               builder: (BuildContext context) {
                 return Dialog(
                   insetPadding: EdgeInsets.zero,
-                  child: TrashBinForm(role: widget.role, binId: binId, roomId: rId, roomName: rName),
+                  child: TrashBinForm(
+                      role: widget.role,
+                      binId: binId,
+                      roomId: rId,
+                      roomName: rName),
                 );
               },
             );
@@ -366,6 +385,7 @@ class DisplayMapState extends State<DisplayMap> {
       );
     }).toList();
   }
+
   // build zoomed out  map Icons
   List<Marker> _buildZoomedOutMarkers(List<Map<String, dynamic>> roomData) {
     return roomData.map((rData) {
@@ -380,21 +400,30 @@ class DisplayMapState extends State<DisplayMap> {
         child: IconButton(
           icon: Icon(Icons.info_outline_rounded, size: 30),
           onPressed: () async {
-             String currentDay = getCurrentDay().toLowerCase();
+            String currentDay = getCurrentDay().toLowerCase();
             String currentTime = getTimeNow();
             print('Clicked on room $rId');
             print("today's day: $currentDay");
             print("current time: $currentTime");
-            List<Map<String, dynamic>> result = await getInProgressCour("sunday", "10:01", rName);
-            String timeRemaning = await calculateTimeRemainingForCourse("sunday", "10:01", rName);
-            Map<String, dynamic> courUpcoming = await getNextClosestCourse("sunday", "10:01", rName);
+            List<Map<String, dynamic>> result =
+                await getInProgressCour("sunday", "10:01", rName);
+            String timeRemaning =
+                await calculateTimeRemainingForCourse("sunday", "10:01", rName);
+            Map<String, dynamic> courUpcoming =
+                await getNextClosestCourse("sunday", "10:01", rName);
             //print(timeRemaning);
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
                   insetPadding: EdgeInsets.zero,
-                  child: InfoForm(role: widget.role, roomId: rId, roomName: rName, inProgressCour: result, courTimeRemaning: timeRemaning, courUpcoming: courUpcoming),
+                  child: InfoForm(
+                      role: widget.role,
+                      roomId: rId,
+                      roomName: rName,
+                      inProgressCour: result,
+                      courTimeRemaning: timeRemaning,
+                      courUpcoming: courUpcoming),
                 );
               },
             );
@@ -403,6 +432,7 @@ class DisplayMapState extends State<DisplayMap> {
       );
     }).toList();
   }
+
   // build light map Icons
   List<Marker> _buildLightMarkers(List<Map<String, dynamic>> lightBulbData) {
     return lightBulbData.map((lightData) {
@@ -424,7 +454,11 @@ class DisplayMapState extends State<DisplayMap> {
               builder: (BuildContext context) {
                 return Dialog(
                   insetPadding: EdgeInsets.zero,
-                  child: LightbulbForm(role: widget.role, bulbId: lightId, roomId: rId, roomName: rName),
+                  child: LightbulbForm(
+                      role: widget.role,
+                      bulbId: lightId,
+                      roomId: rId,
+                      roomName: rName),
                 );
               },
             );
@@ -436,8 +470,7 @@ class DisplayMapState extends State<DisplayMap> {
 }
 
 TileLayer get openStreetMapTileLayer => TileLayer(
-  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-  tileProvider: CancellableNetworkTileProvider(),
-);
-
+      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+      tileProvider: CancellableNetworkTileProvider(),
+    );

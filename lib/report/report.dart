@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_mini/comp/report_history_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+
+import '../comp/report_history_card.dart';
 
 class Report extends StatefulWidget {
   const Report({super.key});
@@ -19,7 +20,9 @@ class _ReportState extends State<Report> {
       appBar: AppBar(
         title: const Text(
           "REPORT HISTORY",
-          style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromRGBO(38, 52, 77, 1)),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromRGBO(38, 52, 77, 1)),
         ),
         titleTextStyle: TextStyle(fontFamily: 'Poppins', fontSize: 19),
         titleSpacing: 00.0,
@@ -28,53 +31,53 @@ class _ReportState extends State<Report> {
         toolbarOpacity: 0.8,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-              //topLeft: Radius.circular(30),
-              //topRight: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+            //topLeft: Radius.circular(30),
+            //topRight: Radius.circular(30),
           ),
         ),
         elevation: 0.00,
         //backgroundColor: const Color(0xFF568C93),
-        backgroundColor: Color.fromRGBO(206, 228, 227, 1), 
-
+        backgroundColor: Color.fromRGBO(206, 228, 227, 1),
       ), //AppBar
 
       body: StreamBuilder<List<Map<String, dynamic>>>(
           stream: getReportDataStream(),
           builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else {
-            List<Map<String, dynamic>> data = snapshot.data!;
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-              final reportData = data[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 15, top: 15), 
-                child: report_history(
-                  reportId: reportData['reportId'], // Access specific properties
-                  //reportStatus: reportData['reportStatus'],
-                  reportDate: reportData['reportDate'],
-                  reportIssueType: reportData['reportIssueType'],
-                  reportLocation: reportData['reportLocation'],
-                  reportTime: reportData['reportTime'],
-                  timeSinceReport: reportData['timeSinceReport'],
-                  reportDescription: reportData['reportDescription'],
-                  reportIsSolved: reportData['reportIsSolved'],
-                  reportIsInProgress: reportData['reportIsInProgress'],
-                ),
-            );}
-          );
-          }
-        }),
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              List<Map<String, dynamic>> data = snapshot.data!;
+              return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final reportData = data[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 15, top: 15),
+                      child: report_history(
+                        reportId: reportData[
+                            'reportId'], // Access specific properties
+                        //reportStatus: reportData['reportStatus'],
+                        reportDate: reportData['reportDate'],
+                        reportIssueType: reportData['reportIssueType'],
+                        reportLocation: reportData['reportLocation'],
+                        reportTime: reportData['reportTime'],
+                        timeSinceReport: reportData['timeSinceReport'],
+                        reportDescription: reportData['reportDescription'],
+                        reportIsSolved: reportData['reportIsSolved'],
+                        reportIsInProgress: reportData['reportIsInProgress'],
+                      ),
+                    );
+                  });
+            }
+          }),
     );
   }
 }
@@ -102,7 +105,8 @@ String formatReportTime(Timestamp reportDate) {
 
 String calculateTimeSinceReport(String reportDay, String reportTime) {
   String correctedReportDayFormat = formatDate(reportDay);
-  final reportDateTime = DateTime.parse('$correctedReportDayFormat $reportTime'); // Adjust format
+  final reportDateTime =
+      DateTime.parse('$correctedReportDayFormat $reportTime'); // Adjust format
 
   // Get current date and time
   final now = DateTime.now();
@@ -127,7 +131,11 @@ String calculateTimeSinceReport(String reportDay, String reportTime) {
 }
 
 Stream<List<Map<String, dynamic>>> getReportDataStream() {
-  return FirebaseFirestore.instance.collection('report').orderBy('reportDate', descending: true).snapshots().map((snapshot) {
+  return FirebaseFirestore.instance
+      .collection('report')
+      .orderBy('reportDate', descending: true)
+      .snapshots()
+      .map((snapshot) {
     return snapshot.docs.map((doc) {
       Map<String, dynamic> rawReportData = doc.data() as Map<String, dynamic>;
       return {
@@ -136,7 +144,9 @@ Stream<List<Map<String, dynamic>>> getReportDataStream() {
         'reportIssueType': rawReportData['reportIssueType'] as String,
         'reportLocation': rawReportData['reportLocation'] as String,
         'reportTime': formatReportTime(rawReportData['reportDate']),
-        'timeSinceReport': calculateTimeSinceReport(formatReportDate(rawReportData['reportDate']), formatReportTime(rawReportData['reportDate'])),
+        'timeSinceReport': calculateTimeSinceReport(
+            formatReportDate(rawReportData['reportDate']),
+            formatReportTime(rawReportData['reportDate'])),
         'reportDescription': rawReportData['reportDescription'] as String,
         'reportIsSolved': rawReportData['reportIsSolved'] as bool,
         'reportIsInProgress': rawReportData['reportIsInProgress'] as bool,
@@ -145,12 +155,10 @@ Stream<List<Map<String, dynamic>>> getReportDataStream() {
   });
 }
 
-Future<void> updateReportStatus(String reportId, bool isSolved, bool isInProgress) async {
+Future<void> updateReportStatus(
+    String reportId, bool isSolved, bool isInProgress) async {
   try {
-    await FirebaseFirestore.instance
-        .collection('report')
-        .doc(reportId)
-        .update({
+    await FirebaseFirestore.instance.collection('report').doc(reportId).update({
       'reportIsSolved': isSolved,
       'reportIsInProgress': isInProgress,
     });

@@ -4,7 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/map/report_form.dart';
+
+import 'report_form.dart';
 
 // ignore: must_be_immutable
 class TrashBinForm extends StatefulWidget {
@@ -227,28 +228,28 @@ class _TrashBinFormState extends State<TrashBinForm>
             const SizedBox(
               height: 25,
             ),
-            if(widget.role!='agent')
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: ElevatedButton(
-                onPressed: isPickupButtonEnabled()
-                    ? () {
-                        AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.question,
-                            animType: AnimType.topSlide,
-                            title: 'Warning',
-                            descTextStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                            desc:
-                                'Are you sure you want to request a garbage pickup ?',
-                            btnCancelOnPress: () {},
-                            btnOkOnPress: () async {
-                              await requestGarbagePickup(widget.binId);
-                            }).show();
-                        /*showDialog(
+            if (widget.role != 'agent')
+              Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30),
+                child: ElevatedButton(
+                  onPressed: isPickupButtonEnabled()
+                      ? () {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.question,
+                              animType: AnimType.topSlide,
+                              title: 'Warning',
+                              descTextStyle: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                              desc:
+                                  'Are you sure you want to request a garbage pickup ?',
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () async {
+                                await requestGarbagePickup(widget.binId);
+                              }).show();
+                          /*showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(
@@ -257,38 +258,38 @@ class _TrashBinFormState extends State<TrashBinForm>
                       );
                     },
                   );*/
-                      }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(215, 235, 215, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(215, 235, 215, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    minimumSize: Size(4.h, 40.0.w),
+                    //fixedSize: Size(MediaQuery.of(context).size.width - 180, 55.0), // Set desired height
                   ),
-                  minimumSize: Size(4.h, 40.0.w),
-                  //fixedSize: Size(MediaQuery.of(context).size.width - 180, 55.0), // Set desired height
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.delete_outline_rounded,
-                      color: Color(0xFF323232),
-                      size: 25.0,
-                    ),
-                    SizedBox(width: 5.0),
-                    Text(
-                      "Request a pickup",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.delete_outline_rounded,
                         color: Color(0xFF323232),
+                        size: 25.0,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 5.0),
+                      Text(
+                        "Request a pickup",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Color(0xFF323232),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             const SizedBox(
               height: 10,
             ),

@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/reservation/reserverooms.dart' show removeReservation;
+import 'package:Smart_College/reservation/reserverooms.dart'
+    show removeReservation;
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyCard extends StatelessWidget {
@@ -11,7 +11,7 @@ class MyCard extends StatelessWidget {
   final String? reservationStartTime;
   final String? reservationEndTime;
   final String? reservationId;
-  
+
   const MyCard({
     super.key,
     required this.reservationLocation,
@@ -20,14 +20,19 @@ class MyCard extends StatelessWidget {
     required this.reservationStartTime,
     required this.reservationEndTime,
     required this.reservationId,
-    
   });
 
   @override
   Widget build(BuildContext context) {
-    Color cardColor = reservationStatus == "Upcoming" ? Color(0xFFD1EBDF) : const Color.fromRGBO(231, 231, 230, 1);
-    Color backgroundStatusColor = reservationStatus == "Upcoming" ? const Color.fromRGBO(0, 255, 8, 0.08) : const Color.fromRGBO(255, 0, 0, 0.06);
-    String imageCard = reservationStatus == "Upcoming" ? 'images/reservation_upcoming.png' : 'images/reservation_expired.png';
+    Color cardColor = reservationStatus == "Upcoming"
+        ? Color(0xFFD1EBDF)
+        : const Color.fromRGBO(231, 231, 230, 1);
+    Color backgroundStatusColor = reservationStatus == "Upcoming"
+        ? const Color.fromRGBO(0, 255, 8, 0.08)
+        : const Color.fromRGBO(255, 0, 0, 0.06);
+    String imageCard = reservationStatus == "Upcoming"
+        ? 'images/reservation_upcoming.png'
+        : 'images/reservation_expired.png';
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -35,10 +40,10 @@ class MyCard extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 0, top: 8),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
             ),
           ),
           color: cardColor,
@@ -50,7 +55,10 @@ class MyCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 5, right: 5),
-                      child:Image.asset(imageCard, height: 70,),
+                      child: Image.asset(
+                        imageCard,
+                        height: 70,
+                      ),
                     ),
                     Expanded(
                       flex: 2,
@@ -71,7 +79,12 @@ class MyCard extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Text(
                                   "$reservationLocation",
-                                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'Poppins',
+                                  ),
                                 ),
                               ),
                               const Spacer(),
@@ -81,14 +94,19 @@ class MyCard extends StatelessWidget {
                                   color: backgroundStatusColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Text(
-                                  "$reservationStatus",
-                                  style: const TextStyle( fontSize: 12, color: Color.fromRGBO(19, 17, 17, 0.70), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                                ),
+                                child: Text("$reservationStatus",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Color.fromRGBO(19, 17, 17, 0.70),
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily: 'Poppins',
+                                    )),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 5,),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           Row(
                             children: [
                               SizedBox(
@@ -98,18 +116,25 @@ class MyCard extends StatelessWidget {
                                   height: 30.0,
                                 ),
                               ),
-                              Expanded( // Wrap Text widget with Expanded
+                              Expanded(
+                                // Wrap Text widget with Expanded
                                 child: Container(
-                                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                  child: Text(
-                                    "$reservationDate",
-                                    style: const TextStyle(fontSize: 13, color: Color(0xFF323232), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                                  ),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  child: Text("$reservationDate",
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Color(0xFF323232),
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: 'Poppins',
+                                      )),
                                 ),
-                              ),       
+                              ),
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Row(
                             children: [
                               SizedBox(
@@ -122,10 +147,14 @@ class MyCard extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Text(
-                                  "$reservationStartTime - $reservationEndTime",
-                                  style: const TextStyle(fontSize: 13, color: Color(0xFF323232), fontWeight: FontWeight.w800, fontFamily: 'Poppins',)
-                                ),
-                              ),  
+                                    "$reservationStartTime - $reservationEndTime",
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Color(0xFF323232),
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily: 'Poppins',
+                                    )),
+                              ),
                             ],
                           ),
                         ],
@@ -133,45 +162,60 @@ class MyCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (reservationStatus == 'Upcoming')  // Add conditional 
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start, 
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                           AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.question,
-                            animType: AnimType.topSlide,
-                            title: 'Warning',          
-                            descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
-                            desc: 'Are you sure you want to cancel this reservation?',
-                            btnCancelOnPress: () {},
-                            btnOkOnPress: () {removeReservation(reservationId!);},
-                          ).show();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red, // Ensure background color is visible
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Adjust padding
-                          textStyle: const TextStyle(fontSize: 14),  // Adjust text style if needed
+                if (reservationStatus == 'Upcoming') // Add conditional
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.question,
+                              animType: AnimType.topSlide,
+                              title: 'Warning',
+                              descTextStyle: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                              desc:
+                                  'Are you sure you want to cancel this reservation?',
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {
+                                removeReservation(reservationId!);
+                              },
+                            ).show();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors
+                                .red, // Ensure background color is visible
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5), // Adjust padding
+                            textStyle: const TextStyle(
+                                fontSize: 14), // Adjust text style if needed
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete_outline,
+                                color: Color(0xFF323232),
+                                size: 25.0,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text(
+                                'Cancel Reservation',
+                                style: TextStyle(
+                                    color: Color(0xFF323232),
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.delete_outline,
-                              color: Color(0xFF323232),
-                              size: 25.0,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text('Cancel Reservation', style: TextStyle(color: Color(0xFF323232),fontFamily: 'Poppins',fontWeight: FontWeight.w800),),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

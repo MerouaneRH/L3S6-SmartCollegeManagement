@@ -1,7 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/map/report_form.dart';
+
+import 'report_form.dart';
 
 // ignore: must_be_immutable
 class LightbulbForm extends StatefulWidget {
@@ -9,13 +10,19 @@ class LightbulbForm extends StatefulWidget {
   String? roomId;
   String roomName;
   String? role;
-  LightbulbForm({super.key, this.role, required this.bulbId, this.roomId, required this.roomName});
+  LightbulbForm(
+      {super.key,
+      this.role,
+      required this.bulbId,
+      this.roomId,
+      required this.roomName});
 
   @override
   State<LightbulbForm> createState() => _LightbulbFormState();
 }
 
-class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProviderStateMixin {
+class _LightbulbFormState extends State<LightbulbForm>
+    with SingleTickerProviderStateMixin {
   final databaseReference = FirebaseDatabase.instance.ref();
   bool isLightOn = false; // Initial state (assuming light is off initially)
 
@@ -28,7 +35,7 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
   }
 
   @override
-   void initState() {
+  void initState() {
     super.initState();
     // Listen to changes in the 'LightBulb/status' node
     databaseReference.child('LightBulb/status').onValue.listen((event) {
@@ -38,9 +45,14 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
       });
     });
   }
+
   @override
   void dispose() {
-    databaseReference.child('LightBulb/status').onValue.listen((event) {}).cancel();
+    databaseReference
+        .child('LightBulb/status')
+        .onValue
+        .listen((event) {})
+        .cancel();
     super.dispose();
   }
 
@@ -52,7 +64,7 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
         //height: 450,
         width: MediaQuery.of(context).size.width * 0.8,
         decoration: BoxDecoration(
-          borderRadius:  BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(30),
           color: const Color.fromRGBO(232, 244, 242, 1),
         ),
         child: Column(
@@ -67,14 +79,14 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                   },
                 ),
               ],
-            ),        
+            ),
             Container(
               height: 45,
               width: MediaQuery.of(context).size.width * 0.75,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
+                ),
                 //color: Colors.red,
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -84,40 +96,53 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                 children: [
                   Row(
                     children: [
-                      Image.asset('images/door2.png', height: 30,),
-                      const SizedBox(width: 10,),
+                      Image.asset(
+                        'images/door2.png',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         widget.roomName,
                         style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins'
-                        ),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Container(
               //height: 45,
               width: MediaQuery.of(context).size.width * 0.75,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color.fromRGBO(0, 0, 0, 0.07),
-                ),       
+                ),
                 //color: Colors.red,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
                 //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(isLightOn ? "images/lighton.png" : "images/lightoff.png", height: 75,),
+                      Image.asset(
+                        isLightOn
+                            ? "images/lighton.png"
+                            : "images/lightoff.png",
+                        height: 75,
+                      ),
                       //IconButton(onPressed: () {}, icon: Icon(Icons.lightbulb_rounded), iconSize: 50,),
                       /*Padding(
                         padding: const EdgeInsets.all(10),
@@ -141,7 +166,9 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                       ),*/
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   /*ElevatedButton(
                     onPressed: (){setLevel(1); }, 
                     style: ElevatedButton.styleFrom(
@@ -158,7 +185,9 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
               "No cour In Progress", 
               style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
             ),*/
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
@@ -186,7 +215,9 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                   );*/
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isLightOn? Color.fromARGB(255, 255, 228, 228) : const Color.fromRGBO(215, 235, 215, 1),
+                  backgroundColor: isLightOn
+                      ? Color.fromARGB(255, 255, 228, 228)
+                      : const Color.fromRGBO(215, 235, 215, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -204,13 +235,20 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                     SizedBox(width: 10.0),
                     Text(
                       isLightOn ? 'Turn Light Off' : 'Turn Light On',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 16, color: Color(0xFF323232),),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF323232),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: ElevatedButton(
@@ -244,7 +282,12 @@ class _LightbulbFormState extends State<LightbulbForm> with SingleTickerProvider
                     SizedBox(width: 10.0),
                     Text(
                       "Report bugs",
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold ,fontSize: 18, color: Color(0xFF323232),),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Color(0xFF323232),
+                      ),
                     ),
                   ],
                 ),

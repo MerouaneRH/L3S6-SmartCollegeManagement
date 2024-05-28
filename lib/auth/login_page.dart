@@ -2,7 +2,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mini/comp/my_textfield.dart';
+
+import '../comp/my_textfield.dart';
 
 class Login_page extends StatefulWidget {
   const Login_page({super.key});

@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/profile/profile.dart';
+
+import 'profile.dart';
 
 // ignore: must_be_immutable
 class PcardAgent extends StatelessWidget {
@@ -127,7 +128,7 @@ class PcardAgent extends StatelessWidget {
                           const SizedBox(height: 5),
                           const Text(
                             'ID : ',
-                            style:  TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Poppins',
                               decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w800,
@@ -135,7 +136,9 @@ class PcardAgent extends StatelessWidget {
                           ),
                           Text(
                             '   $username',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -173,7 +176,9 @@ class PcardAgent extends StatelessWidget {
                           ),
                           Text(
                             '   $dateNaissance',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -211,7 +216,9 @@ class PcardAgent extends StatelessWidget {
                           ),
                           Text(
                             '   $placeOfBirth',
-                            style: const TextStyle(fontWeight: FontWeight.w800,fontFamily: 'Poppins'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Poppins'),
                           ),
                         ],
                       ),
@@ -252,7 +259,8 @@ class PcardAgent extends StatelessWidget {
                 SizedBox(width: 10.0),
                 Text(
                   "Logout",
-                  style: TextStyle(fontFamily: 'Poppins',fontSize: 18, color: Colors.white),
+                  style: TextStyle(
+                      fontFamily: 'Poppins', fontSize: 18, color: Colors.white),
                 ),
               ],
             ),

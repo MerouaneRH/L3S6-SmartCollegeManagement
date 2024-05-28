@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mini/profile/profile_card_agent.dart';
-import 'package:project_mini/profile/profile_card_prof.dart';
-import 'package:project_mini/profile/profile_card_student.dart';
-import 'package:project_mini/profile/profile_card_tech.dart';
+import 'profile_card_agent.dart';
+import 'profile_card_prof.dart';
+import 'profile_card_student.dart';
+import 'profile_card_tech.dart';
 
 String? username;
 String? nom;

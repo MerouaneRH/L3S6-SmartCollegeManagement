@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:project_mini/report/activetrash.dart' show markBinAsPicked;
+import 'package:Smart_College/report/activetrash.dart' show markBinAsPicked;
 
 class activeTrashCard extends StatelessWidget {
   final void Function(double, LatLng) onPressedCallback; // Define callback
@@ -35,10 +35,11 @@ class activeTrashCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: 100,height: 80,
+                      width: 100, height: 80,
                       //color: Colors.red,
                       child: Padding(
-                        padding: const EdgeInsets.only(left:0,right: 0,bottom: 0,top: 0),
+                        padding: const EdgeInsets.only(
+                            left: 0, right: 0, bottom: 0, top: 0),
                         child: Image.asset(
                           'images/trashBin.png',
                         ),
@@ -52,7 +53,10 @@ class activeTrashCard extends StatelessWidget {
                           //const SizedBox(height: 10),
                           Row(
                             children: [
-                              Image.asset("images/door.png", height: 40,),
+                              Image.asset(
+                                "images/door.png",
+                                height: 40,
+                              ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 decoration: BoxDecoration(
@@ -62,7 +66,12 @@ class activeTrashCard extends StatelessWidget {
                                 ),
                                 child: Text(
                                   "$trashLocation",
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'Poppins',color: Color.fromRGBO(72, 82, 98, 1),),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'Poppins',
+                                    color: Color.fromRGBO(72, 82, 98, 1),
+                                  ),
                                 ),
                               ),
                               Container(
@@ -86,15 +95,24 @@ class activeTrashCard extends StatelessWidget {
                             context: context,
                             dialogType: DialogType.question,
                             animType: AnimType.topSlide,
-                            title: 'Warning',          
-                            descTextStyle: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold, fontSize: 16),
-                            desc: 'Are you sure you want to mark this as Picked?',
+                            title: 'Warning',
+                            descTextStyle: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                            desc:
+                                'Are you sure you want to mark this as Picked?',
                             btnCancelOnPress: () {},
-                            btnOkOnPress: () async { await markBinAsPicked(trashId); }// Mark as solved},
-                          ).show();
+                            btnOkOnPress: () async {
+                              await markBinAsPicked(trashId);
+                            } // Mark as solved},
+                            ).show();
                       },
                       style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'Poppins',
+                        ),
                         backgroundColor: const Color.fromARGB(255, 68, 77, 94),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -123,7 +141,10 @@ class activeTrashCard extends StatelessWidget {
                         onPressedCallback(20.6, trashCoor);
                       },
                       style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontWeight: FontWeight.w800, fontFamily: 'Poppins',),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'Poppins',
+                        ),
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -140,7 +161,10 @@ class activeTrashCard extends StatelessWidget {
                           ),
                           Text(
                             "Show on Map",
-                            style: TextStyle(fontSize: 10, color: Color.fromARGB(255, 68, 77, 94),),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Color.fromARGB(255, 68, 77, 94),
+                            ),
                           ),
                         ],
                       ),

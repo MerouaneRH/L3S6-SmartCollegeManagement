@@ -2,15 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_mini/Admin/navigationBarAdmin.dart';
-import 'package:project_mini/auth/fetch_role.dart';
-import 'package:project_mini/auth/login_page.dart';
-import 'package:project_mini/comp/navigation_prof.dart';
-import 'package:project_mini/comp/navigationbarAgent.dart';
-import 'package:project_mini/comp/navigationbarTECH.dart';
-import 'package:project_mini/firebaseoptions.dart/firebase_options.dart';
-import 'package:project_mini/comp/navigationBar.dart';
-import 'package:project_mini/profile/profile.dart';
+import 'Admin/navigationBarAdmin.dart';
+import 'auth/fetch_role.dart';
+import 'auth/login_page.dart';
+import 'comp/navigationBar.dart';
+import 'comp/navigation_prof.dart';
+import 'comp/navigationbarAgent.dart';
+import 'comp/navigationbarTECH.dart';
+import 'firebaseoptions.dart/firebase_options.dart';
+import 'profile/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
