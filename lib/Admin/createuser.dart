@@ -294,7 +294,7 @@ class _createuserState extends State<createuser> {
                 borderRadius: 20,
                 fieldBackgroundColor: const Color.fromRGBO(211, 229, 233, 1),
                 selectedOptions: const [
-                  ValueItem(label: 'student', value: 'student')
+                  ValueItem(label: 'Student', value: 'student')
                 ],
                 controller: _newuserrole,
                 hint: "Select new user role",
@@ -304,8 +304,10 @@ class _createuserState extends State<createuser> {
                   });
                 },
                 options: const <ValueItem>[
-                  ValueItem(label: 'student', value: 'student'),
-                  ValueItem(label: 'teacher', value: 'teacher'),
+                  ValueItem(label: 'Student', value: 'student'),
+                  ValueItem(label: 'Teacher', value: 'teacher'),
+                  ValueItem(label: 'Technicien', value: 'technician'),
+                  ValueItem(label: 'Agent', value: 'agent'),
                 ],
                 selectionType: SelectionType.single,
                 chipConfig: const ChipConfig(wrapType: WrapType.wrap),

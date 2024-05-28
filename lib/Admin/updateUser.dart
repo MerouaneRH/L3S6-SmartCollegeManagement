@@ -570,6 +570,8 @@ class _UpdateUserState extends State<UpdateUser> with TickerProviderStateMixin {
                                                           "place",
                                                           newValue:
                                                               newsearch.text);
+                                                              Navigator.of(context).popUntil(
+                                                  (route) => route.isFirst);
                                                       // Add your submit logic here
                                                       // For example, you can call a function or perform some action
                                                       // editValue(familyName.text, firstName.text, "place", newValue: newsearch.text);
